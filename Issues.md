@@ -1,0 +1,1 @@
+1. Shall buyers delete the account themselves or only manager can delete the buyer's accound?
