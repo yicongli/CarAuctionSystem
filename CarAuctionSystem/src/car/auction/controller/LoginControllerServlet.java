@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class RegisterControllerServlet
+ * Servlet implementation class LoginControllerServlet
  */
-@WebServlet("/registerServlet")
-public class RegisterControllerServlet extends HttpServlet {
+@WebServlet("/loginServlet")
+public class LoginControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RegisterControllerServlet() {
+    public LoginControllerServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,25 +37,18 @@ public class RegisterControllerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String first_name = request.getParameter("first_name");
-		String last_name = request.getParameter("last_name");
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		String address = request.getParameter("address");
-		String contact = request.getParameter("contact");
-		
-		if(first_name.isEmpty() || last_name.isEmpty() || username.isEmpty() || 
-				password.isEmpty() || address.isEmpty() || contact.isEmpty())
+		if(username.isEmpty() || password.isEmpty() )
 		{
-			RequestDispatcher req = request.getRequestDispatcher("/views/register.jsp");
+			RequestDispatcher req = request.getRequestDispatcher("/views/login.jsp");
 			req.include(request, response);
 		}
 		else
 		{
-			RequestDispatcher req = request.getRequestDispatcher("/views/registersuccess.jsp");
+			RequestDispatcher req = request.getRequestDispatcher("/views/homepage.jsp");
 			req.forward(request, response);
 		}
 	}
-
 
 }
