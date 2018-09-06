@@ -1,7 +1,8 @@
 package car.auction.domain;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import car.auction.datasource.BuyerMapper;
 
 public class Buyer extends User {
 	private String firstname;
@@ -47,16 +48,6 @@ public class Buyer extends User {
 	}
 	
     public static List<Buyer> getAllBuyers() {
-//      BookFinder finder = new BookFinder();
-      List<Buyer> result = new ArrayList<Buyer>();
-//      List<BookGateway> booksRecords = finder.findAvailableBooks();
-//
-//      for (BookGateway br : booksRecords) {
-//          Book book = new Book(String.valueOf(br.getIsbn()), br.getAuthor(), br.getTitle(),
-//                  br.getPrice(), br.getCopies());
-//          result.add(book);
-//      }
-      return result;
-		
+      return BuyerMapper.getAllBuyers();	
 	}
 }

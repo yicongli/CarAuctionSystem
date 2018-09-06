@@ -3,10 +3,13 @@ package car.auction.datasource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import car.auction.domain.Buyer;
 
 public class BuyerMapper {
+	
+	private static final String StatementString = "SELECT * from UPDATE APP.buyer";
 	
 	private static final String updateStatementString =
             "UPDATE APP.buyer " +
@@ -73,6 +76,12 @@ public class BuyerMapper {
         
         return result;
     }
+	
+	public static List<Buyer> getAllBuyers () {
+		List<Buyer> results = null;
+		// TODO add fetching data process
+		return results;
+	}
 
 	
 }

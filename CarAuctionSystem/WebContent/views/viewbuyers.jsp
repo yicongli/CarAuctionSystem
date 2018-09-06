@@ -16,11 +16,11 @@
 <hr />
 
 <ul>
-  <li><a href="homepage.jsp" class="active">Home page</a></li>
-  <li><a href="#">Buyers Information</a></li>
-  <li><a href="cars.jsp">Available Cars</a></li>
-  <li><a href="hostory.jsp">History</a></li>
-  <li><a href="Login.jsp">Log out</a></li> <!-- TODO temporary -->
+  <li><a href="/views/homepage.jsp">Home page</a></li>
+  <li><a href="/views/viewbuyers.jsp" class="active">Buyers Information</a></li>
+  <li><a href="/views/cars.jsp">Available Cars</a></li>
+  <li><a href="/views/hostory.jsp">History</a></li>
+  <li><a href="./views/login.jsp">Log out</a></li> <!-- TODO temporary -->
 </ul>
 
 
