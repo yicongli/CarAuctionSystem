@@ -43,11 +43,13 @@ public class LoginControllerServlet extends HttpServlet {
 		if(username.isEmpty() || password.isEmpty() )
 		{
 			RequestDispatcher req = request.getRequestDispatcher("/views/login.jsp");
+			request.setAttribute("loginFlag", "2");
 			req.include(request, response);
 		}
 		else
 		{
 			RequestDispatcher req = request.getRequestDispatcher("/views/homepage.jsp");
+			request.setAttribute("loginFlag", "1");
 			req.forward(request, response);
 		}
 	}

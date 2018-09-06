@@ -19,7 +19,7 @@
   <li><a href="/views/viewbuyers.jsp">Buyers Information</a></li>
   <li><a href="/views/cars.jsp">Available Cars</a></li>
   <li><a href="/views/hostory.jsp">History</a></li>
-  <li><a href="./views/login.jsp">Log out</a></li> <!-- TODO temporary -->
+  <li><a href="/views/login.jsp">Log out</a></li> <!-- TODO temporary -->
 </ul>
 
 <br />

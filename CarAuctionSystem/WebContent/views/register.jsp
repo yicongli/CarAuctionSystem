@@ -10,6 +10,14 @@
 </head>
 <body>
 <h2>Register Form</h2>
+
+<% 
+	String flag = (String)request.getAttribute("registerFlag");
+	if(flag != null && Integer.parseInt(flag) == 2) { 
+%>
+	<p style = "color:red; margin-left: 80px;"> <b>Register failed! </b></p>
+<% }%>
+
 <hr /><br />
 
 <div class='container'>
@@ -40,7 +48,7 @@
 					<td><input type="text" name="contact" /></td>
 				</tr></table>
 			<input type="submit" value="Submit" />
-			<a href="login.jsp" style = "margin-left: 30px"><b>Back to Login</b></a>
+			<a href="/views/login.jsp" style = "margin-left: 30px"><b>Back to Login</b></a>
 	</form>
 </div>
 </body>

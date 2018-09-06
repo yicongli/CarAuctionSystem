@@ -11,6 +11,21 @@
 </head>
 <body>
 <h2>Login</h2>
+
+<% 
+	String flag = (String)request.getAttribute("registerFlag");
+	if(flag != null && Integer.parseInt(flag) == 1) { 
+%>
+	<p style = "color:blue; margin-left: 80px;"> <b>Register success! </b></p>
+<% }%>
+
+<% 
+	flag = (String)request.getAttribute("loginFlag");
+	if(flag != null && Integer.parseInt(flag) == 2) { 
+%>
+	<p style = "color:red; margin-left: 80px;"> <b>Login failed! </b></p>
+<% }%>
+
 <hr /><br />
 
 <div class='container'>
@@ -27,7 +42,7 @@
 				</tr>
 			</table>
 			<input type="submit" value="Login" />
-			<a href="register.jsp" style = "margin-left: 30px"><b>register</b></a>
+			<a href="/views/register.jsp" style = "margin-left: 30px"><b>register</b></a>
 	</form>
 </div>
 </body>

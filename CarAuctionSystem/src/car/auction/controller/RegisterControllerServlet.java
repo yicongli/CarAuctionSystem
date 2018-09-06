@@ -48,11 +48,13 @@ public class RegisterControllerServlet extends HttpServlet {
 				password.isEmpty() || address.isEmpty() || contact.isEmpty())
 		{
 			RequestDispatcher req = request.getRequestDispatcher("/views/register.jsp");
+			request.setAttribute("registerFlag", "2");
 			req.include(request, response);
 		}
 		else
 		{
-			RequestDispatcher req = request.getRequestDispatcher("/views/registersuccess.jsp");
+			RequestDispatcher req = request.getRequestDispatcher("/views/login.jsp");
+			request.setAttribute("registerFlag", "1");
 			req.forward(request, response);
 		}
 	}
