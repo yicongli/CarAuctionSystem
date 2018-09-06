@@ -1,5 +1,5 @@
 div.box {
-    width: 35%;
+    width: 50%;
     border: 1px solid pink;
     margin-left: 10px;
     padding: 20px;
@@ -23,7 +23,7 @@ input, select, textarea {
 }
 
 h2 {
-	margin-left: 30px;
+	margin-left: 80px;
 }
 
 .button {
@@ -35,4 +35,32 @@ h2 {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
 }

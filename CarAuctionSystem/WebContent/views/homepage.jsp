@@ -19,10 +19,7 @@
 	<a>Welcome   <% out.println(username); %> User!!!! You have logged in.</a>
 		</td>
 	</tr>
-	<tr></tr>
 	<tr>
-		<td></td>
-		<td></td>
 		<td><a href="login.jsp"><b>Logout</b></a></td>
 	</tr>
 	</table>

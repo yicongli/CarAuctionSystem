@@ -13,7 +13,18 @@
 </head>
 <body>
 <h2>Buyer List</h2>
-<hr /><br />
+<hr />
+
+<ul>
+  <li><a href="homepage.jsp" class="active">Home page</a></li>
+  <li><a href="#">Buyers Information</a></li>
+  <li><a href="cars.jsp">Available Cars</a></li>
+  <li><a href="hostory.jsp">History</a></li>
+  <li><a href="Login.jsp">Log out</a></li> <!-- TODO temporary -->
+</ul>
+
+
+<br />
 
 <div class='container'>
 
