@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Login
  */
-@WebServlet("/Login")
+@WebServlet("/login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -20,6 +20,21 @@ public class Login extends HttpServlet {
     public Login() {
         super();
         // TODO Auto-generated constructor stub
+    }
+    
+    @Override
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String name = req.getParameter("name");
+        String password = req.getParameter("password");
+
+//        User user = null;//new UserDAO().getUser(name,password);
+//        if (null!=user){
+//            //把session传入页面
+//            req.getSession().setAttribute("user",user);
+//            resp.sendRedirect("/listProduct");
+//        }else {
+            resp.sendRedirect("/CarAuctionSystem/login.html");
+//        }
     }
 
 	/**
