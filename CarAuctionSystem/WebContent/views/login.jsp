@@ -27,6 +27,7 @@
 				</tr>
 			</table>
 			<input type="submit" value="Login" />
+			<a href="register.jsp" style = "margin-left: 30px"><b>register</b></a>
 	</form>
 </div>
 </body>

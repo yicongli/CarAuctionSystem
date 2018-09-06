@@ -9,7 +9,9 @@
 <title>Registration Form</title>
 </head>
 <body>
-<h1>Register Form</h1>
+<h2>Register Form</h2>
+<hr /><br />
+
 <div class='container'>
 	<form action="../registerServlet" method="post">
 			<table style="with: 50%" class='table table-bordered table-striped'>
@@ -38,6 +40,7 @@
 					<td><input type="text" name="contact" /></td>
 				</tr></table>
 			<input type="submit" value="Submit" />
+			<a href="login.jsp" style = "margin-left: 30px"><b>Back to Login</b></a>
 	</form>
 </div>
 </body>
