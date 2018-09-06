@@ -1,6 +1,8 @@
-package scripts;
+package car.auction.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,33 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class LoginControllerServlet
  */
-@WebServlet("/login")
-public class Login extends HttpServlet {
+@WebServlet("/loginServlet")
+public class LoginControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public LoginControllerServlet() {
         super();
         // TODO Auto-generated constructor stub
-    }
-    
-    @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("name");
-        String password = req.getParameter("password");
-
-//        User user = null;//new UserDAO().getUser(name,password);
-//        if (null!=user){
-//            //把session传入页面
-//            req.getSession().setAttribute("user",user);
-//            resp.sendRedirect("/listProduct");
-//        }else {
-            resp.sendRedirect("/CarAuctionSystem/login.html");
-//        }
     }
 
 	/**
@@ -50,7 +37,19 @@ public class Login extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		
+		if(username.isEmpty() || password.isEmpty() )
+		{
+			RequestDispatcher req = request.getRequestDispatcher("/views/login.jsp");
+			req.include(request, response);
+		}
+		else
+		{
+			RequestDispatcher req = request.getRequestDispatcher("/views/homepage.jsp");
+			req.forward(request, response);
+		}
 	}
 
 }
