@@ -39,6 +39,7 @@ public class LoginControllerServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+		
 		if(username.isEmpty() || password.isEmpty() )
 		{
 			RequestDispatcher req = request.getRequestDispatcher("/views/login.jsp");

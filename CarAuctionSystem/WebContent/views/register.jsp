@@ -3,13 +3,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel='stylesheet' href='../resources/bootstrap.min.css'/>
+    <link rel='stylesheet' href='../style.css'/>
 <title>Registration Form</title>
 </head>
 <body>
 <h1>Register Form</h1>
-<form action="../registerServlet" method="post">
-			<table style="with: 50%">
+<div class='container'>
+	<form action="../registerServlet" method="post">
+			<table style="with: 50%" class='table table-bordered table-striped'>
 				<tr>
 					<td>First Name</td>
 					<td><input type="text" name="first_name" /></td>
@@ -34,6 +37,8 @@
 					<td>Contact No</td>
 					<td><input type="text" name="contact" /></td>
 				</tr></table>
-			<input type="submit" value="Submit" /></form>
+			<input type="submit" value="Submit" />
+	</form>
+</div>
 </body>
 </html>

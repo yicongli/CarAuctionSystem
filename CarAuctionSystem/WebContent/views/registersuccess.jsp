@@ -3,7 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel='stylesheet' href='../resources/bootstrap.min.css'/>
+    <link rel='stylesheet' href='../style.css'/>
 <title>Registration Success Page</title>
 </head>
 <body>
