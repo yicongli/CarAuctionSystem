@@ -1,5 +1,6 @@
 package car.auction.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import car.auction.datasource.BuyerMapper;
@@ -42,12 +43,35 @@ public class Buyer extends User {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public static Buyer getBuyer(int userId) {
-		Buyer buyer = (Buyer) User.getUser(userId);
-		return buyer;
+	public static Buyer getBuyer(String username) {
+		Buyer b = BuyerMapper.getUserByUsername(username);
+		return (b == null) ? null : new Buyer(b.getId(), b.getUsername(), b.getPassword(), b.getFirstname(),
+        		b.getLastname(), b.getPhoneNumber());
 	}
 	
     public static List<Buyer> getAllBuyers() {
-      return BuyerMapper.getAllBuyers();	
+        List<Buyer> result = new ArrayList<Buyer>();
+        List<Buyer> buyerRecords = BuyerMapper.getAllBuyers();
+
+        for (Buyer b : buyerRecords) {
+            Buyer buyer = new Buyer(b.getId(), b.getUsername(), b.getPassword(), b.getFirstname(),
+            		b.getLastname(), b.getPhoneNumber());
+            result.add(buyer);
+        }
+        return result;
 	}
+    
+    public static void updateBuyer(Buyer buyer) {
+    	BuyerMapper mapper = new BuyerMapper();
+        Buyer b = BuyerMapper.getUserByID(buyer.getId());
+        
+        b.setUsername(buyer.getFirstname());
+        b.setPassword(buyer.getPassword());
+        b.setFirstname(buyer.getFirstname());
+        b.setLastname(buyer.getLastname());
+        b.setPhoneNumber(buyer.getPhoneNumber());
+        
+        mapper.update(b);
+        
+    }
 }

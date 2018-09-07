@@ -20,7 +20,11 @@ public class BuyerMapper {
 	}
 
 	
-	private static final String selectAllBuyers = "SELECT * FROM APP.buyer";
+	private static final String getAllBuyers = "SELECT * FROM APP.buyer";
+	
+	private static final String getUserByID = "SELECT * FROM APP.buyer WHERE id = ?";
+	
+	private static final String getUserByUsername = "SELECT * FROM APP.buyer WHERE username = ?";
 	
 	private static final String updateStatementString =
             "UPDATE APP.buyer " +
@@ -48,7 +52,7 @@ public class BuyerMapper {
 
             updateStatement.execute();
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
         	System.out.println("Update error:" + e.getMessage());
         }
     }
@@ -75,7 +79,7 @@ public class BuyerMapper {
             }
 
             Registry.addBuyer(b);
-        } catch (Exception e) {
+        } catch (SQLException e) {
         	System.out.println("Insert error: " + e.getMessage());
         }
         return b.getId();
@@ -89,19 +93,26 @@ public class BuyerMapper {
     		deleteStatement = DBConnection.prepare(deleteStatementString);
     		deleteStatement.setInt(1, b.getId());
     		deleteStatement.executeQuery();
-    	} catch (Exception e) {
+    	} catch (SQLException e) {
     		System.out.println("Delete error: " + e.getMessage());
 		}
     }
 	
 	public static Buyer load(ResultSet rs) throws SQLException {
 		int idArg = rs.getInt(1);
+		
+		Buyer result = Registry.getBuyer(idArg);
+        if (result != null)
+            return result;
+		
 		String usernameArg = rs.getString(2);
         String passwordArg = rs.getString(3);
         String firstnameArg = rs.getString(4);
         String lastnameArg = rs.getString(5);
         String phonenoArg = rs.getString(6);
-        Buyer result = new Buyer(idArg, usernameArg, passwordArg, firstnameArg, lastnameArg, phonenoArg);
+        
+        result = new Buyer(idArg, usernameArg, passwordArg, firstnameArg, lastnameArg, phonenoArg);
+        Registry.addBuyer(result);
         
         return result;
     }
@@ -110,7 +121,7 @@ public class BuyerMapper {
 		List<Buyer> result = new ArrayList<>();
 		
 		try {
-			PreparedStatement stmt = DBConnection.prepare(selectAllBuyers);
+			PreparedStatement stmt = DBConnection.prepare(getAllBuyers);
 
 			  ResultSet rs = stmt.executeQuery();
 			  while (rs.next()) {
@@ -120,9 +131,44 @@ public class BuyerMapper {
 		} catch (SQLException e) {
 	      
 		}
+		
 		return result;
 
 	}
+	
+	public static Buyer getUserByID(int id) {
+        Buyer result = null;
+        PreparedStatement getStatement = null;
+        ResultSet rs = null;
+        try {
+            getStatement = DBConnection.prepare(getUserByID);
+            getStatement.setInt(1, id);
+            rs = getStatement.executeQuery();
+            while (rs.next()) {
+                result = load(rs);
+            }
+
+        } catch (SQLException e) {
+        }
+        return result;
+    }
+		
+	public static Buyer getUserByUsername(String username) {
+        Buyer result = null;
+        PreparedStatement getStatement = null;
+        ResultSet rs = null;
+        try {
+            getStatement = DBConnection.prepare(getUserByUsername);
+            getStatement.setString(1, username);
+            rs = getStatement.executeQuery();
+            while (rs.next()) {
+                result = load(rs);
+            }
+
+        } catch (SQLException e) {
+        }
+        return result;
+    }
 
 	
 }
