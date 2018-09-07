@@ -11,16 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class HomepageControllerServlet
+ * Servlet implementation class UpdateInforController
  */
-@WebServlet("/homepage")
-public class HomepageControllerServlet extends HttpServlet {
+@WebServlet("/update")
+public class UpdateInforController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HomepageControllerServlet() {
+    public UpdateInforController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,7 +36,8 @@ public class HomepageControllerServlet extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/login");
 		}
 		else {
-			RequestDispatcher req = request.getRequestDispatcher("/views/homepage.jsp");
+		
+			RequestDispatcher req = request.getRequestDispatcher("/views/updateinfo.jsp");
 			req.include(request, response);
 		}
 	}
@@ -45,7 +46,7 @@ public class HomepageControllerServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher req = request.getRequestDispatcher("/views/homepage.jsp");
+		RequestDispatcher req = request.getRequestDispatcher("/views/updateinfo.jsp");
 		req.include(request, response);
 	}
 

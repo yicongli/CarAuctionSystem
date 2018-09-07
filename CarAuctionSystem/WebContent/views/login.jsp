@@ -13,7 +13,8 @@
 <h2>Login</h2>
 
 <% 
-	String flag = (String)request.getAttribute("registerFlag");
+	String flag = (String)session.getAttribute("registerFlag");
+	session.removeAttribute("registerFlag");
 	if(flag != null && Integer.parseInt(flag) == 1) { 
 %>
 	<p style = "color:blue; margin-left: 80px;"> <b>Register success! </b></p>
@@ -42,7 +43,7 @@
 				</tr>
 			</table>
 			<input type="submit" value="Login" />
-			<input type="checkbox" name="sellerFlag" value="True" style = "margin-left: 15px"> I am seller
+			<input type="checkbox" name="sellerFlag" value="true" style = "margin-left: 15px"> I am seller
 			<a href="/register" style = "margin-left: 30px"><b>register</b></a>
 	</form>
 </div>

@@ -7,11 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import car.auction.domain.Buyer;
 import car.auction.domain.UserInfoManagementService;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 
 /**
  * Servlet implementation class UserInfoControllerServlet
@@ -31,17 +29,14 @@ public class ViewBuyersControllerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String view = "/views/viewbuyers.jsp";
-        ServletContext servletContext = getServletContext();
-        RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(view);
-        requestDispatcher.forward(request, response);
+		RequestDispatcher req = request.getRequestDispatcher("/views/viewbuyers.jsp");
+		req.include(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("buyerID");
-        Buyer buyer = Buyer.getBuyerByUsername(username);
 
         // if delate failed then show the fail notification in View 
         if (username != null) {
@@ -52,10 +47,8 @@ public class ViewBuyersControllerServlet extends HttpServlet {
         	
         }
 
-        String view = "/views/viewbuyers.jsp";
-        ServletContext servletContext = getServletContext();
-        RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(view);
-        requestDispatcher.forward(request, response);
+		RequestDispatcher req = request.getRequestDispatcher("/views/viewbuyers.jsp");
+		req.include(request, response);
     }
 
 }

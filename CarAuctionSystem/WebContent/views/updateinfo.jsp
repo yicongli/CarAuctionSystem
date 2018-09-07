@@ -24,7 +24,7 @@
 <hr />
 
 <ul>
-  <li><a href="/homepage" class="active">Home page</a></li>
+  <li><a href="/update" class="active">Home page</a></li>
   <li><a href="/buyers">Buyers Information</a></li>
   <li><a href="#">Available Cars</a></li>
   <li><a href="#">History</a></li>
@@ -63,7 +63,7 @@
 		</tr>
 	</table>
 	
-	<a href="/update"><b>Update</b></a>
+	<a href="/homepage"><b>Back to Home page</b></a>
 </div>
 <% } %>
 
@@ -77,7 +77,7 @@
 <hr />
 
 <ul>
-  <li><a href="/homepage" class="active">Home page</a></li>
+  <li><a href="/update" class="active">Home page</a></li>
   <li><a href="#">Available Cars</a></li>
   <li><a href="#">History</a></li>
   <li><a href="/login">Log out</a></li> <!-- TODO temporary -->
@@ -123,7 +123,7 @@
 		</tr>
 	</table>
 	
-	<a href="/update"><b>Update</b></a>
+	<a href="/homepage"><b>Back to Home page</b></a>
 </div>
 <% } %>
 

@@ -48,7 +48,7 @@
         <%
         	List<Buyer> list = UserInfoManagementService.getInstance().getAllBuyers();
         	if (list != null) {
-	            for ( Buyer buyer : UserInfoManagementService.getInstance().getAllBuyers()) {
+	            for ( Buyer buyer : list) {
 	        %>
 	        <tr>
 	            <form name="ListBuyers" action="viewbuyers" method="post">
