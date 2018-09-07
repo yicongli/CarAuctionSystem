@@ -21,6 +21,7 @@ public class UnitOfWork {
 	
 	public static void registerDirty(Buyer buyer) {
 		if (!dirtyBuyer.contains(buyer) && !newBuyer.contains(buyer)) {
+			cleanBuyer.remove(buyer);
 			dirtyBuyer.add(buyer);
 		}
 	}
@@ -53,6 +54,7 @@ public class UnitOfWork {
 	
 	// commit the lists and then empty them
 	public void commit() {
+
 		for (Buyer buyer : newBuyer) {
 			BuyerMapper.insert(buyer);
 		}
@@ -69,6 +71,8 @@ public class UnitOfWork {
 		dirtyBuyer = new ArrayList<>();
 		deletedBuyer = new ArrayList<>();
 		cleanBuyer = new ArrayList<>();
-		
+	
+			
 	}
+	
 }

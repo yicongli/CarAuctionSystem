@@ -2,6 +2,7 @@ package car.auction.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import car.auction.datasource.BuyerMapper;
 import car.auction.datasource.UnitOfWork;
@@ -155,4 +156,16 @@ public class Buyer extends User {
 		UnitOfWork.registerDeleted(buyer);
 	}
     
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Buyer buyer = (Buyer) o;
+        return Objects.equals(this.getId(), buyer.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getId());
+    }
 }
