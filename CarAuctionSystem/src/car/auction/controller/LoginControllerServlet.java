@@ -34,8 +34,11 @@ public class LoginControllerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher req = request.getRequestDispatcher("/views/login.jsp");
 		HttpSession session = request.getSession(false);
-		session.removeAttribute("userinfo");
-		session.removeAttribute("sellerflag");
+		if (session != null) {
+			session.removeAttribute("userinfo");
+			session.removeAttribute("sellerflag");
+		}
+		
 		req.include(request, response);
 	}
 
@@ -47,7 +50,7 @@ public class LoginControllerServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String sellerFlag = request.getParameter("sellerFlag");
-		Boolean isSeller = Boolean.getBoolean(sellerFlag);
+		Boolean isSeller = Boolean.valueOf(sellerFlag);
 		
 		// check if all fields were inputed
 		if(!username.isEmpty() || password.isEmpty())

@@ -14,7 +14,17 @@
 	<title>Home page</title>
 </head>
 
-<%  Boolean isSeller = (Boolean)session.getAttribute("sellerflag"); 
+<%  
+	if(session == null 
+		|| session.getAttribute("userinfo") == null) {
+		response.sendRedirect(request.getContextPath() + "/login");
+	}
+
+	Boolean isSeller = (Boolean)session.getAttribute("sellerflag"); 
+	if(isSeller == null) {
+		response.sendRedirect(request.getContextPath() + "/login");
+	}
+	
 	if (isSeller.booleanValue()){
 %>
 
@@ -61,6 +71,8 @@
 			<td><%= seller.getAddress() %></td>
 		</tr>
 	</table>
+	
+	<a href="/update"><b>Update</b></a>
 </div>
 <% } %>
 
@@ -119,6 +131,8 @@
 			<td><%= buyer.getPhoneNumber() %></td>
 		</tr>
 	</table>
+	
+	<a href="/update"><b>Update</b></a>
 </div>
 <% } %>
 
