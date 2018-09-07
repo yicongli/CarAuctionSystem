@@ -41,7 +41,7 @@ public class ViewBuyersControllerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("buyerID");
-        Buyer buyer = Buyer.getBuyer(username);
+        Buyer buyer = Buyer.getBuyerByUsername(username);
 
         // if delate failed then show the fail notification in View 
         if (username != null) {
