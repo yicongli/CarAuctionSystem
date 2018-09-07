@@ -19,7 +19,7 @@ public class Seller extends User {
 	
 	//Lazy load, get address when needed
 	public String getAddress() {
-		if (this.getAddress() == null) {
+		if (this.address == null) {
 			address = SellerMapper.getAddressSeller();
 		}
 		return this.address;
