@@ -3,10 +3,15 @@ package car.auction.datasource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import car.auction.domain.Buyer;
 import car.auction.domain.Seller;
 
 public class SellerMapper {
+	
+	private static final String selectSeller = "SELECT * FROM APP.seller";
 	
 	private static final String updateStatementString =
             "UPDATE APP.users " +
@@ -37,5 +42,23 @@ public class SellerMapper {
         
         return result;
     }
+	
+	public List<Seller> getSeller() {
+		List<Seller> result = new ArrayList<>();
+		
+		try {
+			PreparedStatement stmt = DBConnection.prepare(selectSeller);
+
+			  ResultSet rs = stmt.executeQuery();
+			  while (rs.next()) {
+				  result.add(load(rs));
+			  }
+
+		} catch (SQLException e) {
+			
+		}
+		return result;
+
+	}
 
 }

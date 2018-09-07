@@ -3,7 +3,7 @@ package car.auction.datasource;
 import java.sql.*;
 
 public class DBConnection {
-	
+		
 	/* DB INFO:
 	private static String host = "ec2-50-17-194-186.compute-1.amazonaws.com";
 	private static String user = "vpsevylwsefnhm";
@@ -13,8 +13,8 @@ public class DBConnection {
 	*/
 	private static final String DB_CONNECTION = "jdbc:derby://localhost:1527/carauction;create=true";
 	//private static final String DB_CONNECTION = System.getenv().get("JDBC_DATABASE_URL");
-	private static final String DB_USER = "vpsevylwsefnhm";
-	private static final String DB_PASSWORD = "ac3586f78e635d23107a8f69103a06c436a389a91fa6a790a57062faac0e8f07";
+	private static final String DB_USER = "user";
+	private static final String DB_PASSWORD = "123";
 
 
     public static PreparedStatement prepare(String stm) {
