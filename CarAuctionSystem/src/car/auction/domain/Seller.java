@@ -1,5 +1,9 @@
 package car.auction.domain;
 
+import java.util.List;
+
+import car.auction.datasource.SellerMapper;
+
 public class Seller extends User {
 	private String address;
 	
@@ -17,4 +21,8 @@ public class Seller extends User {
 		this.address = address;
 	}
 
+	public static Seller getSeller () {
+		List<Seller> list= SellerMapper.getSeller();
+		return list.isEmpty() ? null : list.get(0);
+	}
 }

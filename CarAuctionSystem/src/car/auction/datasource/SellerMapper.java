@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import car.auction.domain.Buyer;
 import car.auction.domain.Seller;
 
 public class SellerMapper {
@@ -18,7 +17,7 @@ public class SellerMapper {
                     "  set username = ?, password = ?, address = ?" +
                     "  where id = 1";
 	
-	public void update(Seller s) {
+	public static void update(Seller s) {
         PreparedStatement updateStatement = null;
         try {
             updateStatement = DBConnection.prepare(updateStatementString);
@@ -43,7 +42,7 @@ public class SellerMapper {
         return result;
     }
 	
-	public List<Seller> getSeller() {
+	public static List<Seller> getSeller() {
 		List<Seller> result = new ArrayList<>();
 		
 		try {

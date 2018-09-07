@@ -26,15 +26,8 @@ public class UserInfoManagementService {
 		return buyerInfos;
 	}
 	
-	public Buyer getBuyers(String username) {
-		Buyer buyer = Buyer.getBuyerByUsername(username);
-		return buyer;
-	}
-	
-	public Seller getSeller() {
-		// TODO get seller information from Domain
-		Seller seller = null;
-		return seller;
+	public User getUser(String username, boolean isSeller) {
+		return isSeller ? Seller.getSeller() : Buyer.getBuyerByUsername(username);
 	}
 
 	// generate new buyer and send data to the domain 
@@ -44,7 +37,7 @@ public class UserInfoManagementService {
 		return Buyer.generateNewBuyer(newBuyer);
 	}
 	
-	public boolean deleteBuyer(Integer id) {
+	public boolean deleteBuyer(String username) {
 		// find buyer through id and send it to the domain 
 		// then send delete operation from mapper
 		return false;
