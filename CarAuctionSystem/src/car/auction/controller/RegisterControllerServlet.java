@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import car.auction.domain.UserInfoManagementService;
 
@@ -51,9 +52,13 @@ public class RegisterControllerServlet extends HttpServlet {
 			// check if the generating operation success
 			UserInfoManagementService instance = UserInfoManagementService.getInstance();
 			if (instance.generateNewBuyers(username, password, first_name, last_name, contact)) {
-				RequestDispatcher req = request.getRequestDispatcher("/views/login.jsp");
-				request.setAttribute("registerFlag", "1");
-				req.forward(request, response);
+//				RequestDispatcher req = request.getRequestDispatcher("/login");
+//				request.setAttribute("registerFlag", "1");
+//				req.forward(request, response);
+				
+				HttpSession session = request.getSession(false);
+				session.setAttribute("registerFlag", "1");
+				response.sendRedirect(request.getContextPath() + "/login");
 			}
 		}
 		

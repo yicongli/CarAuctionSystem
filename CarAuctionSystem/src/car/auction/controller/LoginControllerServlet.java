@@ -8,10 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import car.auction.domain.User;
-import car.auction.domain.Buyer;
-import car.auction.domain.Seller;
 import car.auction.domain.UserInfoManagementService;
 
 /**
@@ -34,6 +33,9 @@ public class LoginControllerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher req = request.getRequestDispatcher("/views/login.jsp");
+		HttpSession session = request.getSession(false);
+		session.removeAttribute("userinfo");
+		session.removeAttribute("sellerflag");
 		req.include(request, response);
 	}
 
@@ -45,7 +47,7 @@ public class LoginControllerServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String sellerFlag = request.getParameter("sellerFlag");
-		boolean isSeller = Boolean.parseBoolean(sellerFlag);
+		Boolean isSeller = Boolean.getBoolean(sellerFlag);
 		
 		// check if all fields were inputed
 		if(!username.isEmpty() || password.isEmpty())
@@ -56,11 +58,16 @@ public class LoginControllerServlet extends HttpServlet {
 			User user = instance.getUser(username, isSeller);
 			
 			if (user != null && user.getPassword().equals(password)) {
-				RequestDispatcher req = request.getRequestDispatcher("/homepage");
-				request.setAttribute("userinfo", user);
-				request.setAttribute("sellerflag", isSeller);
-
-				req.forward(request, response);
+				HttpSession session = request.getSession(false);
+				session.setAttribute("userinfo", user);
+				session.setAttribute("sellerflag", isSeller);
+				response.sendRedirect(request.getContextPath() + "/homepage");
+				
+//				RequestDispatcher req = request.getRequestDispatcher("/homepage");
+//				request.setAttribute("userinfo", user);
+//				request.setAttribute("sellerflag", isSeller);
+//
+//				req.forward(request, response);
 				
 				return;
 			}

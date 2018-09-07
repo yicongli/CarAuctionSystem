@@ -14,8 +14,8 @@
 	<title>Home page</title>
 </head>
 
-<%  Boolean isSeller = (Boolean)request.getAttribute("sellerflag"); 
-	if (isSeller){
+<%  Boolean isSeller = (Boolean)session.getAttribute("sellerflag"); 
+	if (isSeller.booleanValue()){
 %>
 
 <body>
@@ -36,15 +36,14 @@
 	<table style="with: 50%" class='table table-bordered table-striped'>
 	<tr>
 		<td>
-	<% String username = request.getParameter("username"); %>
-	<b><% out.println(username); %>, Welcome! You have logged in.</b>
+	<% Seller seller = (Seller)session.getAttribute("userinfo"); %>
+	<b><% out.println(seller.getUsername()); %>, Welcome! You have logged in.</b>
 		</td>
 	</tr>
 	</table>
 </div>
 
-<%  Seller seller = (Seller)request.getAttribute("userinfo"); 
-// TODO: should get data from databse
+<%  
 	if (seller != null){
 %>
 <div class='container'>
@@ -87,14 +86,14 @@
 	<table style="with: 50%" class='table table-bordered table-striped'>
 	<tr>
 		<td>
-	<% String username = request.getParameter("username"); %>
-	<b><% out.println(username); %>, Welcome! You have logged in.</b>
+	<% Buyer buyer = (Buyer)session.getAttribute("userinfo");  %>
+	<b><% out.println(buyer.getUsername()); %>, Welcome! You have logged in.</b>
 		</td>
 	</tr>
 	</table>
 </div>
 
-<%  Buyer buyer = (Buyer)request.getAttribute("userinfo"); 
+<%  
 	if (buyer != null){
 %>
 <div class='container'>
