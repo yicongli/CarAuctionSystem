@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import car.auction.domain.User;
 import car.auction.domain.Buyer;
+import car.auction.domain.Seller;
 import car.auction.domain.UserInfoManagementService;
 
 /**
@@ -42,6 +44,8 @@ public class LoginControllerServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+		String sellerFlag = request.getParameter("sellerFlag");
+		boolean isSeller = Boolean.parseBoolean(sellerFlag);
 		
 		// check if all fields were inputed
 		if(!username.isEmpty() || password.isEmpty())
@@ -49,9 +53,19 @@ public class LoginControllerServlet extends HttpServlet {
 			// check if can find the username in database and 
 			// compare the found username's password with inputed one
 			UserInfoManagementService instance = UserInfoManagementService.getInstance();
-			Buyer buyer = instance.getBuyers(username);
-			if (buyer != null && buyer.getPassword().equals(password)) {
-				RequestDispatcher req = request.getRequestDispatcher("/views/homepage.jsp");
+			User user = instance.getUser(username, isSeller);
+			
+			if (user != null && user.getPassword().equals(password)) {
+				RequestDispatcher req = null;
+				if (isSeller) {
+					req = request.getRequestDispatcher("/views/homepage.jsp");
+					request.setAttribute("userinfo", (Seller)user);
+				}
+				else {
+					req = request.getRequestDispatcher("/views/buyerhomepage.jsp");
+					request.setAttribute("userinfo", (Buyer)user);
+				}
+				
 				request.setAttribute("loginFlag", "1");
 				req.forward(request, response);
 			}

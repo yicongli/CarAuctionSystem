@@ -16,8 +16,6 @@
 <h2> Home Page </h2>
 <hr />
 
-<% String path = request.getRequestURI().substring(request.getContextPath().length()); %>
-
 <ul>
   <li><a href="/views/homepage.jsp" class="active">Home page</a></li>
   <li><a href="/views/viewbuyers.jsp">Buyers Information</a></li>
@@ -33,7 +31,7 @@
 	<tr>
 		<td>
 	<% String username = request.getParameter("username"); %>
-	<a>Welcome   <% out.println(username); %> User!!!! You have logged in.</a>
+	<a><% out.println(username); %>, Welcome! You have logged in.</a>
 		</td>
 	</tr>
 	</table>
@@ -59,5 +57,6 @@
 	</table>
 </div>
 <% } %>
+
 </body>
 </html>

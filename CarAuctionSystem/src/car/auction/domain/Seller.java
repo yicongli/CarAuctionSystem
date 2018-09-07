@@ -17,4 +17,8 @@ public class Seller extends User {
 		this.address = address;
 	}
 
+	public static Seller getSeller () {
+		// TODO read from the seller table
+		return null;
+	}
 }

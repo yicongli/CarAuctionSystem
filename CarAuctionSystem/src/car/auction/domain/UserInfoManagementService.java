@@ -26,14 +26,8 @@ public class UserInfoManagementService {
 		return buyerInfos;
 	}
 	
-	public Buyer getBuyers(String username) {
-		return Buyer.getBuyer(username);
-	}
-	
-	public Seller getSeller() {
-		// TODO get seller information from Domain
-		Seller seller = null;
-		return seller;
+	public User getUser(String username, boolean isSeller) {
+		return isSeller ? Seller.getSeller() : Buyer.getBuyer(username);
 	}
 
 	// generate new buyer and send data to the domain 
