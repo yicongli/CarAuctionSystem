@@ -54,8 +54,8 @@
 	        %>
 	        <tr>
 	            <form name="ListBuyers" action="viewbuyers" method="post">
-	                <input type="hidden" name="buyerID" value="<%= buyer. getId()%>">
-	                <td><%= buyer.getFirstname() %></td>
+	                <input type="hidden" name="username" value="<%= buyer.getUsername()%>">
+	                <td ><%= buyer.getFirstname() %></td>
 	                <td><%= buyer.getLastname() %></td>
 	                <td><%= buyer.getPhoneNumber() %></td>
 	                <td><%= buyer.getUsername() %></td>

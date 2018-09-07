@@ -44,9 +44,7 @@ public class Buyer extends User {
 	}
 
 	public static Buyer getBuyer(String username) {
-		Buyer b = BuyerMapper.getUserByUsername(username);
-		return (b == null) ? null : new Buyer(b.getId(), b.getUsername(), b.getPassword(), b.getFirstname(),
-        		b.getLastname(), b.getPhoneNumber());
+		return BuyerMapper.getUserByUsername(username);
 	}
 	
 	public static boolean generateNewBuyer(Buyer buyer) {
@@ -54,19 +52,10 @@ public class Buyer extends User {
 	}
 	
     public static List<Buyer> getAllBuyers() {
-        List<Buyer> result = new ArrayList<Buyer>();
-        List<Buyer> buyerRecords = BuyerMapper.getAllBuyers();
-
-        for (Buyer b : buyerRecords) {
-            Buyer buyer = new Buyer(b.getId(), b.getUsername(), b.getPassword(), b.getFirstname(),
-            		b.getLastname(), b.getPhoneNumber());
-            result.add(buyer);
-        }
-        return result;
+        return BuyerMapper.getAllBuyers();
 	}
     
     public static void updateBuyer(Buyer buyer) {
-    	BuyerMapper mapper = new BuyerMapper();
         Buyer b = BuyerMapper.getUserByID(buyer.getId());
         
         b.setUsername(buyer.getFirstname());
@@ -75,7 +64,7 @@ public class Buyer extends User {
         b.setLastname(buyer.getLastname());
         b.setPhoneNumber(buyer.getPhoneNumber());
         
-        mapper.update(b);
+        BuyerMapper.update(buyer);
         
     }
 }

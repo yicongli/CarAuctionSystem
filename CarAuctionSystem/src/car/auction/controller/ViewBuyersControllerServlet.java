@@ -40,13 +40,13 @@ public class ViewBuyersControllerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
-        String buyerID = request.getParameter("buyerID");
-        Buyer buyer = Buyer.getBuyer(Integer.parseInt(buyerID));
+        String username = request.getParameter("buyerID");
+        Buyer buyer = Buyer.getBuyer(username);
 
         // if delate failed then show the fail notification in View 
-        if (buyer != null) {
+        if (username != null) {
         	UserInfoManagementService instance = UserInfoManagementService.getInstance();
-        	if (!instance.deleteBuyer(Integer.parseInt(buyerID))) {
+        	if (!instance.deleteBuyer(username)) {
         		request.setAttribute("deleteFlag", "2");
         	}
         	
