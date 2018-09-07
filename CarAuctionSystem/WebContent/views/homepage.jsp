@@ -13,7 +13,7 @@
 	<title>Home page</title>
 </head>
 <body>
-<h2> Home Page </h2>
+<h2> Home Page - Buyer</h2>
 <hr />
 
 <ul>
@@ -31,13 +31,13 @@
 	<tr>
 		<td>
 	<% String username = request.getParameter("username"); %>
-	<a><% out.println(username); %>, Welcome! You have logged in.</a>
+	<b><% out.println(username); %>, Welcome! You have logged in.</b>
 		</td>
 	</tr>
 	</table>
 </div>
 
-<%  Seller seller = (Seller)request.getAttribute("userInfo"); 
+<%  Seller seller = (Seller)request.getAttribute("userinfo"); 
 	if (seller != null){
 %>
 <div class='container'>

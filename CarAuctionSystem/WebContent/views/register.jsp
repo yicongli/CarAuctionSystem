@@ -9,7 +9,7 @@
 <title>Registration Form</title>
 </head>
 <body>
-<h2>Register Form</h2>
+<h2>Register Buyer</h2>
 
 <% 
 	String flag = (String)request.getAttribute("registerFlag");
