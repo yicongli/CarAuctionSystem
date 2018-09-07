@@ -37,12 +37,11 @@ public class UserInfoManagementService {
 		return seller;
 	}
 
-	/* TODO modify return into boolean to identify if success */
+	// generate new buyer and send data to the domain 
 	public boolean generateNewBuyers (String username, String password, 
 			String firstname, String lastName, String phoneNumber) {
 		Buyer newBuyer = new Buyer(0, username, password, firstname, lastName, phoneNumber);
-		// TODO generate insert into domain
-		return false;
+		return Buyer.generateNewBuyer(newBuyer);
 	}
 	
 	public boolean deleteBuyer(Integer id) {

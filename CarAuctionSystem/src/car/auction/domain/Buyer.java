@@ -42,8 +42,12 @@ public class Buyer extends User {
 		this.phoneNumber = phoneNumber;
 	}
 
+	public static boolean generateNewBuyer(Buyer buyer) {
+		return BuyerMapper.insert(buyer) != -1;
+	}
+	
 	public static Buyer getBuyer(int userId) {
-		Buyer buyer = (Buyer) User.getUser(userId);
+		Buyer buyer = null;
 		return buyer;
 	}
 	

@@ -42,12 +42,11 @@ public class RegisterControllerServlet extends HttpServlet {
 		String last_name = request.getParameter("last_name");
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		String address = request.getParameter("address");
 		String contact = request.getParameter("contact");
 		
 		// check the if all info filled
 		if(!first_name.isEmpty() && !last_name.isEmpty() && !username.isEmpty() && 
-				!password.isEmpty() && !address.isEmpty() && !contact.isEmpty())
+				!password.isEmpty() && !contact.isEmpty())
 		{
 			// check if the generating operation success
 			UserInfoManagementService instance = UserInfoManagementService.getInstance();

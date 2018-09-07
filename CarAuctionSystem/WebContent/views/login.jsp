@@ -29,7 +29,7 @@
 <hr /><br />
 
 <div class='container'>
-	<form action="../loginServlet" method="post">
+	<form action="../login" method="post">
 			<table style="with: 50%" class='table table-bordered table-striped'>
 	 
 				<tr>
