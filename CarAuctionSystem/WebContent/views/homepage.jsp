@@ -37,7 +37,7 @@
 	</table>
 </div>
 
-<%  Seller seller = UserInfoManagementService.getInstance().getSeller(); 
+<%  Seller seller = (Seller)request.getAttribute("userInfo"); 
 	if (seller != null){
 %>
 <div class='container'>
