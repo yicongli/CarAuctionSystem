@@ -42,8 +42,8 @@
 				</tr>
 			</table>
 			<input type="submit" value="Login" />
-			<input type="checkbox" name="sellerFlag" value="1" style = "margin-left: 15px"> I am seller
-			<a href="/views/register.jsp" style = "margin-left: 30px"><b>register</b></a>
+			<input type="checkbox" name="sellerFlag" value="True" style = "margin-left: 15px"> I am seller
+			<a href="/register" style = "margin-left: 30px"><b>register</b></a>
 	</form>
 </div>
 </body>

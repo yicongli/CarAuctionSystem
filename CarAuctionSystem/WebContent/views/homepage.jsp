@@ -3,6 +3,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="car.auction.domain.UserInfoManagementService" %>
 <%@page import="car.auction.domain.Seller"%>
+<%@page import="car.auction.domain.Buyer"%>
 
 <!DOCTYPE html>
 <html>
@@ -12,16 +13,21 @@
     <link rel='stylesheet' href='../style.css'/>
 	<title>Home page</title>
 </head>
+
+<%  Boolean isSeller = (Boolean)request.getAttribute("sellerflag"); 
+	if (isSeller){
+%>
+
 <body>
 <h2> Home Page - Buyer</h2>
 <hr />
 
 <ul>
-  <li><a href="/views/homepage.jsp" class="active">Home page</a></li>
-  <li><a href="/views/viewbuyers.jsp">Buyers Information</a></li>
+  <li><a href="/homepage" class="active">Home page</a></li>
+  <li><a href="/buyers">Buyers Information</a></li>
   <li><a href="/views/cars.jsp">Available Cars</a></li>
   <li><a href="/views/hostory.jsp">History</a></li>
-  <li><a href="/views/login.jsp">Log out</a></li> <!-- TODO temporary -->
+  <li><a href="/login">Log out</a></li> <!-- TODO temporary -->
 </ul>
 
 <br />
@@ -38,6 +44,7 @@
 </div>
 
 <%  Seller seller = (Seller)request.getAttribute("userinfo"); 
+// TODO: should get data from databse
 	if (seller != null){
 %>
 <div class='container'>
@@ -59,4 +66,65 @@
 <% } %>
 
 </body>
+
+<%  }else{
+%>
+
+<body>
+<h2> Home Page - Buyer</h2>
+<hr />
+
+<ul>
+  <li><a href="/homepage" class="active">Home page</a></li>
+  <li><a href="/views/cars.jsp">Available Cars</a></li>
+  <li><a href="/views/hostory.jsp">History</a></li>
+  <li><a href="/login">Log out</a></li> <!-- TODO temporary -->
+</ul>
+
+<br />
+
+<div class='container'>
+	<table style="with: 50%" class='table table-bordered table-striped'>
+	<tr>
+		<td>
+	<% String username = request.getParameter("username"); %>
+	<b><% out.println(username); %>, Welcome! You have logged in.</b>
+		</td>
+	</tr>
+	</table>
+</div>
+
+<%  Buyer buyer = (Buyer)request.getAttribute("userinfo"); 
+	if (buyer != null){
+%>
+<div class='container'>
+	<table style="with: 50%" class='table table-bordered table-striped'>
+		<tr>
+			<td>First Name</td>
+			<td><%= buyer.getFirstname() %></td>
+		</tr>
+		<tr>
+			<td>Last Name</td>
+			<td><%= buyer.getLastname() %></td>
+		</tr>
+		<tr>
+			<td>UserName</td>
+			<td><%= buyer.getUsername() %></td>
+		</tr>
+			<tr>
+			<td>Password</td>
+			<td><%= buyer.getPassword() %></td>
+		</tr>
+		<tr>
+			<td>Phone Number</td>
+			<td><%= buyer.getPhoneNumber() %></td>
+		</tr>
+	</table>
+</div>
+<% } %>
+
+</body>
+
+<%  }
+%>
 </html>

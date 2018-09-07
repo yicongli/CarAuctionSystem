@@ -56,18 +56,13 @@ public class LoginControllerServlet extends HttpServlet {
 			User user = instance.getUser(username, isSeller);
 			
 			if (user != null && user.getPassword().equals(password)) {
-				RequestDispatcher req = null;
-				if (isSeller) {
-					req = request.getRequestDispatcher("/views/homepage.jsp");
-					request.setAttribute("userinfo", (Seller)user);
-				}
-				else {
-					req = request.getRequestDispatcher("/views/buyerhomepage.jsp");
-					request.setAttribute("userinfo", (Buyer)user);
-				}
-				
-				request.setAttribute("loginFlag", "1");
+				RequestDispatcher req = request.getRequestDispatcher("/homepage");
+				request.setAttribute("userinfo", user);
+				request.setAttribute("sellerflag", isSeller);
+
 				req.forward(request, response);
+				
+				return;
 			}
 		}
 		

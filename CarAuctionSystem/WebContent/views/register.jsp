@@ -44,7 +44,7 @@
 					<td><input type="text" name="contact" /></td>
 				</tr></table>
 			<input type="submit" value="Submit" />
-			<a href="/views/login.jsp" style = "margin-left: 30px"><b>Back to Login</b></a>
+			<a href="/login" style = "margin-left: 30px"><b>Back to Login</b></a>
 	</form>
 </div>
 </body>
