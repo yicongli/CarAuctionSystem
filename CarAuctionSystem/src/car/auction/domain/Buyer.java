@@ -3,6 +3,7 @@ package car.auction.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Timer;
 
 import car.auction.datasource.BuyerMapper;
 import car.auction.datasource.UnitOfWork;
@@ -79,11 +80,7 @@ public class Buyer extends User {
 		return true;
 	}
 	
-	/*public static boolean generateNewBuyer(Buyer buyer) {
-		return BuyerMapper.insert(buyer) != -1;
-	}*/
 	
-	// If list is empty, then get the data from database, else get it from memory
     public static List<Buyer> getAllBuyers() {
     	
     	List<Buyer> buyers = new ArrayList<>();
@@ -118,6 +115,10 @@ public class Buyer extends User {
     public static void hasLoaded() {
     	if(hasExecutedOnce == true) {
     		BuyerMapper.getAllBuyers();
+    		
+    		//Commit changes to database every 60 seconds
+    		Timer timer = new Timer();
+    		timer.schedule(new UnitOfWork(), 0, 60000);
     		hasExecutedOnce = false;
     	}
     }

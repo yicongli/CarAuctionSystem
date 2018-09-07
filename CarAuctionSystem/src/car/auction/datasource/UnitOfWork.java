@@ -2,10 +2,11 @@ package car.auction.datasource;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 
 import car.auction.domain.Buyer;
 
-public class UnitOfWork {
+public class UnitOfWork extends TimerTask{
 	
 	private static List<Buyer> newBuyer = new ArrayList<Buyer>();
 	private static List<Buyer> dirtyBuyer = new ArrayList<Buyer>();
@@ -54,7 +55,7 @@ public class UnitOfWork {
 	
 	// commit the lists and then empty them
 	public void commit() {
-
+						
 		for (Buyer buyer : newBuyer) {
 			BuyerMapper.insert(buyer);
 		}
@@ -71,8 +72,13 @@ public class UnitOfWork {
 		dirtyBuyer = new ArrayList<>();
 		deletedBuyer = new ArrayList<>();
 		cleanBuyer = new ArrayList<>();
-	
-			
+
+	}
+
+	@Override
+	public void run() {
+		commit();
+		System.out.println("Committed to the DB");
 	}
 	
 }
