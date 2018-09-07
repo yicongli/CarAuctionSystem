@@ -16,7 +16,8 @@ public class Seller extends User {
 	public Seller(String username, String password) {
 		super(username, password);
 	}
-
+	
+	//Lazy load, get address when needed
 	public String getAddress() {
 		if (this.getAddress() == null) {
 			address = SellerMapper.getAddressSeller();
@@ -28,6 +29,7 @@ public class Seller extends User {
 		this.address = address;
 	}
 	
+	//Get only necessary info to login
 	public static Seller getLoginInfoSeller () {
 		List<Seller> list= SellerMapper.getLoginInfoSeller();
 		return list.isEmpty() ? null : list.get(0);
