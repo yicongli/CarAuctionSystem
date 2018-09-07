@@ -1,5 +1,9 @@
+<%@page import="car.auction.domain.Seller"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="car.auction.domain.UserInfoManagementService" %>
+<%@page import="car.auction.domain.Seller"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,5 +38,26 @@
 	</tr>
 	</table>
 </div>
+
+<%  Seller seller = UserInfoManagementService.getInstance().getSeller(); 
+	if (seller != null){
+%>
+<div class='container'>
+	<table style="with: 50%" class='table table-bordered table-striped'>
+		<tr>
+			<td>UserName</td>
+			<td><%= seller.getUsername() %></td>
+		</tr>
+			<tr>
+			<td>Password</td>
+			<td><%= seller.getPassword() %></td>
+		</tr>
+		<tr>
+			<td>Car Pick-Up Location</td>
+			<td><%= seller.getAddress() %></td>
+		</tr>
+	</table>
+</div>
+<% } %>
 </body>
 </html>

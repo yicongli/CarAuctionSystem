@@ -1,5 +1,3 @@
-<%-- shopping Page  --%>
-
 <%@page import="java.util.List"%>
 <%@page import="car.auction.domain.Buyer"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
