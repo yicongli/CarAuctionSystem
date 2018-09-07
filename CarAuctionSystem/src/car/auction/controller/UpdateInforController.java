@@ -59,7 +59,7 @@ public class UpdateInforController extends HttpServlet {
 			String password = request.getParameter("password");
 			String address = request.getParameter("address");
 
-			Seller seller = (Seller)session.getAttribute("sellerflag");
+			Seller seller = (Seller)session.getAttribute("userinfo");
 			UserInfoManagementService instance = UserInfoManagementService.getInstance();
 			instance.updateSellerInfo(username, password, address, seller);
 		} else {
@@ -69,13 +69,13 @@ public class UpdateInforController extends HttpServlet {
 			String password = request.getParameter("password");
 			String contact = request.getParameter("contact");
 			
-			Buyer buyer = (Buyer)session.getAttribute("sellerflag");
+			Buyer buyer = (Buyer)session.getAttribute("userinfo");
 			UserInfoManagementService instance = UserInfoManagementService.getInstance();
-			instance.updateBuyerInfo(username, password, first_name, last_name, contact, buyer);
+			instance.updateBuyerInfo(buyer.getId(),username, password, first_name, last_name, contact);
 		}
 		
-		RequestDispatcher req = request.getRequestDispatcher("/views/updateinfo.jsp");
-		req.include(request, response);
+		session.setAttribute("updateFlag", 1);
+		response.sendRedirect(request.getContextPath() + "/homepage");
 	}
 
 }

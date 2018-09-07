@@ -139,8 +139,10 @@ public class Buyer extends User {
     	return result;
     }
     
-    public static void updateBuyer(String username, String password, String firstname, 
-			String lastname, String phoneNumber, Buyer updateBuyer) {
+    public static void updateBuyer(int id, String username, String password, String firstname, 
+			String lastname, String phoneNumber) {
+    	Buyer updateBuyer = Buyer.getBuyer(id);
+    	
     	updateBuyer.updateFirstname(firstname);
     	updateBuyer.updateLastname(lastname);
     	updateBuyer.updatePhoneNumber(phoneNumber);

@@ -41,9 +41,9 @@ public class UserInfoManagementService {
 		Buyer.deleteBuyer(username);
 	}
 	
-	public void updateBuyerInfo(String username, String password, 
-			String firstname, String lastName, String phoneNumber, Buyer buyer) {
-		Buyer.updateBuyer(username, password, firstname, lastName, phoneNumber, buyer);
+	public void updateBuyerInfo(int id, String username, String password, 
+			String firstname, String lastName, String phoneNumber) {
+		Buyer.updateBuyer(id, username, password, firstname, lastName, phoneNumber);
 	}
 	
 	public void updateSellerInfo(String username, String password, String address, Seller seller) {
