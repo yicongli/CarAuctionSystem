@@ -1,0 +1,74 @@
+package car.auction.datasource;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import car.auction.domain.Buyer;
+
+public class UnitOfWork {
+	
+	private static List<Buyer> newBuyer = new ArrayList<Buyer>();
+	private static List<Buyer> dirtyBuyer = new ArrayList<Buyer>();
+	private static List<Buyer> deletedBuyer = new ArrayList<Buyer>();
+	private static List<Buyer> cleanBuyer = new ArrayList<Buyer>();
+
+
+	public static void registerNew(Buyer buyer) {
+		if (!newBuyer.contains(buyer) && !dirtyBuyer.contains(buyer)) {
+			newBuyer.add(buyer);
+		}
+	}
+	
+	public static void registerDirty(Buyer buyer) {
+		if (!dirtyBuyer.contains(buyer) && !newBuyer.contains(buyer)) {
+			dirtyBuyer.add(buyer);
+		}
+	}
+	
+	public static void registerDeleted(Buyer buyer) {
+		if (newBuyer.remove(buyer)) return;
+		dirtyBuyer.remove(buyer);
+		
+		if (!deletedBuyer.contains(buyer)) {
+			deletedBuyer.add(buyer);
+		}
+		
+	}
+	
+	public static void registerClean(Buyer buyer) {
+			cleanBuyer.add(buyer);
+	}
+	
+	// Gather all lists into one
+	public static List<Buyer> allBuyersList() {
+		List<Buyer> allBuyers = new ArrayList<Buyer>();
+		
+		allBuyers.addAll(newBuyer);
+		allBuyers.addAll(dirtyBuyer);
+		allBuyers.addAll(cleanBuyer);
+		
+		return allBuyers;
+	}
+	
+	
+	// commit the lists and then empty them
+	public void commit() {
+		for (Buyer buyer : newBuyer) {
+			BuyerMapper.insert(buyer);
+		}
+		
+		for (Buyer buyer : dirtyBuyer) {
+			BuyerMapper.update(buyer);
+		}
+		
+		for (Buyer buyer : deletedBuyer) {
+			BuyerMapper.delete(buyer);
+		}
+		
+		newBuyer = new ArrayList<>();
+		dirtyBuyer = new ArrayList<>();
+		deletedBuyer = new ArrayList<>();
+		cleanBuyer = new ArrayList<>();
+		
+	}
+}

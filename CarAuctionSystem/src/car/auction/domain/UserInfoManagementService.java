@@ -27,7 +27,7 @@ public class UserInfoManagementService {
 	}
 	
 	public Buyer getBuyers(String username) {
-		Buyer buyer = null;
+		Buyer buyer = Buyer.getBuyerByUsername(username);
 		return buyer;
 	}
 	

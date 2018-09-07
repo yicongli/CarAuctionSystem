@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import car.auction.datasource.BuyerMapper;
+import car.auction.datasource.UnitOfWork;
 
 public class Buyer extends User {
+	
+	private static boolean hasExecutedOnce = false;
+	
 	private String firstname;
 	private String lastname;
 	private String phoneNumber;
@@ -25,6 +29,7 @@ public class Buyer extends User {
 
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
+		UnitOfWork.registerDirty(this);
 	}
 
 	public String getLastname() {
@@ -33,6 +38,7 @@ public class Buyer extends User {
 
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
+		UnitOfWork.registerDirty(this);
 	}
 
 	public String getPhoneNumber() {
@@ -41,20 +47,34 @@ public class Buyer extends User {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
-	}
-
-	public static Buyer getBuyer(String username) {
-		Buyer b = BuyerMapper.getUserByUsername(username);
-		return (b == null) ? null : new Buyer(b.getId(), b.getUsername(), b.getPassword(), b.getFirstname(),
-        		b.getLastname(), b.getPhoneNumber());
+		UnitOfWork.registerDirty(this);
 	}
 	
 	public static boolean generateNewBuyer(Buyer buyer) {
-		return BuyerMapper.insert(buyer) != -1;
+		UnitOfWork.registerNew(buyer);
+		return true;
 	}
 	
+	/*public static boolean generateNewBuyer(Buyer buyer) {
+		return BuyerMapper.insert(buyer) != -1;
+	}*/
+	
+	// If list is empty, then get the data from database, else get it from memory
     public static List<Buyer> getAllBuyers() {
-        List<Buyer> result = new ArrayList<Buyer>();
+    	
+    	List<Buyer> buyers = new ArrayList<>();
+    	
+    	if (UnitOfWork.allBuyersList().isEmpty()) {
+    		buyers = BuyerMapper.getAllBuyers();
+    		System.out.println("path1");
+    	} else {
+    		buyers = UnitOfWork.allBuyersList();
+    		System.out.println("path2");
+    	}
+    	
+    	return buyers;
+        
+    	/*List<Buyer> result = new ArrayList<Buyer>();
         List<Buyer> buyerRecords = BuyerMapper.getAllBuyers();
 
         for (Buyer b : buyerRecords) {
@@ -62,11 +82,59 @@ public class Buyer extends User {
             		b.getLastname(), b.getPhoneNumber());
             result.add(buyer);
         }
-        return result;
+        return result;*/
 	}
     
-    public static void updateBuyer(Buyer buyer) {
-    	BuyerMapper mapper = new BuyerMapper();
+    /*public static void main(String [] args)
+	{
+		for(Buyer b: getAllBuyers()) {
+			System.out.println(b.getId()+" "+ b.getUsername() +" "+ b.getPassword() +" "+ b.getFirstname() +" "+ b.getLastname());
+		}
+    	
+    	//System.out.println("user" + getBuyerByUsername("buyer1").getFirstname());
+		
+	}*/
+    
+    public static Buyer getBuyer(int id) {
+    	Buyer result = null;
+    	
+    	for (Buyer b : getAllBuyers()) {
+    		if (b.getId() == id) {
+	    		Buyer buyer = new Buyer (b.getId(), b.getUsername(), b.getPassword(), b.getFirstname(),
+						  b.getLastname(), b.getPhoneNumber());
+	    		result = buyer;
+    		}
+    	}
+    	
+    	return result;
+	}
+    
+    
+    public static void hasLoaded() {
+    	if(hasExecutedOnce == true) {
+    		BuyerMapper.getAllBuyers();
+    		hasExecutedOnce = false;
+    	}
+    }
+    
+    public static Buyer getBuyerByUsername(String username) {
+    	Buyer result = null;
+    	hasExecutedOnce = true;
+    	
+    	hasLoaded();
+
+    	for (Buyer b : getAllBuyers()) {
+    		if (b.getUsername().equals(username)) {
+	    		Buyer buyer = new Buyer (b.getId(), b.getUsername(), b.getPassword(), b.getFirstname(),
+						  b.getLastname(), b.getPhoneNumber());
+	    		result = buyer;
+    		}
+    	}
+    	
+    	return result;
+    }
+    
+    /*public static void updateBuyer(Buyer buyer) {
         Buyer b = BuyerMapper.getUserByID(buyer.getId());
         
         b.setUsername(buyer.getFirstname());
@@ -75,7 +143,7 @@ public class Buyer extends User {
         b.setLastname(buyer.getLastname());
         b.setPhoneNumber(buyer.getPhoneNumber());
         
-        mapper.update(b);
+        BuyerMapper.update(b);
         
-    }
+    }*/
 }
