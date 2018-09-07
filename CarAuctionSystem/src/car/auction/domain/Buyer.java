@@ -29,6 +29,10 @@ public class Buyer extends User {
 
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
+	}
+	
+	public void updateFirstname(String firstname) {
+		this.firstname = firstname;
 		UnitOfWork.registerDirty(this);
 	}
 
@@ -38,14 +42,23 @@ public class Buyer extends User {
 
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
+	}
+	
+	public void updateLastname(String lastname) {
+		this.lastname = lastname;
 		UnitOfWork.registerDirty(this);
 	}
+
 
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	
+	public void updatePhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 		UnitOfWork.registerDirty(this);
 	}
@@ -73,28 +86,8 @@ public class Buyer extends User {
     	}
     	
     	return buyers;
-        
-    	/*List<Buyer> result = new ArrayList<Buyer>();
-        List<Buyer> buyerRecords = BuyerMapper.getAllBuyers();
-
-        for (Buyer b : buyerRecords) {
-            Buyer buyer = new Buyer(b.getId(), b.getUsername(), b.getPassword(), b.getFirstname(),
-            		b.getLastname(), b.getPhoneNumber());
-            result.add(buyer);
-        }
-        return result;*/
 	}
-    
-    /*public static void main(String [] args)
-	{
-		for(Buyer b: getAllBuyers()) {
-			System.out.println(b.getId()+" "+ b.getUsername() +" "+ b.getPassword() +" "+ b.getFirstname() +" "+ b.getLastname());
-		}
-    	
-    	//System.out.println("user" + getBuyerByUsername("buyer1").getFirstname());
-		
-	}*/
-    
+      
     public static Buyer getBuyer(int id) {
     	Buyer result = null;
     	
@@ -134,16 +127,4 @@ public class Buyer extends User {
     	return result;
     }
     
-    /*public static void updateBuyer(Buyer buyer) {
-        Buyer b = BuyerMapper.getUserByID(buyer.getId());
-        
-        b.setUsername(buyer.getFirstname());
-        b.setPassword(buyer.getPassword());
-        b.setFirstname(buyer.getFirstname());
-        b.setLastname(buyer.getLastname());
-        b.setPhoneNumber(buyer.getPhoneNumber());
-        
-        BuyerMapper.update(b);
-        
-    }*/
 }

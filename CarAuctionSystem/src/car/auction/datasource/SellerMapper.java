@@ -6,11 +6,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import car.auction.domain.Buyer;
 import car.auction.domain.Seller;
 
 public class SellerMapper {
 	
-	private static final String selectSeller = "SELECT * FROM APP.seller";
+	private static final String getAddressSellerStatement = "SELECT address FROM APP.seller";
+	private static final String getLoginInfoSellerStatement = "SELECT username, password FROM APP.seller";
 	
 	private static final String updateStatementString =
             "UPDATE APP.users " +
@@ -32,25 +34,36 @@ public class SellerMapper {
         }
     }
 	
-	public static Seller load(ResultSet rs) throws SQLException {
-		int idArg = rs.getInt(1);
-		String usernameArg = rs.getString(2);
-        String passwordArg = rs.getString(3);
-        String addressArg = rs.getString(4);
-        Seller result = new Seller(idArg, usernameArg, passwordArg, addressArg);
-        
-        return result;
-    }
 	
-	public static List<Seller> getSeller() {
+	public static List<Seller> getLoginInfoSeller() {
 		List<Seller> result = new ArrayList<>();
 		
 		try {
-			PreparedStatement stmt = DBConnection.prepare(selectSeller);
+			PreparedStatement stmt = DBConnection.prepare(getLoginInfoSellerStatement);
 
 			  ResultSet rs = stmt.executeQuery();
 			  while (rs.next()) {
-				  result.add(load(rs));
+				  Seller seller = new Seller (rs.getString(1), rs.getString(2));
+				  
+				  result.add(seller);
+			  }
+
+		} catch (SQLException e) {
+			
+		}
+		return result;
+
+	}
+	
+	public static String getAddressSeller() {
+		String result = null;
+		
+		try {
+			PreparedStatement stmt = DBConnection.prepare(getAddressSellerStatement);
+
+			  ResultSet rs = stmt.executeQuery();
+			  while (rs.next()) {
+				  result = rs.getString(1);
 			  }
 
 		} catch (SQLException e) {

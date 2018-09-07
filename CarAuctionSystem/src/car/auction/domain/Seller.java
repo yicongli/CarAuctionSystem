@@ -12,17 +12,24 @@ public class Seller extends User {
 		
 		this.setAddress(address);
 	}
+	
+	public Seller(String username, String password) {
+		super(username, password);
+	}
 
 	public String getAddress() {
-		return address;
+		if (this.getAddress() == null) {
+			address = SellerMapper.getAddressSeller();
+		}
+		return this.address;
 	}
 
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
-	public static Seller getSeller () {
-		List<Seller> list= SellerMapper.getSeller();
+	
+	public static Seller getLoginInfoSeller () {
+		List<Seller> list= SellerMapper.getLoginInfoSeller();
 		return list.isEmpty() ? null : list.get(0);
 	}
 }

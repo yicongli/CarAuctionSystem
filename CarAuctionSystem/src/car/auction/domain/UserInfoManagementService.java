@@ -27,7 +27,7 @@ public class UserInfoManagementService {
 	}
 	
 	public User getUser(String username, boolean isSeller) {
-		return isSeller ? Seller.getSeller() : Buyer.getBuyerByUsername(username);
+		return isSeller ? Seller.getLoginInfoSeller() : Buyer.getBuyerByUsername(username);
 	}
 
 	// generate new buyer and send data to the domain 

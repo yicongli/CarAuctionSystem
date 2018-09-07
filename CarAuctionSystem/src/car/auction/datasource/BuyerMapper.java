@@ -21,11 +21,11 @@ public class BuyerMapper {
 	}
 	*/
 	
-	private static final String getAllBuyers = "SELECT * FROM APP.buyer";
+	private static final String getAllBuyersStatement = "SELECT * FROM APP.buyer";
 	
-	private static final String getUserByID = "SELECT * FROM APP.buyer WHERE id = ?";
+	private static final String getUserByIDStatement = "SELECT * FROM APP.buyer WHERE id = ?";
 	
-	private static final String getUserByUsername = "SELECT * FROM APP.buyer WHERE username = ?";
+	private static final String getUserByUsernameStatement = "SELECT * FROM APP.buyer WHERE username = ?";
 	
 	private static final String updateStatementString =
             "UPDATE APP.buyer " +
@@ -97,34 +97,13 @@ public class BuyerMapper {
     	} catch (SQLException e) {
     		System.out.println("Delete error: " + e.getMessage());
 		}
-    }
-	
-	/*public static Buyer load(ResultSet rs) throws SQLException {
-		int idArg = rs.getInt(1);
-		
-		Buyer result = Registry.getBuyer(idArg);
-        if (result != null)
-            return result;
-		
-		String usernameArg = rs.getString(2);
-        String passwordArg = rs.getString(3);
-        String firstnameArg = rs.getString(4);
-        String lastnameArg = rs.getString(5);
-        String phonenoArg = rs.getString(6);
-        
-        result = new Buyer(idArg, usernameArg, passwordArg, firstnameArg, lastnameArg, phonenoArg);
-        //Registry.addBuyer(result);
-        //UnitOfWork.getCurrent().registerClean(result);
-        
-        return result;
-    }*/
-    
+    }  
 	
 	public static List<Buyer> getAllBuyers () {
 		List<Buyer> result = new ArrayList<>();
 	
 		try {
-			PreparedStatement stmt = DBConnection.prepare(getAllBuyers);
+			PreparedStatement stmt = DBConnection.prepare(getAllBuyersStatement);
 
 			  ResultSet rs = stmt.executeQuery();
 			  while (rs.next()) {
@@ -150,7 +129,7 @@ public class BuyerMapper {
         PreparedStatement getStatement = null;
         ResultSet rs = null;
         try {
-            getStatement = DBConnection.prepare(getUserByID);
+            getStatement = DBConnection.prepare(getUserByIDStatement);
             getStatement.setInt(1, id);
             rs = getStatement.executeQuery();
             while (rs.next()) {
@@ -170,7 +149,7 @@ public class BuyerMapper {
         PreparedStatement getStatement = null;
         ResultSet rs = null;
         try {
-            getStatement = DBConnection.prepare(getUserByUsername);
+            getStatement = DBConnection.prepare(getUserByUsernameStatement);
             getStatement.setString(1, username);
             rs = getStatement.executeQuery();
             while (rs.next()) {

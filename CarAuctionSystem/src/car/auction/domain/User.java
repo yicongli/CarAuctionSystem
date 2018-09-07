@@ -10,6 +10,11 @@ public class User {
     	this.setUsername(username);
     	this.setPassword(password);
     }
+    
+    public User (String username, String password) {
+    	this.setUsername(username);
+    	this.setPassword(password);
+    }
 
 	public int getId() {
 		return id;
