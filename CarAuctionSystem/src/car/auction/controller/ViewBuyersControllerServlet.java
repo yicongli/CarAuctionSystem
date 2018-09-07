@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import car.auction.domain.Buyer;
+import car.auction.domain.UserInfoManagementService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -42,11 +43,13 @@ public class ViewBuyersControllerServlet extends HttpServlet {
         String buyerID = request.getParameter("buyerID");
         Buyer buyer = Buyer.getBuyer(Integer.parseInt(buyerID));
 
+        // if delate failed then show the fail notification in View 
         if (buyer != null) {
-        	// TODO delete the buyer information.
-//            int customerId = Session.getUser().getId();
-//            ShoppingCart cart = ShoppingCart.getCartOf(customerId);
-//            cart.addBook(book, 1, customerId);
+        	UserInfoManagementService instance = UserInfoManagementService.getInstance();
+        	if (!instance.deleteBuyer(Integer.parseInt(buyerID))) {
+        		request.setAttribute("deleteFlag", "2");
+        	}
+        	
         }
 
         String view = "/views/viewbuyers.jsp";

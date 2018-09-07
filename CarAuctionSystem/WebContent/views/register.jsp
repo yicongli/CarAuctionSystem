@@ -21,7 +21,7 @@
 <hr /><br />
 
 <div class='container'>
-	<form action="../registerServlet" method="post">
+	<form action="../register" method="post">
 			<table style="with: 50%" class='table table-bordered table-striped'>
 				<tr>
 					<td>First Name</td>
@@ -38,10 +38,6 @@
 					<tr>
 					<td>Password</td>
 					<td><input type="password" name="password" /></td>
-				</tr>
-				<tr>
-					<td>Address</td>
-					<td><input type="text" name="address" /></td>
 				</tr>
 				<tr>
 					<td>Contact No</td>

@@ -16,6 +16,14 @@
 <h2>Buyer List</h2>
 <hr />
 
+<% 
+	String flag = (String)request.getAttribute("deleteFlag");
+	if(flag != null && Integer.parseInt(flag) == 2) { 
+%>
+	<p style = "color:red; margin-left: 80px;"> <b>Register failed! </b></p>
+	<hr />
+<% }%>
+
 <ul>
   <li><a href="/views/homepage.jsp">Home page</a></li>
   <li><a href="/views/viewbuyers.jsp" class="active">Buyers Information</a></li>

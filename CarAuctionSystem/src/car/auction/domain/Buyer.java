@@ -49,6 +49,10 @@ public class Buyer extends User {
         		b.getLastname(), b.getPhoneNumber());
 	}
 	
+	public static boolean generateNewBuyer(Buyer buyer) {
+		return BuyerMapper.insert(buyer) != -1;
+	}
+	
     public static List<Buyer> getAllBuyers() {
         List<Buyer> result = new ArrayList<Buyer>();
         List<Buyer> buyerRecords = BuyerMapper.getAllBuyers();

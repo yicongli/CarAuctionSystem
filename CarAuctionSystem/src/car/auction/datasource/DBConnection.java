@@ -41,7 +41,7 @@ public class DBConnection {
 
 
 		try {
-			DriverManager.registerDriver(new org.postgresql.Driver());
+			DriverManager.registerDriver(new org.apache.derby.jdbc.ClientDriver());
 
 			Connection dbConnection = DriverManager.getConnection(
                             DB_CONNECTION, DB_USER,DB_PASSWORD);
