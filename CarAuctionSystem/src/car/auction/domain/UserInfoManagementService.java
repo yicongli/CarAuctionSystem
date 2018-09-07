@@ -37,20 +37,16 @@ public class UserInfoManagementService {
 		return Buyer.generateNewBuyer(newBuyer);
 	}
 	
-	public boolean deleteBuyer(String username) {
-		// find buyer through id and send it to the domain 
-		// then send delete operation from mapper
-		return false;
+	public void deleteBuyer(String username) {
+		Buyer.deleteBuyer(username);
 	}
 	
-	public boolean updateBuyerInfo(String username, String password, 
-			String firstname, String lastName, String phoneNumber) {
-		// invoke the update function in buyer 
-		return false;
+	public void updateBuyerInfo(String username, String password, 
+			String firstname, String lastName, String phoneNumber, Buyer buyer) {
+		Buyer.updateBuyer(username, password, firstname, lastName, phoneNumber, buyer);
 	}
 	
-	public boolean updateSellerInfo(String username, String password, String address) {
-		// invoke the update function in seller
-		return false;
+	public void updateSellerInfo(String username, String password, String address, Seller seller) {
+		Seller.updateSeller(username, password, address, seller);
 	}
 }

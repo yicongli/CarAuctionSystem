@@ -41,10 +41,7 @@ public class ViewBuyersControllerServlet extends HttpServlet {
         // if delate failed then show the fail notification in View 
         if (username != null) {
         	UserInfoManagementService instance = UserInfoManagementService.getInstance();
-        	if (!instance.deleteBuyer(username)) {
-        		request.setAttribute("deleteFlag", "2");
-        	}
-        	
+        	instance.deleteBuyer(username);
         }
 
 		RequestDispatcher req = request.getRequestDispatcher("/views/viewbuyers.jsp");

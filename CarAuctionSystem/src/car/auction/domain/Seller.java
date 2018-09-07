@@ -34,4 +34,12 @@ public class Seller extends User {
 		List<Seller> list= SellerMapper.getLoginInfoSeller();
 		return list.isEmpty() ? null : list.get(0);
 	}
+	
+	public static void updateSeller(String username, String password, String address, Seller seller) {
+		seller.setUsername(username);
+		seller.setPassword(password);
+		seller.setAddress(address);
+		
+		SellerMapper.update(seller);
+	}
 }

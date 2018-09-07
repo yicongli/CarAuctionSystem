@@ -48,22 +48,23 @@
 	if (seller != null){
 %>
 <div class='container'>
+<form action="../update" method="post">
 	<table style="with: 50%" class='table table-bordered table-striped'>
 		<tr>
 			<td>UserName</td>
-			<td><%= seller.getUsername() %></td>
+			<td><input type="text" name="username" value = "<%= seller.getUsername() %>"/></td>
 		</tr>
 			<tr>
 			<td>Password</td>
-			<td><%= seller.getPassword() %></td>
+			<td><input type="text" name="password" value = "<%= seller.getPassword() %>"/></td>
 		</tr>
 		<tr>
 			<td>Car Pick-Up Location</td>
-			<td><%= seller.getAddress() %></td>
-		</tr>
-	</table>
-	
-	<a href="/homepage"><b>Back to Home page</b></a>
+			<td><input type="text" name="address" value = "<%= seller.getAddress() %>"/></td>
+		</tr></table>
+	<input type="submit" value="Submit" />
+	<a href="/homepage" style = "margin-left: 30px"><b>Back to Home page</b></a>
+</form>
 </div>
 <% } %>
 
@@ -100,30 +101,31 @@
 	if (buyer != null){
 %>
 <div class='container'>
-	<table style="with: 50%" class='table table-bordered table-striped'>
-		<tr>
-			<td>First Name</td>
-			<td><%= buyer.getFirstname() %></td>
-		</tr>
-		<tr>
-			<td>Last Name</td>
-			<td><%= buyer.getLastname() %></td>
-		</tr>
-		<tr>
-			<td>UserName</td>
-			<td><%= buyer.getUsername() %></td>
-		</tr>
-			<tr>
-			<td>Password</td>
-			<td><%= buyer.getPassword() %></td>
-		</tr>
-		<tr>
-			<td>Phone Number</td>
-			<td><%= buyer.getPhoneNumber() %></td>
-		</tr>
-	</table>
-	
-	<a href="/homepage"><b>Back to Home page</b></a>
+<form action="../update" method="post">
+			<table style="with: 50%" class='table table-bordered table-striped'>
+				<tr>
+					<td>First Name</td>
+					<td><input type="text" name="first_name" value = "<%= buyer.getFirstname() %>" /></td>
+				</tr>
+				<tr>
+					<td>Last Name</td>
+					<td><input type="text" name="last_name" value = "<%= buyer.getLastname() %>"/></td>
+				</tr>
+				<tr>
+					<td>UserName</td>
+					<td><input type="text" name="username" value = "<%= buyer.getUsername() %>"/></td>
+				</tr>
+					<tr>
+					<td>Password</td>
+					<td><input type="text" name="password" value = "<%= buyer.getPassword() %>"/></td>
+				</tr>
+				<tr>
+					<td>Contact No</td>
+					<td><input type="text" name="contact" value = "<%= buyer.getPhoneNumber() %>"/></td>
+				</tr></table>
+			<input type="submit" value="Submit" />
+			<a href="/homepage" style = "margin-left: 30px"><b>Back to Home page</b></a>
+</form>
 </div>
 <% } %>
 

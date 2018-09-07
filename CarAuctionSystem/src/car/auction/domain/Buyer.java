@@ -22,6 +22,16 @@ public class Buyer extends User {
 		this.setLastname(lastName);
 		this.setPhoneNumber(phoneNumber);
 	}
+	
+	public void updatePassword(String password) {
+		super.setPassword(password);
+		UnitOfWork.registerDirty(this);
+	}
+	
+	public void updateUsername(String username) {
+		super.setUsername(username);
+		UnitOfWork.registerDirty(this);
+	}
 
 	public String getFirstname() {
 		return firstname;
@@ -91,7 +101,8 @@ public class Buyer extends User {
     public static Buyer getBuyer(int id) {
     	Buyer result = null;
     	
-    	for (Buyer b : getAllBuyers()) {
+    	List<Buyer> list = getAllBuyers();
+    	for (Buyer b : list) {
     		if (b.getId() == id) {
 	    		Buyer buyer = new Buyer (b.getId(), b.getUsername(), b.getPassword(), b.getFirstname(),
 						  b.getLastname(), b.getPhoneNumber());
@@ -115,8 +126,9 @@ public class Buyer extends User {
     	hasExecutedOnce = true;
     	
     	hasLoaded();
-
-    	for (Buyer b : getAllBuyers()) {
+    	
+    	List<Buyer> list = getAllBuyers();
+    	for (Buyer b : list) {
     		if (b.getUsername().equals(username)) {
 	    		Buyer buyer = new Buyer (b.getId(), b.getUsername(), b.getPassword(), b.getFirstname(),
 						  b.getLastname(), b.getPhoneNumber());
@@ -126,5 +138,19 @@ public class Buyer extends User {
     	
     	return result;
     }
+    
+    public static void updateBuyer(String username, String password, String firstname, 
+			String lastname, String phoneNumber, Buyer updateBuyer) {
+    	updateBuyer.updateFirstname(firstname);
+    	updateBuyer.updateLastname(lastname);
+    	updateBuyer.updatePhoneNumber(phoneNumber);
+    	updateBuyer.updatePassword(password);
+    	updateBuyer.updateUsername(username);
+	}
+    
+    public static void deleteBuyer(String username) {
+    	Buyer buyer = Buyer.getBuyerByUsername(username);
+		UnitOfWork.registerDeleted(buyer);
+	}
     
 }
