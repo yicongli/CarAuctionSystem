@@ -9,10 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import car.auction.domain.UserInfoManagementService;
+
 /**
  * Servlet implementation class RegisterControllerServlet
  */
-@WebServlet("/registerServlet")
+@WebServlet("/register")
 public class RegisterControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -28,15 +30,14 @@ public class RegisterControllerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		RequestDispatcher req = request.getRequestDispatcher("/views/register.jsp");
+		req.include(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String first_name = request.getParameter("first_name");
 		String last_name = request.getParameter("last_name");
 		String username = request.getParameter("username");
@@ -44,20 +45,21 @@ public class RegisterControllerServlet extends HttpServlet {
 		String address = request.getParameter("address");
 		String contact = request.getParameter("contact");
 		
-		if(first_name.isEmpty() || last_name.isEmpty() || username.isEmpty() || 
-				password.isEmpty() || address.isEmpty() || contact.isEmpty())
+		// check the if all info filled
+		if(!first_name.isEmpty() && !last_name.isEmpty() && !username.isEmpty() && 
+				!password.isEmpty() && !address.isEmpty() && !contact.isEmpty())
 		{
-			RequestDispatcher req = request.getRequestDispatcher("/views/register.jsp");
-			request.setAttribute("registerFlag", "2");
-			req.include(request, response);
+			// check if the generating operation success
+			UserInfoManagementService instance = UserInfoManagementService.getInstance();
+			if (instance.generateNewBuyers(username, password, first_name, last_name, contact)) {
+				RequestDispatcher req = request.getRequestDispatcher("/views/login.jsp");
+				request.setAttribute("registerFlag", "1");
+				req.forward(request, response);
+			}
 		}
-		else
-		{
-			RequestDispatcher req = request.getRequestDispatcher("/views/login.jsp");
-			request.setAttribute("registerFlag", "1");
-			req.forward(request, response);
-		}
+		
+		RequestDispatcher req = request.getRequestDispatcher("/views/register.jsp");
+		request.setAttribute("registerFlag", "2");
+		req.include(request, response);
 	}
-
-
 }

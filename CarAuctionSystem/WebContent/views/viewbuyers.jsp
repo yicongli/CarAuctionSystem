@@ -1,8 +1,9 @@
 <%-- shopping Page  --%>
 
+<%@page import="java.util.List"%>
 <%@page import="car.auction.domain.Buyer"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="car.auction.domain.Buyer" %>
+<%@ page import="car.auction.domain.UserInfoManagementService" %>
 
 <html>
 <head>
@@ -39,21 +40,24 @@
 
         </tr>
         <%
-            for ( Buyer buyer : Buyer.getAllBuyers()) {
-        %>
-        <tr>
-            <form name="ListBuyers" action="viewbuyers" method="post">
-                <input type="hidden" name="buyerID" value="<%= buyer. getId()%>">
-                <td><%= buyer.getFirstname() %></td>
-                <td><%= buyer.getLastname() %></td>
-                <td><%= buyer.getPhoneNumber() %></td>
-                <td><%= buyer.getUsername() %></td>
-                <td><%= buyer.getPassword() %></td>
-                <td align="left"> <input type="submit" value="Delete"> </td>
-            </form>
-        </tr>
-        <%
-            } // for loop
+        	List<Buyer> list = UserInfoManagementService.getInstance().getAllBuyers();
+        	if (list != null) {
+	            for ( Buyer buyer : UserInfoManagementService.getInstance().getAllBuyers()) {
+	        %>
+	        <tr>
+	            <form name="ListBuyers" action="viewbuyers" method="post">
+	                <input type="hidden" name="buyerID" value="<%= buyer. getId()%>">
+	                <td><%= buyer.getFirstname() %></td>
+	                <td><%= buyer.getLastname() %></td>
+	                <td><%= buyer.getPhoneNumber() %></td>
+	                <td><%= buyer.getUsername() %></td>
+	                <td><%= buyer.getPassword() %></td>
+	                <td align="left"> <input type="submit" value="Delete"> </td>
+	            </form>
+	        </tr>
+	        <%
+	            } // for loop
+        	}
         %>
     </table>
     
