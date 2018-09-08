@@ -71,7 +71,7 @@ public class ModifyBuyerInfoControllerServlet extends HttpServlet {
 		String contact = request.getParameter("contact");
 		instance.updateBuyerInfo(id,username, password, first_name, last_name, contact);
 
-		session.setAttribute("modifyflag", 1);
+		session.setAttribute("modifyflag", "1");
 		response.sendRedirect(request.getContextPath() + "/buyers");
 	}
 

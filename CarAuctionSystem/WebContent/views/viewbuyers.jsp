@@ -11,22 +11,14 @@
     <title>Registered Buyers</title>
     
     <style type="text/css">	
-.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-  background-color: #color;
+.table tbody tr:hover td, .table tbody tr:hover th {
+    background-color: #eeeeea;
 }
 </style>
 </head>
 <body>
 <h2>Buyer List</h2>
 <hr />
-
-<% 
-	String flag = (String)request.getAttribute("deleteFlag");
-	if(flag != null && Integer.parseInt(flag) == 2) { 
-%>
-	<p style = "color:red; margin-left: 80px;"> <b>Register failed! </b></p>
-	<hr />
-<% }%>
 
 <ul>
   <li><a href="/homepage">Home page</a></li>
@@ -38,6 +30,22 @@
 
 
 <br />
+
+<% 
+	String flag = (String)request.getAttribute("deleteFlag");
+	request.removeAttribute("deleteFlag");
+	if(flag != null && Integer.parseInt(flag) == 1) { 
+%>
+	<p style = "color:blue; margin-left: 80px;"> <b>Delete Success! </b></p>
+<% }%>
+
+<% 
+	flag = (String)session.getAttribute("modifyflag");
+	session.removeAttribute("modifyflag");
+	if(flag != null && Integer.parseInt(flag) == 1) { 
+%>
+	<p style = "color:blue; margin-left: 80px;"> <b>Modify Success! </b></p>
+<% }%>
 
 <div class='container'>
 

@@ -61,6 +61,7 @@ public class ViewBuyersControllerServlet extends HttpServlet {
         	instance.deleteBuyer(username);
         }
 
+        request.setAttribute("deleteFlag", "1");
 		RequestDispatcher req = request.getRequestDispatcher("/views/viewbuyers.jsp");
 		req.include(request, response);
     }
