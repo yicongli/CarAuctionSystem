@@ -23,11 +23,11 @@
 <% }%>
 
 <ul>
-  <li><a href="/views/homepage.jsp">Home page</a></li>
-  <li><a href="/views/viewbuyers.jsp" class="active">Buyers Information</a></li>
+  <li><a href="/homepage">Home page</a></li>
+  <li><a href="/buyers" class="active">Buyers Information</a></li>
   <li><a href="/views/cars.jsp">Available Cars</a></li>
   <li><a href="/views/hostory.jsp">History</a></li>
-  <li><a href="./views/login.jsp">Log out</a></li> <!-- TODO temporary -->
+  <li><a href="/login">Log out</a></li> <!-- TODO temporary -->
 </ul>
 
 

@@ -90,7 +90,7 @@ public class Buyer extends User {
     		
     		//Commit changes to database every 6000 seconds
     		Timer timer = new Timer();
-    		timer.schedule(new UnitOfWork(), 0, 6000000);
+    		timer.schedule(new UnitOfWork(), 0, 60000);
     		hasExecutedOnce = false;
     	}
     }

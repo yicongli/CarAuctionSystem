@@ -80,7 +80,7 @@ public class BuyerMapper {
     	try {
     		deleteStatement = DBConnection.prepare(deleteStatementString);
     		deleteStatement.setInt(1, b.getId());
-    		deleteStatement.executeQuery();
+    		deleteStatement.execute();
     	} catch (SQLException e) {
     		System.out.println("Delete error: " + e.getMessage());
     		// TODO handle the error situation
