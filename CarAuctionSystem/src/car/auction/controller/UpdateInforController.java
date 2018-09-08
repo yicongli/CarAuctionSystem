@@ -54,26 +54,28 @@ public class UpdateInforController extends HttpServlet {
 		String sellerFlag = (String)session.getAttribute("sellerFlag");
 		Boolean isSeller = Boolean.valueOf(sellerFlag);
 		
+		UserInfoManagementService instance = UserInfoManagementService.getInstance();
+		String username = request.getParameter("username");
+		
 		if (isSeller) {
-			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			String address = request.getParameter("address");
 
 			Seller seller = (Seller)session.getAttribute("userinfo");
-			UserInfoManagementService instance = UserInfoManagementService.getInstance();
 			instance.updateSellerInfo(username, password, address, seller);
+			
+			session.setAttribute("userinfo", seller);
 		} else {
 			String first_name = request.getParameter("first_name");
 			String last_name = request.getParameter("last_name");
-			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			String contact = request.getParameter("contact");
 			
 			Buyer buyer = (Buyer)session.getAttribute("userinfo");
-			UserInfoManagementService instance = UserInfoManagementService.getInstance();
 			instance.updateBuyerInfo(buyer.getId(),username, password, first_name, last_name, contact);
 		}
 		
+		session.setAttribute("userinfo", instance.getUser(username, isSeller));
 		session.setAttribute("updateFlag", 1);
 		response.sendRedirect(request.getContextPath() + "/homepage");
 	}

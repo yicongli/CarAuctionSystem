@@ -10,7 +10,7 @@ import car.auction.datasource.UnitOfWork;
 
 public class Buyer extends User {
 	
-	private static boolean hasExecutedOnce = false;
+	private static boolean hasExecutedOnce = true;
 	
 	private String firstname;
 	private String lastname;
@@ -24,16 +24,6 @@ public class Buyer extends User {
 		this.setLastname(lastName);
 		this.setPhoneNumber(phoneNumber);
 	}
-	
-	public void updatePassword(String password) {
-		super.setPassword(password);
-		UnitOfWork.registerDirty(this);
-	}
-	
-	public void updateUsername(String username) {
-		super.setUsername(username);
-		UnitOfWork.registerDirty(this);
-	}
 
 	public String getFirstname() {
 		return firstname;
@@ -41,11 +31,6 @@ public class Buyer extends User {
 
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
-	}
-	
-	public void updateFirstname(String firstname) {
-		this.firstname = firstname;
-		UnitOfWork.registerDirty(this);
 	}
 
 	public String getLastname() {
@@ -55,12 +40,6 @@ public class Buyer extends User {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
-	
-	public void updateLastname(String lastname) {
-		this.lastname = lastname;
-		UnitOfWork.registerDirty(this);
-	}
-
 
 	public String getPhoneNumber() {
 		return phoneNumber;
@@ -68,11 +47,6 @@ public class Buyer extends User {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
-	}
-	
-	public void updatePhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-		UnitOfWork.registerDirty(this);
 	}
 	
 	public static boolean generateNewBuyer(Buyer buyer) {
@@ -97,18 +71,14 @@ public class Buyer extends User {
 	}
       
     public static Buyer getBuyer(int id) {
-    	Buyer result = null;
-    	
     	List<Buyer> list = getAllBuyers();
     	for (Buyer b : list) {
     		if (b.getId() == id) {
-	    		Buyer buyer = new Buyer (b.getId(), b.getUsername(), b.getPassword(), b.getFirstname(),
-						  b.getLastname(), b.getPhoneNumber());
-	    		result = buyer;
+	    		return b;
     		}
     	}
     	
-    	return result;
+    	return null;
 	}
     
     
@@ -116,40 +86,36 @@ public class Buyer extends User {
     	if(hasExecutedOnce == true) {
     		BuyerMapper.getAllBuyers();
     		
-    		//Commit changes to database every 60 seconds
+    		//Commit changes to database every 6000 seconds
     		Timer timer = new Timer();
-    		timer.schedule(new UnitOfWork(), 0, 60000);
+    		timer.schedule(new UnitOfWork(), 0, 6000000);
     		hasExecutedOnce = false;
     	}
     }
     
     public static Buyer getBuyerByUsername(String username) {
-    	Buyer result = null;
-    	hasExecutedOnce = true;
-    	
     	hasLoaded();
     	
     	List<Buyer> list = getAllBuyers();
     	for (Buyer b : list) {
     		if (b.getUsername().equals(username)) {
-	    		Buyer buyer = new Buyer (b.getId(), b.getUsername(), b.getPassword(), b.getFirstname(),
-						  b.getLastname(), b.getPhoneNumber());
-	    		result = buyer;
+	    		return b;
     		}
     	}
     	
-    	return result;
+    	return null;
     }
     
     public static void updateBuyer(int id, String username, String password, String firstname, 
 			String lastname, String phoneNumber) {
     	Buyer updateBuyer = Buyer.getBuyer(id);
+    	updateBuyer.setFirstname(firstname);
+    	updateBuyer.setLastname(lastname);
+    	updateBuyer.setPhoneNumber(phoneNumber);
+    	updateBuyer.setPassword(password);
+    	updateBuyer.setUsername(username);
     	
-    	updateBuyer.updateFirstname(firstname);
-    	updateBuyer.updateLastname(lastname);
-    	updateBuyer.updatePhoneNumber(phoneNumber);
-    	updateBuyer.updatePassword(password);
-    	updateBuyer.updateUsername(username);
+    	UnitOfWork.registerDirty(updateBuyer);
 	}
     
     public static void deleteBuyer(String username) {
