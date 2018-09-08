@@ -10,7 +10,7 @@ input, select, textarea {
     margin: 3px;
     padding: 5px;
     border-radius: 2px;
-    border: 1px solid pink
+    border: 1px solid #ff9200
 }
 
 .footer {

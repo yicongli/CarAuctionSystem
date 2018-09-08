@@ -10,7 +10,7 @@ import car.auction.datasource.UnitOfWork;
 
 public class Buyer extends User {
 	
-	private static boolean hasExecutedOnce = true;
+	public static boolean hasExecutedOnce = true;
 	
 	private String firstname;
 	private String lastname;
@@ -57,16 +57,21 @@ public class Buyer extends User {
 	
 	
     public static List<Buyer> getAllBuyers() {
-    	
     	List<Buyer> buyers = new ArrayList<>();
     	
-    	if (UnitOfWork.allBuyersList().isEmpty()) {
+    	if(hasExecutedOnce == true) {
     		buyers = BuyerMapper.getAllBuyers();
     		System.out.println("load from DB");
-    	} else {
+    		
+    		//Commit changes to database every 6000 seconds
+    		Timer timer = new Timer();
+    		timer.schedule(new UnitOfWork(), 60000);
+    		hasExecutedOnce = false;
+    	}
+    	else {
     		buyers = UnitOfWork.allBuyersList();
     		System.out.println("load from memory");
-    	}
+		}
     	
     	return buyers;
 	}
@@ -83,21 +88,7 @@ public class Buyer extends User {
     	return null;
 	}
     
-    
-    public static void hasLoaded() {
-    	if(hasExecutedOnce == true) {
-    		BuyerMapper.getAllBuyers();
-    		
-    		//Commit changes to database every 6000 seconds
-    		Timer timer = new Timer();
-    		timer.schedule(new UnitOfWork(), 0, 60000);
-    		hasExecutedOnce = false;
-    	}
-    }
-    
     public static Buyer getBuyerByUsername(String username) {
-    	hasLoaded();
-    	
     	List<Buyer> list = getAllBuyers();
     	for (Buyer b : list) {
     		if (b.getUsername().equals(username)) {

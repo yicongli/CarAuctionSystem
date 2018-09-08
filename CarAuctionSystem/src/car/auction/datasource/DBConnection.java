@@ -63,7 +63,7 @@ public class DBConnection {
 
             Connection dbConnection = getDBConnection();
 
-            preparedStatement = dbConnection.prepareStatement(stm, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement = dbConnection.prepareStatement(stm, returnGeneratedKeys);
 
 
         } catch (SQLException e) {
