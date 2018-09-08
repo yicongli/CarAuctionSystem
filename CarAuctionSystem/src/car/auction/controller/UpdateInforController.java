@@ -51,6 +51,12 @@ public class UpdateInforController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
+		if (session == null) {
+			RequestDispatcher req = request.getRequestDispatcher("/views/updateinfo.jsp");
+			req.include(request, response);
+			return;
+		}
+		
 		String sellerFlag = (String)session.getAttribute("sellerflag");
 		Boolean isSeller = Boolean.valueOf(sellerFlag);
 		

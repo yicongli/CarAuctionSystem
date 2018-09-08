@@ -45,6 +45,13 @@ public class HomepageControllerServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			RequestDispatcher req = request.getRequestDispatcher("/views/updateinfo.jsp");
+			req.include(request, response);
+			return;
+		}
+		
 		RequestDispatcher req = request.getRequestDispatcher("/views/homepage.jsp");
 		req.include(request, response);
 	}
