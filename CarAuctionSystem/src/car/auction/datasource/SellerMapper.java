@@ -14,7 +14,7 @@ public class SellerMapper {
 	private static final String getLoginInfoSellerStatement = "SELECT username, password FROM APP.seller";
 	
 	private static final String updateStatementString =
-            "UPDATE APP.users " +
+            "UPDATE APP.seller " +
                     "  set username = ?, password = ?, address = ?" +
                     "  where id = 1";
 	

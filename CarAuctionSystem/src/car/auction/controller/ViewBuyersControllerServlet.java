@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import car.auction.domain.UserInfoManagementService;
 
@@ -29,14 +30,30 @@ public class ViewBuyersControllerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-		RequestDispatcher req = request.getRequestDispatcher("/views/viewbuyers.jsp");
-		req.include(request, response);
+		HttpSession session = request.getSession(false);
+		if(session == null 
+			|| session.getAttribute("userinfo") == null
+			|| session.getAttribute("sellerflag") == null) {
+			response.sendRedirect(request.getContextPath() + "/login");
+		}
+		else {
+			RequestDispatcher req = request.getRequestDispatcher("/views/viewbuyers.jsp");
+			req.include(request, response);
+		}
     }
 
     @Override
     protected void doPost(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("buyerID");
+    	HttpSession session = request.getSession(false);
+    	if(session == null 
+    			|| session.getAttribute("userinfo") == null
+    			|| session.getAttribute("sellerflag") == null) {
+    		response.sendRedirect(request.getContextPath() + "/login");
+    		return;
+    	}
+    	
+    	String username = request.getParameter("username");
 
         // if delate failed then show the fail notification in View 
         if (username != null) {

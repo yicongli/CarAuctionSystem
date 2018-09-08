@@ -51,7 +51,7 @@
 	            for ( Buyer buyer : list) {
 	        %>
 	        <tr>
-	            <form name="ListBuyers" action="viewbuyers" method="post">
+	            <form name="ListBuyers" action="buyers" method="post">
 	                <input type="hidden" name="username" value="<%= buyer.getUsername()%>">
 	                <td ><%= buyer.getFirstname() %></td>
 	                <td><%= buyer.getLastname() %></td>

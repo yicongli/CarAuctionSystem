@@ -35,6 +35,7 @@ public class UnitOfWork extends TimerTask{
 		
 		if (!deletedBuyer.contains(buyer)) {
 			deletedBuyer.add(buyer);
+			cleanBuyer.remove(buyer);
 		}
 		
 		System.out.println("Add delete :"+ buyer.getId());
