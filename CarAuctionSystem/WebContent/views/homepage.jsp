@@ -20,7 +20,7 @@
 %>
 
 <body>
-<h2> Home Page - Buyer</h2>
+<h2> Home Page - Seller</h2>
 
 <hr />
 

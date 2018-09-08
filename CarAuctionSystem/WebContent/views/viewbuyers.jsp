@@ -9,6 +9,12 @@
     <link rel='stylesheet' href='../resources/bootstrap.min.css'/>
     <link rel='stylesheet' href='../style.css'/>
     <title>Registered Buyers</title>
+    
+    <style type="text/css">	
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #color;
+}
+</style>
 </head>
 <body>
 <h2>Buyer List</h2>
@@ -25,8 +31,8 @@
 <ul>
   <li><a href="/homepage">Home page</a></li>
   <li><a href="/buyers" class="active">Buyers Information</a></li>
-  <li><a href="/views/cars.jsp">Available Cars</a></li>
-  <li><a href="/views/hostory.jsp">History</a></li>
+  <li><a href="#">Available Cars</a></li>
+  <li><a href="#">History</a></li>
   <li><a href="/login">Log out</a></li> <!-- TODO temporary -->
 </ul>
 
@@ -50,7 +56,7 @@
         	if (list != null) {
 	            for ( Buyer buyer : list) {
 	        %>
-	        <tr>
+	        <tr onclick="document.location='modifybuyer?id=<%= buyer.getId()%>';">
 	            <form name="ListBuyers" action="buyers" method="post">
 	                <input type="hidden" name="username" value="<%= buyer.getUsername()%>">
 	                <td ><%= buyer.getFirstname() %></td>

@@ -60,7 +60,10 @@ public class LoginControllerServlet extends HttpServlet {
 			UserInfoManagementService instance = UserInfoManagementService.getInstance();
 			User user = instance.getUser(username, isSeller);
 			
-			if (user != null && user.getPassword().equals(password)) {
+			if (user != null 
+					&& user.getUsername().equals(username)
+					&& user.getPassword().equals(password)) {
+				
 				HttpSession session = request.getSession(false);
 				session.setAttribute("userinfo", user);
 				session.setAttribute("sellerflag", isSeller);
