@@ -8,11 +8,14 @@ import java.util.Timer;
 import car.auction.datasource.BuyerMapper;
 import car.auction.datasource.UnitOfWork;
 
+/*
+ * Class for Buyer information
+ * */
 public class Buyer extends User {
 	
-	public static boolean hasExecutedOnce = true;
+	public static boolean hasExecutedOnce = true;	// identify if has gotten data from db
 	
-	private String firstname;
+	private String firstname;	
 	private String lastname;
 	private String phoneNumber;
 	
@@ -49,13 +52,14 @@ public class Buyer extends User {
 		this.phoneNumber = phoneNumber;
 	}
 	
+	// generate new buyer
 	public static void generateNewBuyer(String username, String password, 
 			String firstname, String lastName, String phoneNumber) {
 		Buyer newBuyer = new Buyer(0, username, password, firstname, lastName, phoneNumber);
 		UnitOfWork.registerNew(newBuyer);
 	}
 	
-	
+	// get all buyers from data source
     public static List<Buyer> getAllBuyers() {
     	List<Buyer> buyers = new ArrayList<>();
     	
@@ -76,6 +80,7 @@ public class Buyer extends User {
     	return buyers;
 	}
       
+    //get buyer by id from data source
     public static Buyer getBuyer(int id) {
     	
     	List<Buyer> list = getAllBuyers();
@@ -88,6 +93,7 @@ public class Buyer extends User {
     	return null;
 	}
     
+    //get buyer by username from data source
     public static Buyer getBuyerByUsername(String username) {
     	List<Buyer> list = getAllBuyers();
     	for (Buyer b : list) {
@@ -99,6 +105,7 @@ public class Buyer extends User {
     	return null;
     }
     
+    //update buyer information
     public static void updateBuyer(int id, String username, String password, String firstname, 
 			String lastname, String phoneNumber) {
     	Buyer updateBuyer = Buyer.getBuyer(id);
@@ -111,11 +118,13 @@ public class Buyer extends User {
     	UnitOfWork.registerDirty(updateBuyer);
 	}
     
+    // delete buyer information
     public static void deleteBuyer(String username) {
     	Buyer buyer = Buyer.getBuyerByUsername(username);
 		UnitOfWork.registerDeleted(buyer);
 	}
     
+    // identify buyer information by id
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

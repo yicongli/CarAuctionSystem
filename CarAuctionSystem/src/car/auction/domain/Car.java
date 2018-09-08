@@ -3,14 +3,17 @@ package car.auction.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * Class for Car information
+ * */
 public class Car {
-	private String registerNumber;
+	private String registerNumber;	// identity
     private String make;
     private String model;
     private String variant;
     private String year;
-    private float  initialPrice;
-    private float  currentBid;
+    private float  initialPrice;// initial price
+    private float  currentBid;	// current bid price
     private Long   endTime;  	// the ending time of bidding
     private int    curBuyerID;	// the one who has the highest bidding price
 

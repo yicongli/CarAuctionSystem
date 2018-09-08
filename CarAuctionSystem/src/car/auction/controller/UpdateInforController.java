@@ -59,6 +59,7 @@ public class UpdateInforController extends HttpServlet {
 		
 		Boolean sellerFlag = (Boolean)session.getAttribute("sellerflag");
 		
+		// update user information according to the user type
 		UserInfoManagementService instance = UserInfoManagementService.getInstance();
 		String username = request.getParameter("username");
 		
@@ -80,6 +81,7 @@ public class UpdateInforController extends HttpServlet {
 			instance.updateBuyerInfo(buyer.getId(),username, password, first_name, last_name, contact);
 		}
 		
+		// after modification, direct back to the homepage
 		session.setAttribute("userinfo", instance.getUser(username, sellerFlag));
 		response.sendRedirect(request.getContextPath() + "/homepage");
 	}

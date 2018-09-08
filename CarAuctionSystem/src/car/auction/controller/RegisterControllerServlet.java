@@ -52,9 +52,6 @@ public class RegisterControllerServlet extends HttpServlet {
 			// check if the generating operation success
 			UserInfoManagementService instance = UserInfoManagementService.getInstance();
 			if (instance.generateNewBuyers(username, password, first_name, last_name, contact)) {
-//				RequestDispatcher req = request.getRequestDispatcher("/login");
-//				request.setAttribute("registerFlag", "1");
-//				req.forward(request, response);
 				
 				HttpSession session = request.getSession(false);
 				session.setAttribute("registerFlag", "1");

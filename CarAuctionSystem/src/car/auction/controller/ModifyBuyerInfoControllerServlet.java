@@ -40,6 +40,7 @@ public class ModifyBuyerInfoControllerServlet extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/login");
 		}
 		else {
+			// if get id from view_buyers page, then go to the modify page
 			UserInfoManagementService instance = UserInfoManagementService.getInstance();
 			int id = Integer.parseInt(request.getParameter("id"));
 			Buyer buyer = (Buyer)instance.getBuyerById(id);
@@ -62,6 +63,7 @@ public class ModifyBuyerInfoControllerServlet extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/login");
 		}
 		
+		// update the buyer's information
 		UserInfoManagementService instance = UserInfoManagementService.getInstance();
 		int id = Integer.parseInt(request.getParameter("id"));
 		String username = request.getParameter("username");

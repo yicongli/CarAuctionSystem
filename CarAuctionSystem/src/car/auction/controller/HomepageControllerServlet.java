@@ -30,6 +30,7 @@ public class HomepageControllerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
+		// if no session, jump back to login page
 		if(session == null 
 			|| session.getAttribute("userinfo") == null
 			|| session.getAttribute("sellerflag") == null) {
@@ -46,9 +47,11 @@ public class HomepageControllerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-		if (session == null) {
-			RequestDispatcher req = request.getRequestDispatcher("/views/updateinfo.jsp");
-			req.include(request, response);
+		// if no session, jump back to login page
+		if(session == null 
+			|| session.getAttribute("userinfo") == null
+			|| session.getAttribute("sellerflag") == null) {
+			response.sendRedirect(request.getContextPath() + "/login");
 			return;
 		}
 		

@@ -4,6 +4,9 @@ import java.util.List;
 
 import car.auction.datasource.SellerMapper;
 
+/*
+ * Class for Seller information
+ * */
 public class Seller extends User {
 	private String address;
 	
@@ -35,6 +38,7 @@ public class Seller extends User {
 		return list.isEmpty() ? null : list.get(0);
 	}
 	
+	// update seller info
 	public static void updateSeller(String username, String password, String address, Seller seller) {
 		seller.setUsername(username);
 		seller.setPassword(password);

@@ -55,12 +55,13 @@ public class ViewBuyersControllerServlet extends HttpServlet {
     	
     	String username = request.getParameter("username");
 
-        // if delate failed then show the fail notification in View 
+        // delete specific user
         if (username != null) {
         	UserInfoManagementService instance = UserInfoManagementService.getInstance();
         	instance.deleteBuyer(username);
         }
 
+        // show delete seccess message
         request.setAttribute("deleteFlag", "1");
 		RequestDispatcher req = request.getRequestDispatcher("/views/viewbuyers.jsp");
 		req.include(request, response);

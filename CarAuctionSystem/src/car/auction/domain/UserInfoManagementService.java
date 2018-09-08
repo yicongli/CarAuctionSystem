@@ -18,23 +18,27 @@ public class UserInfoManagementService {
     }
 	
     /*
-     * service provided
+     * provided service 
      * */
     
+    // get all buyers
 	public List<Buyer> getAllBuyers() {
 		List<Buyer> buyerInfos = Buyer.getAllBuyers();
 		return buyerInfos;
 	}
 	
+	// get user information according to the username and its user type
 	public User getUser(String username, boolean isSeller) {
 		return isSeller ? Seller.getLoginInfoSeller() : Buyer.getBuyerByUsername(username);
 	}
 	
+	// get buyer by id
 	public Buyer getBuyerById(int id) {
 		return Buyer.getBuyer(id);
 	}
 
 	// generate new buyer and send data to the domain 
+	// check if current has already had buyer with same username
 	public boolean generateNewBuyers (String username, String password, 
 			String firstname, String lastName, String phoneNumber) {
 		
@@ -48,15 +52,18 @@ public class UserInfoManagementService {
 		}
 	}
 	
+	// delete buyer according to its username
 	public void deleteBuyer(String username) {
 		Buyer.deleteBuyer(username);
 	}
 	
+	// update buyer information
 	public void updateBuyerInfo(int id, String username, String password, 
 			String firstname, String lastName, String phoneNumber) {
 		Buyer.updateBuyer(id, username, password, firstname, lastName, phoneNumber);
 	}
 	
+	// update seller information
 	public void updateSellerInfo(String username, String password, String address, Seller seller) {
 		Seller.updateSeller(username, password, address, seller);
 	}

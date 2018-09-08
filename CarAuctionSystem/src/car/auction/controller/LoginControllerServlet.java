@@ -46,7 +46,6 @@ public class LoginControllerServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String sellerFlag = request.getParameter("sellerFlag");
@@ -69,16 +68,11 @@ public class LoginControllerServlet extends HttpServlet {
 				session.setAttribute("sellerflag", isSeller);
 				response.sendRedirect(request.getContextPath() + "/homepage");
 				
-//				RequestDispatcher req = request.getRequestDispatcher("/homepage");
-//				request.setAttribute("userinfo", user);
-//				request.setAttribute("sellerflag", isSeller);
-//
-//				req.forward(request, response);
-				
 				return;
 			}
 		}
 		
+		// if failed redirect to login page
 		RequestDispatcher req = request.getRequestDispatcher("/views/login.jsp");
 		request.setAttribute("loginFlag", "2");
 		req.include(request, response);

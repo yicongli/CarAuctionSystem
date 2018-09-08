@@ -1,5 +1,8 @@
 package car.auction.domain;
 
+/*
+ * Basic class for buyer and seller
+ * */
 public class User {
     private int id;
     private String username;

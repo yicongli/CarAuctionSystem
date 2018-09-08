@@ -18,6 +18,8 @@ public class SellerMapper {
                     "  set username = ?, password = ?, address = ?" +
                     "  where id = 1";
 	
+	
+	// update seller information to the database
 	public static void update(Seller s) {
         PreparedStatement updateStatement = null;
         try {
@@ -30,11 +32,10 @@ public class SellerMapper {
 
         } catch (Exception e) {
         	System.out.println("update error: " + e.getMessage());
-    		// TODO handle the error situation
         }
     }
 	
-	
+	// get seller information from database
 	public static List<Seller> getLoginInfoSeller() {
 		List<Seller> result = new ArrayList<>();
 		
@@ -56,6 +57,7 @@ public class SellerMapper {
 
 	}
 	
+	// get the address from database
 	public static String getAddressSeller() {
 		String result = null;
 		

@@ -3,6 +3,9 @@ package car.auction.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * Class for History information
+ * */
 public class History {
 	private int id;
 	private Long date;

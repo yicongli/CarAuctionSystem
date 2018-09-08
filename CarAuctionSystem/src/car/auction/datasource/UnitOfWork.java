@@ -8,12 +8,13 @@ import car.auction.domain.Buyer;
 
 public class UnitOfWork extends TimerTask{
 	
-	private static List<Buyer> newBuyer = new ArrayList<Buyer>();
-	private static List<Buyer> dirtyBuyer = new ArrayList<Buyer>();
-	private static List<Buyer> deletedBuyer = new ArrayList<Buyer>();
-	private static List<Buyer> cleanBuyer = new ArrayList<Buyer>();
+	private static List<Buyer> newBuyer = new ArrayList<Buyer>();		// new register buyer list
+	private static List<Buyer> dirtyBuyer = new ArrayList<Buyer>();		// modified buyer list
+	private static List<Buyer> deletedBuyer = new ArrayList<Buyer>();	// deleted buyer list
+	private static List<Buyer> cleanBuyer = new ArrayList<Buyer>();		// buyer info from database without modifying
 
 
+	// register a buyer information as new one
 	public static void registerNew(Buyer buyer) {
 		if (!newBuyer.contains(buyer) && !dirtyBuyer.contains(buyer)) {
 			newBuyer.add(buyer);
@@ -21,6 +22,7 @@ public class UnitOfWork extends TimerTask{
 		}
 	}
 	
+	// register a buyer information as modified one
 	public static void registerDirty(Buyer buyer) {
 		if (!dirtyBuyer.contains(buyer) && !newBuyer.contains(buyer)) {
 			cleanBuyer.remove(buyer);
@@ -29,6 +31,7 @@ public class UnitOfWork extends TimerTask{
 		}
 	}
 	
+	// register a buyer information as deleted one
 	public static void registerDeleted(Buyer buyer) {
 		if (newBuyer.remove(buyer)) return;
 		dirtyBuyer.remove(buyer);
@@ -42,6 +45,7 @@ public class UnitOfWork extends TimerTask{
 		
 	}
 	
+	// register a buyer information as clean one
 	public static void registerClean(Buyer buyer) {
 		cleanBuyer.add(buyer);
 		System.out.println("Add clean :"+ buyer.getId());
@@ -85,6 +89,7 @@ public class UnitOfWork extends TimerTask{
 
 	}
 
+	// routinely commit the changed to the database
 	@Override
 	public void run() {
 		commit();

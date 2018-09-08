@@ -17,6 +17,7 @@ public class DBConnection {
 	private static final String DB_PASSWORD = "123";
 
 
+	// prepare for the operation
     public static PreparedStatement prepare(String stm) {
 		 
 		PreparedStatement preparedStatement = null;
@@ -36,9 +37,9 @@ public class DBConnection {
 
 		return preparedStatement;
 	}
+    
+    // get connection
 	private static Connection getDBConnection() {
-
-
 
 		try {
 			DriverManager.registerDriver(new org.apache.derby.jdbc.ClientDriver());
@@ -57,6 +58,7 @@ public class DBConnection {
 
 	}
 
+	// prepare operation
     public static PreparedStatement prepare(String stm, int returnGeneratedKeys) {
         PreparedStatement preparedStatement = null;
         try {
