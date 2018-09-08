@@ -49,9 +49,10 @@ public class Buyer extends User {
 		this.phoneNumber = phoneNumber;
 	}
 	
-	public static boolean generateNewBuyer(Buyer buyer) {
-		UnitOfWork.registerNew(buyer);
-		return true;
+	public static void generateNewBuyer(String username, String password, 
+			String firstname, String lastName, String phoneNumber) {
+		Buyer newBuyer = new Buyer(0, username, password, firstname, lastName, phoneNumber);
+		UnitOfWork.registerNew(newBuyer);
 	}
 	
 	
@@ -61,16 +62,17 @@ public class Buyer extends User {
     	
     	if (UnitOfWork.allBuyersList().isEmpty()) {
     		buyers = BuyerMapper.getAllBuyers();
-    		System.out.println("path1");
+    		System.out.println("load from DB");
     	} else {
     		buyers = UnitOfWork.allBuyersList();
-    		System.out.println("path2");
+    		System.out.println("load from memory");
     	}
     	
     	return buyers;
 	}
       
     public static Buyer getBuyer(int id) {
+    	
     	List<Buyer> list = getAllBuyers();
     	for (Buyer b : list) {
     		if (b.getId() == id) {

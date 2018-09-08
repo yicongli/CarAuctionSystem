@@ -29,7 +29,8 @@ public class SellerMapper {
             updateStatement.execute();
 
         } catch (Exception e) {
-
+        	System.out.println("update error: " + e.getMessage());
+    		// TODO handle the error situation
         }
     }
 	
@@ -48,7 +49,8 @@ public class SellerMapper {
 			  }
 
 		} catch (SQLException e) {
-			
+			System.out.println("load error: " + e.getMessage());
+    		// TODO handle the error situation
 		}
 		return result;
 
@@ -66,7 +68,8 @@ public class SellerMapper {
 			  }
 
 		} catch (SQLException e) {
-			
+			System.out.println("load address error: " + e.getMessage());
+    		// TODO handle the error situation
 		}
 		return result;
 

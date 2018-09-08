@@ -70,15 +70,7 @@ public class History {
 	}
 	
     public static List<History> getAllAvailableHistory() {
-//        BookFinder finder = new BookFinder();
         List<History> result = new ArrayList<History>();
-//        List<BookGateway> booksRecords = finder.findAvailableBooks();
-//
-//        for (BookGateway br : booksRecords) {
-//            Book book = new Book(String.valueOf(br.getIsbn()), br.getAuthor(), br.getTitle(),
-//                    br.getPrice(), br.getCopies());
-//            result.add(book);
-//        }
         return result;
     }
 }

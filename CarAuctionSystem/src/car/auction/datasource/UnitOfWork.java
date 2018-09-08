@@ -54,6 +54,8 @@ public class UnitOfWork extends TimerTask{
 		allBuyers.addAll(dirtyBuyer);
 		allBuyers.addAll(cleanBuyer);
 		
+		System.out.println("load memory info");
+		
 		return allBuyers;
 	}
 	

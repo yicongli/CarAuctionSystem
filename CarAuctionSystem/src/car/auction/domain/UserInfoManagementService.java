@@ -33,8 +33,15 @@ public class UserInfoManagementService {
 	// generate new buyer and send data to the domain 
 	public boolean generateNewBuyers (String username, String password, 
 			String firstname, String lastName, String phoneNumber) {
-		Buyer newBuyer = new Buyer(0, username, password, firstname, lastName, phoneNumber);
-		return Buyer.generateNewBuyer(newBuyer);
+		
+		Buyer check = Buyer.getBuyerByUsername(username);
+		if (check == null) {
+			Buyer.generateNewBuyer(username, password, firstname, lastName, phoneNumber);
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public void deleteBuyer(String username) {

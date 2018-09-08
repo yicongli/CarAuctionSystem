@@ -100,34 +100,16 @@ public class Car {
 
 	public static Car getCar(String registNum) {
     	Car curCar = null;
-        //BookFinder finder = new BookFinder();
-        //BookGateway br = finder.find(isbn);
-//        return (br == null) ? null : new Book(String.valueOf(br.getIsbn()), br.getAuthor(),
-//                br.getTitle(), br.getPrice(), br.getCopies());
     	return curCar;
     }
 
     public static List<Car> getAllAvailableCars() {
-//        BookFinder finder = new BookFinder();
         List<Car> result = new ArrayList<Car>();
-//        List<BookGateway> booksRecords = finder.findAvailableBooks();
-//
-//        for (BookGateway br : booksRecords) {
-//            Book book = new Book(String.valueOf(br.getIsbn()), br.getAuthor(), br.getTitle(),
-//                    br.getPrice(), br.getCopies());
-//            result.add(book);
-//        }
         return result;
     }
 
     public static void updateCar(Car car) {
-//        BookFinder finder = new BookFinder();
-//        BookGateway br = finder.find(book.getIsbn());
-//        br.setCopies(book.getCopies());
-//        br.setAuthor(book.getAuthor());
-//        br.setPrice(book.getPrice());
-//        br.setTitle(book.getTitle());
-//        br.update();
+
     }
     
     public static void addNewCar() {
