@@ -17,6 +17,7 @@ public class UnitOfWork extends TimerTask{
 	public static void registerNew(Buyer buyer) {
 		if (!newBuyer.contains(buyer) && !dirtyBuyer.contains(buyer)) {
 			newBuyer.add(buyer);
+			System.out.println("Add New :"+ buyer.getId());
 		}
 	}
 	
@@ -24,6 +25,7 @@ public class UnitOfWork extends TimerTask{
 		if (!dirtyBuyer.contains(buyer) && !newBuyer.contains(buyer)) {
 			cleanBuyer.remove(buyer);
 			dirtyBuyer.add(buyer);
+			System.out.println("Add dirty :"+ buyer.getId());
 		}
 	}
 	
@@ -35,10 +37,13 @@ public class UnitOfWork extends TimerTask{
 			deletedBuyer.add(buyer);
 		}
 		
+		System.out.println("Add delete :"+ buyer.getId());
+		
 	}
 	
 	public static void registerClean(Buyer buyer) {
-			cleanBuyer.add(buyer);
+		cleanBuyer.add(buyer);
+		System.out.println("Add clean :"+ buyer.getId());
 	}
 	
 	// Gather all lists into one
