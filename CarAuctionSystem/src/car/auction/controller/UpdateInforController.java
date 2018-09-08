@@ -51,7 +51,7 @@ public class UpdateInforController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-		String sellerFlag = (String)session.getAttribute("sellerFlag");
+		String sellerFlag = (String)session.getAttribute("sellerflag");
 		Boolean isSeller = Boolean.valueOf(sellerFlag);
 		
 		UserInfoManagementService instance = UserInfoManagementService.getInstance();
@@ -76,7 +76,6 @@ public class UpdateInforController extends HttpServlet {
 		}
 		
 		session.setAttribute("userinfo", instance.getUser(username, isSeller));
-		session.setAttribute("updateFlag", 1);
 		response.sendRedirect(request.getContextPath() + "/homepage");
 	}
 

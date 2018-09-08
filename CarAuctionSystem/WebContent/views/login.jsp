@@ -44,7 +44,7 @@
 			</table>
 			<input type="submit" value="Login" />
 			<input type="checkbox" name="sellerFlag" value="true" style = "margin-left: 15px"> I am seller
-			<a href="/register" style = "margin-left: 30px"><b>register</b></a>
+			<a href="/register" style = "margin-left: 30px"><b>register buyer</b></a>
 	</form>
 </div>
 </body>

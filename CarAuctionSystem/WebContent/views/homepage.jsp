@@ -23,14 +23,6 @@
 <h2> Home Page - Buyer</h2>
 
 <hr />
-<% 
-	String flag = (String)session.getAttribute("updateFlag");
-	session.removeAttribute("updateFlag");
-	if(flag != null && Integer.parseInt(flag) == 1) { 
-%>
-	<p style = "color:blue; margin-left: 80px;"> <b>Update success! </b></p>
-<% }%>
-<hr />
 
 <ul>
   <li><a href="/homepage" class="active">Home page</a></li>
