@@ -1,11 +1,9 @@
 package car.auction.domain;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import java.util.Timer;
-import java.util.concurrent.TimeUnit;
 
 import car.auction.datasource.BuyerMapper;
 import car.auction.datasource.UnitOfWork;
@@ -64,18 +62,14 @@ public class Buyer extends User {
 	// get all buyers from data source
     public static List<Buyer> getAllBuyers() {
     	List<Buyer> buyers = new ArrayList<>();
-    	Calendar today = Calendar.getInstance();
-    	today.set(Calendar.HOUR_OF_DAY, 1);
-    	today.set(Calendar.MINUTE, 0);
-    	today.set(Calendar.SECOND, 0);
     	
     	if(hasExecutedOnce == true) {
     		buyers = BuyerMapper.getAllBuyers();
     		System.out.println("load from DB");
     		
-    		//Commit changes to database every day at 1 AM
+    		//Commit changes to database every day
     		Timer timer = new Timer();
-    		timer.schedule(new UnitOfWork(), today.getTime(), TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS));
+    		timer.schedule(new UnitOfWork(), 1000*60*60*24);
     		hasExecutedOnce = false;
     	}
     	else {
