@@ -130,11 +130,11 @@ public class Buyer extends User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Buyer buyer = (Buyer) o;
-        return Objects.equals(this.getId(), buyer.getId());
+        return Objects.equals(this.getUsername(), buyer.getUsername());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getId());
+        return Objects.hash(this.getUsername());
     }
 }
