@@ -13,7 +13,7 @@ import car.auction.datasource.UnitOfWork;
  * */
 public class Buyer extends User {
 	
-	public static boolean hasExecutedOnce = true;	// identify if has gotten data from db
+	public static boolean hasExecutedOnce = false;	// identify if has gotten data from db
 	
 	private String firstname;	
 	private String lastname;
@@ -63,14 +63,14 @@ public class Buyer extends User {
     public static List<Buyer> getAllBuyers() {
     	List<Buyer> buyers = new ArrayList<>();
     	
-    	if(hasExecutedOnce == true) {
+    	if(hasExecutedOnce == false) {
     		buyers = BuyerMapper.getAllBuyers();
     		System.out.println("load from DB");
     		
     		//Commit changes to database every day
     		Timer timer = new Timer();
     		timer.schedule(new UnitOfWork(), 1000*60*60*24);
-    		hasExecutedOnce = false;
+    		hasExecutedOnce = true;
     	}
     	else {
     		buyers = UnitOfWork.allBuyersList();

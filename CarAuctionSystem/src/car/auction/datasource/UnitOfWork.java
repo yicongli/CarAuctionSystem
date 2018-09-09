@@ -84,7 +84,7 @@ public class UnitOfWork extends TimerTask{
 		dirtyBuyer = new ArrayList<>();
 		deletedBuyer = new ArrayList<>();
 		
-		Buyer.hasExecutedOnce = true;
+		Buyer.hasExecutedOnce = false;
 		cleanBuyer = Buyer.getAllBuyers();
 
 	}
