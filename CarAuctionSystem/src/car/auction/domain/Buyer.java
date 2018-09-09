@@ -67,9 +67,9 @@ public class Buyer extends User {
     		buyers = BuyerMapper.getAllBuyers();
     		System.out.println("load from DB");
     		
-    		//Commit changes to database every 60 seconds
+    		//Commit changes to database every day
     		Timer timer = new Timer();
-    		timer.schedule(new UnitOfWork(), 60000);
+    		timer.schedule(new UnitOfWork(), 1000*60*60*24);
     		hasExecutedOnce = false;
     	}
     	else {
