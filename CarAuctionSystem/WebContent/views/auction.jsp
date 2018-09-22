@@ -55,7 +55,7 @@
 	            for ( BiddingCar car : list) {
 	        %>
 	        <tr>
-	          <form name="ListBuyers" action="auction" method="post">
+	          <form name="ListCars" action="auction" method="post">
 	            <input type="hidden" name="register_number" value="<%= car.getRegisterNumber() %>">
                 <td ><%= car.getRegisterNumber() %></td>
                 <td><%= car.getMake() %></td>

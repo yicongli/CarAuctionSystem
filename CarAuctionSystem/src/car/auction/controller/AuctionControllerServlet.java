@@ -78,8 +78,7 @@ public class AuctionControllerServlet extends HttpServlet {
 				request.setAttribute("bidFlag", "2");
 			}
 			
-			RequestDispatcher req = request.getRequestDispatcher("/views/auction.jsp");
-			req.include(request, response);
+			doGet(request, response);
 		}
 	}
 

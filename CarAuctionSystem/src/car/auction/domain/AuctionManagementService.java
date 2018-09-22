@@ -33,5 +33,18 @@ public class AuctionManagementService {
     public boolean updateBiddingCarPrice (int registerNumber, double biddingPrice) {
     	return false;
     }
+    
+    public boolean deleteBiddingCar (int registerNumber) {
+    	return false;
+    }
+    
+    public boolean AddBiddingCar (int registerNumber, String make, String model, String variant, 
+			String year, float initialPrice, Long endTime) {
+    	return false;
+    }
+    
+    public boolean updateBiddingCar (int registerNumber, String make, String model, String variant, String year) {
+    	return false;
+    }
 
 }

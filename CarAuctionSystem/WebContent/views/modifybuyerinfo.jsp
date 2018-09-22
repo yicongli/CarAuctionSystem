@@ -21,7 +21,7 @@
 <ul>
   <li><a href="/update">Home page</a></li>
   <li><a href="/buyers" class="active">Buyers Information</a></li>
-  <li><a href="#">Available Cars</a></li>
+  <li><a href="/auctionmanagement">Auction Management</a></li>
   <li><a href="/history">Sold Cars</a></li>
   <li><a href="/login">Log out</a></li> <!-- TODO temporary -->
 </ul>
