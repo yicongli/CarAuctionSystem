@@ -34,7 +34,7 @@
 
 <ul>
   <li><a href="/homepage">Home page</a></li>
-  <li><a href="#">Available Cars</a></li>
+  <li><a href="/auction">Auction</a></li>
   <li><a href="/history">Bought Cars</a></li>
   <li><a href="/login">Log out</a></li> 
 </ul>
