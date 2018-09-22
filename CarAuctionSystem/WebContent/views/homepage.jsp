@@ -28,7 +28,7 @@
   <li><a href="/homepage" class="active">Home page</a></li>
   <li><a href="/buyers">Buyers Information</a></li>
   <li><a href="#">Available Cars</a></li>
-  <li><a href="#">History</a></li>
+  <li><a href="/history">Sold Cars</a></li>
   <li><a href="/login">Log out</a></li> <!-- TODO temporary -->
 </ul>
 
@@ -80,7 +80,7 @@
 <ul>
   <li><a href="/homepage" class="active">Home page</a></li>
   <li><a href="#">Available Cars</a></li>
-  <li><a href="#">History</a></li>
+  <li><a href="/history">Bought Cars</a></li>
   <li><a href="/login">Log out</a></li> <!-- TODO temporary -->
 </ul>
 

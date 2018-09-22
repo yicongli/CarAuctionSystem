@@ -38,5 +38,10 @@ public class SoldCar extends Car {
 	public void setBuyerID(int buyerID) {
 		this.buyerID = buyerID;
 	}
+	
+	public String getBuyerName () {
+		Buyer buyer = UserInfoManagementService.getInstance().getBuyerById(this.buyerID);
+		return buyer.getFullName();
+	}
 
 }

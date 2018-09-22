@@ -52,6 +52,11 @@ public class Buyer extends User {
 		this.phoneNumber = phoneNumber;
 	}
 	
+	// get full name of buyer
+	public String getFullName () {
+		return firstname + " " + lastname;
+	}
+	
 	// generate new buyer
 	public static void generateNewBuyer(String username, String password, 
 			String firstname, String lastName, String phoneNumber) {
