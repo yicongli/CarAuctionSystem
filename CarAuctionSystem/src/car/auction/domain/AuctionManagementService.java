@@ -15,12 +15,12 @@ public class AuctionManagementService {
     }
     
     // get the bought car history of specific buyer
-    public List<Car> getBoughtCarHistoryByBuyerID (int buyerID) {
+    public List<CarHistory> getBoughtCarHistoryByBuyerID (int buyerID) {
     	return null;
     }
     
     // get the sold car history for seller
-    public List<Car> getSoldCarHistory() {
+    public List<CarHistory> getSoldCarHistory() {
     	return null;
     }
     
@@ -31,6 +31,7 @@ public class AuctionManagementService {
     
     // update specific cars's bidding price
     public boolean updateBiddingCarPrice (int registerNumber, double biddingPrice) {
+    	
     	return false;
     }
     

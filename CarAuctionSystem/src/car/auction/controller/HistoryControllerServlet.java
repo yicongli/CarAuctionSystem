@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import car.auction.domain.AuctionManagementService;
 import car.auction.domain.Buyer;
-import car.auction.domain.Car;
+import car.auction.domain.CarHistory;
 
 /**
  * Servlet implementation class HistoryControllerServlet
@@ -41,7 +41,7 @@ public class HistoryControllerServlet extends HttpServlet {
 		else {
 			Boolean isSeller = (Boolean) session.getAttribute("sellerflag");
 			AuctionManagementService instance = AuctionManagementService.getInstance();
-			List<Car> history =  null;
+			List<CarHistory> history =  null;
 			
 			// get the history according to current user
 			if (isSeller.booleanValue()) {

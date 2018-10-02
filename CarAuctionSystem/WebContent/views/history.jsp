@@ -1,5 +1,4 @@
-<%@page import="car.auction.domain.SoldCar"%>
-<%@page import="car.auction.domain.BoughtCar"%>
+<%@page import="car.auction.domain.CarHistory"%>
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="car.auction.domain.AuctionManagementService" %>
@@ -13,7 +12,7 @@
 </head>
 <body>
 
-<%  
+<%
 	Boolean isSeller = (Boolean)session.getAttribute("sellerflag"); 
 	if (isSeller.booleanValue()){
 %>
@@ -28,7 +27,9 @@
   <li><a href="/login">Log out</a></li> 
 </ul>
 
-<% } else {%>
+<%
+	} else {
+%>
 <h2>Bought Cars</h2>
 <hr />
 
@@ -38,11 +39,13 @@
   <li><a href="/history">Bought Cars</a></li>
   <li><a href="/login">Log out</a></li> 
 </ul>
-<% } %>
+<%
+	}
+%>
 <br />
 
 <div class='container'>
-<%  
+<%
 	if (isSeller.booleanValue()){
 %>
 <table class='table table-bordered table-striped'>
@@ -58,10 +61,10 @@
 
         </tr>
         <%
-        	List<SoldCar> list = (List<SoldCar>)request.getAttribute("history");
-        	if (list != null && list.size() != 0) {
-	            for ( SoldCar history : list) {
-	        %>
+        	List<CarHistory> list = (List<CarHistory>)request.getAttribute("history");
+                	if (list != null && list.size() != 0) {
+        	            for ( CarHistory history : list) {
+        %>
 	        <tr>
                 <td ><%= history.getRegisterNumber() %></td>
                 <td><%= history.getMake() %></td>
@@ -92,9 +95,9 @@
 
         </tr>
         <%
-        	List<BoughtCar> list = (List<BoughtCar>)request.getAttribute("history");
+        	List<CarHistory> list = (List<CarHistory>)request.getAttribute("history");
         	if (list != null && list.size() != 0) {
-	            for ( BoughtCar history : list) {
+	            for ( CarHistory history : list) {
 	        %>
 	        <tr>
                 <td ><%= history.getRegisterNumber() %></td>
@@ -102,8 +105,8 @@
                 <td><%= history.getModel() %></td>
                 <td><%= history.getVariant() %></td>
                 <td><%= history.getYear() %></td>
-                <td><%= history.getPrice() %></td>
-                <td><%= history.getPurchaseDate() %></td>
+                <td><%= history.getSalesPrice() %></td>
+                <td><%= history.getSalesdate() %></td>
                 <td><%= history.getPickUpLocation() %></td>
 	        </tr>
 	        <%
