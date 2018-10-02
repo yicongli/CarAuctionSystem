@@ -1,4 +1,4 @@
-package car.auction.dataTransfer;
+package car.auction.datatransfer;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
