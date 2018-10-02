@@ -17,7 +17,7 @@ import car.auction.domain.BiddingCar;
 /**
  * Servlet implementation class AuctionManagementControllerSevlet
  */
-@WebServlet("/AuctionManagementControllerSevlet")
+@WebServlet("/auctionmanagement")
 public class AuctionManagementControllerSevlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
