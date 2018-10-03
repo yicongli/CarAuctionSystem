@@ -7,6 +7,7 @@ import java.util.Timer;
 
 import car.auction.datasource.BuyerMapper;
 import car.auction.datasource.UnitOfWork;
+import car.auction.datatransfer.BuyerDTO;
 
 /*
  * Class for Buyer information
@@ -119,6 +120,16 @@ public class Buyer extends User {
     	updateBuyer.setPhoneNumber(phoneNumber);
     	updateBuyer.setPassword(password);
     	updateBuyer.setUsername(username);
+    	
+    	UnitOfWork.registerDirty(updateBuyer);
+	}
+    
+    //update buyer information from remote facade
+    public static void updateBuyer(BuyerDTO buyerDTO) {
+    	Buyer updateBuyer = Buyer.getBuyer(buyerDTO.getBuyerID());
+    	updateBuyer.setFirstname(buyerDTO.getFirstname());
+    	updateBuyer.setLastname(buyerDTO.getLastname());
+    	updateBuyer.setPhoneNumber(buyerDTO.getPhoneNumber());
     	
     	UnitOfWork.registerDirty(updateBuyer);
 	}

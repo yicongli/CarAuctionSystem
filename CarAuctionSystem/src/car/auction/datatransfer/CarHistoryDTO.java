@@ -5,6 +5,8 @@ import java.beans.XMLEncoder;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import car.auction.domain.CarHistory;
+
 /**
  * The Data transfer object for CarHistory
  */
@@ -27,18 +29,32 @@ public class CarHistoryDTO {
 		this.setModel(model);
 		this.setVariant(variant);
 		this.setYear(year);
-		this.setYear(year);
+		this.setBuyerID(buyerID);
 		this.setSalesPrice(salesPrice);
 		this.setSalesdate(salesdate);
 		this.setPickUpLocation(pickUpLocation);
 	}
 	
+	public CarHistoryDTO(CarHistory carHistory) {
+		this.setRegisterNumber(carHistory.getRegisterNumber());
+		this.setMake(carHistory.getMake());
+		this.setModel(carHistory.getModel());
+		this.setVariant(carHistory.getVariant());
+		this.setYear(carHistory.getYear());
+		this.setBuyerID(carHistory.getBuyerID());
+		this.setSalesPrice(carHistory.getSalesPrice());
+		this.setSalesdate(carHistory.getSalesdate());
+		this.setPickUpLocation(carHistory.getPickUpLocation());
+	}
+	
+	// write DTO to the outputStream
 	public static void toXML(CarHistoryDTO carHistoryDTO, OutputStream outputStream) {
         XMLEncoder encoder = new XMLEncoder(outputStream);
         encoder.writeObject(carHistoryDTO);
         encoder.close();
     }
 
+	// read DTO from inputStream
     public static CarHistoryDTO fromXML(InputStream inputStream) {
         XMLDecoder decoder = new XMLDecoder(inputStream);
         CarHistoryDTO result = (CarHistoryDTO) decoder.readObject();

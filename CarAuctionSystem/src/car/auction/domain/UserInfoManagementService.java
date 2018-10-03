@@ -2,6 +2,8 @@ package car.auction.domain;
 
 import java.util.List;
 
+import car.auction.datatransfer.BuyerDTO;
+
 /*
  * This class belong to service layer, mainly manage all the information of users
  * */
@@ -19,7 +21,7 @@ public class UserInfoManagementService {
 	
     /*
      * provided service 
-     * */
+     */
     
     // get all buyers
 	public List<Buyer> getAllBuyers() {
@@ -61,6 +63,11 @@ public class UserInfoManagementService {
 	public void updateBuyerInfo(int id, String username, String password, 
 			String firstname, String lastName, String phoneNumber) {
 		Buyer.updateBuyer(id, username, password, firstname, lastName, phoneNumber);
+	}
+	
+	// update buyer information from remote facade
+	public void updateBuyerInfo(BuyerDTO buyerDTO) {
+		Buyer.updateBuyer(buyerDTO);
 	}
 	
 	// update seller information
