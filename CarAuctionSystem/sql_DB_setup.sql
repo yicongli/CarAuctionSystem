@@ -35,23 +35,25 @@ CREATE TABLE APP.car(
    regno	 	VARCHAR(50),
    make			VARCHAR(50),
    model		VARCHAR(50),
+   variant		VARCHAR(50),
    buildyear	INT,
    price		FLOAT,
-   salesdate	DATE,
+   salesdate	BIGINT,
    currentbid	FLOAT,
    PRIMARY KEY (id),
    FOREIGN KEY (sellerID) REFERENCES APP.seller (id)
 );
 
-INSERT INTO APP.car (sellerID, regno, make, model, buildyear, price, salesdate)
-VALUES (1, 'REG123', 'Toyota', 'Yaris', 2017, 9000, '2018-09-06 12:00:00');
+INSERT INTO APP.car (sellerID, regno, make, model, variant, buildyear, price, salesdate)
+VALUES (1, 'REG111', 'Toyota', 'Yaris', 'Variant 87', 2017, 9000, '2018-09-06 12:00:00');
 
-INSERT INTO APP.car (sellerID, regno, make, model, buildyear, price, salesdate)
-VALUES (1, 'REG123', 'Mercedes', 'C-Class', 2014, 12000, '2018-09-07 12:00:00');
+INSERT INTO APP.car (sellerID, regno, make, model, variant, buildyear, price, salesdate)
+VALUES (1, 'REG222', 'Mercedes', 'C-Class', 'Variant 5', 2014, 12000, '2018-09-07 12:00:00');
 
 CREATE TABLE APP.buyer_car(
-	buyerID		INT,
-	carID		INT,
+	buyerID			INT,
+	carID			INT,
+	pickuplocation 	VARCHAR(100),
 	PRIMARY KEY (buyerID, carID),
 	FOREIGN KEY (buyerID) REFERENCES APP.buyer (id),
 	FOREIGN KEY (carID) REFERENCES APP.car (id)

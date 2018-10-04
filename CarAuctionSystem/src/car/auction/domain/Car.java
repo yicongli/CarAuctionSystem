@@ -7,25 +7,45 @@ import java.util.List;
  * Class for Car information
  * */
 public class Car {
-	private int registerNumber;	// identity
+	private int id;
+	private int sellerId;
+	private String registerNumber;
     private String make;
     private String model;
     private String variant;
-    private String year;
+    private int year;
 
-    public Car(int registerNumber, String make, String model, String variant, String year) {
+    public Car(int id, int sellerId, String registerNumber, String make, String model, String variant, int year) {
+    	this.setId(id);
+    	this.setSellerId(sellerId);
         this.setRegisterNumber(registerNumber);
         this.setMake(make);
         this.setModel(model);
         this.setVariant(variant);
         this.setYear(year);
     }
+    
+    public int getId() {
+    	return id;
+    }
+    
+    public void setId(int id) {
+    	this.id = id;
+    }
+    
+    public int getSellerId(int sellerId) {
+    	return sellerId;
+    }
+    
+    public void setSellerId(int sellerId) {
+    	this.sellerId = sellerId;
+    }
 
-    public int getRegisterNumber() {
+    public String getRegisterNumber() {
 		return registerNumber;
 	}
 
-	public void setRegisterNumber(int registerNumber) {
+	public void setRegisterNumber(String registerNumber) {
 		this.registerNumber = registerNumber;
 	}
 
@@ -53,11 +73,11 @@ public class Car {
 		this.variant = variant;
 	}
 
-	public String getYear() {
+	public int getYear() {
 		return year;
 	}
 
-	public void setYear(String year) {
+	public void setYear(int year) {
 		this.year = year;
 	}
 }
