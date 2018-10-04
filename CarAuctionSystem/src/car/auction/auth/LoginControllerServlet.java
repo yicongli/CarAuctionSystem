@@ -1,4 +1,4 @@
-package car.auction.controller;
+package car.auction.auth;
 
 import java.io.IOException;
 
@@ -8,7 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 
 import car.auction.domain.User;
 import car.auction.domain.UserInfoManagementService;
@@ -32,14 +37,8 @@ public class LoginControllerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher req = request.getRequestDispatcher("/views/login.jsp");
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			session.removeAttribute("userinfo");
-			session.removeAttribute("sellerflag");
-		}
-		
-		req.include(request, response);
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/views/login.jsp");
+        requestDispatcher.forward(request, response);
 	}
 
 	/**
@@ -47,35 +46,31 @@ public class LoginControllerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		String sellerFlag = request.getParameter("sellerFlag");
-		Boolean isSeller = Boolean.valueOf(sellerFlag);
-		
-		// check if all fields were inputed
-		if(!username.isEmpty() || password.isEmpty())
-		{
-			// check if can find the username in database and 
-			// compare the found username's password with inputed one
-			UserInfoManagementService instance = UserInfoManagementService.getInstance();
+        String password = request.getParameter("password");
+        String sellerFlag = request.getParameter("sellerFlag");
+        Boolean isSeller = Boolean.valueOf(sellerFlag);
+        
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        token.setRememberMe(true);
+
+        Subject currentUser = SecurityUtils.getSubject();
+
+        try {
+            //Authenticate the subject by passing the user name and password token into the login method
+            currentUser.login(token);
+
+            UserInfoManagementService instance = UserInfoManagementService.getInstance();
 			User user = instance.getUser(username, isSeller);
-			
-			if (user != null 
-					&& user.getUsername().equals(username)
-					&& user.getPassword().equals(password)) {
-				
-				HttpSession session = request.getSession(false);
-				session.setAttribute("userinfo", user);
-				session.setAttribute("sellerflag", isSeller);
-				response.sendRedirect(request.getContextPath() + "/homepage");
-				
-				return;
-			}
-		}
-		
-		// if failed redirect to login page
-		RequestDispatcher req = request.getRequestDispatcher("/views/login.jsp");
-		request.setAttribute("loginFlag", "2");
-		req.include(request, response);
+            AppSession.init(user);
+            
+            response.sendRedirect(request.getContextPath() + "/homepage");
+            
+        } catch (UnknownAccountException | IncorrectCredentialsException e) {
+    		// if failed redirect to login page
+    		RequestDispatcher req = request.getRequestDispatcher("/views/login.jsp");
+    		request.setAttribute("loginFlag", "2");
+    		req.include(request, response);
+        }
 	}
 
 }
