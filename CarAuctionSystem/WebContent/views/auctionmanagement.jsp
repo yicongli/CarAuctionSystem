@@ -18,7 +18,7 @@
   <li><a href="/buyers">Buyers Information</a></li>
   <li><a href="/auctionmanagement">Auction Management</a></li>
   <li><a href="/history">Bought Cars</a></li>
-  <li><a href="/login">Log out</a></li>
+  <li><a href="/logout">Log out</a></li>
 </ul>
 
 

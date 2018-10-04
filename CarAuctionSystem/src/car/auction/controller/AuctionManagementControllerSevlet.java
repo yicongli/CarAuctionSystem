@@ -9,8 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import car.auction.auth.AppSession;
 import car.auction.domain.AuctionManagementService;
 import car.auction.domain.BiddingCar;
 
@@ -33,19 +33,24 @@ public class AuctionManagementControllerSevlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		if(session == null 
-			|| session.getAttribute("userinfo") == null
-			|| session.getAttribute("sellerflag") == null) {
-			response.sendRedirect(request.getContextPath() + "/login");
+		// if has logged in
+		if(AppSession.isAuthenticated()) {
+			// if the role is correct
+			if (AppSession.hasRole(AppSession.SELLER_ROLE)) {
+				// load all bidding cars and show in auction management page
+				AuctionManagementService instance = AuctionManagementService.getInstance();
+				List<BiddingCar> cars =  instance.getBiddingCars();
+				
+				RequestDispatcher req = request.getRequestDispatcher("/views/auctionmanagement.jsp");
+				request.setAttribute("bidding_car", cars);
+				req.include(request, response);
+			} 
+			else {
+				response.sendError(403);
+			}
 		}
 		else {
-			AuctionManagementService instance = AuctionManagementService.getInstance();
-			List<BiddingCar> cars =  instance.getBiddingCars();
-			
-			RequestDispatcher req = request.getRequestDispatcher("/views/auctionmanagement.jsp");
-			request.setAttribute("bidding_car", cars);
-			req.include(request, response);
+			response.sendRedirect(request.getContextPath() + "/login");
 		}
 	}
 
@@ -53,32 +58,36 @@ public class AuctionManagementControllerSevlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		if(session == null 
-			|| session.getAttribute("userinfo") == null
-			|| session.getAttribute("sellerflag") == null) {
-			response.sendRedirect(request.getContextPath() + "/login");
-			return;
-		}
-		
-		String sOpertationFlag = request.getParameter("operation_flag");
-		int operationflag = Integer.parseInt(sOpertationFlag);
-		
-		switch (operationflag) {
-		case 0:
-			addNewCar(request, response);
-			break;
-		case 1:
-			updateCar(request, response);
-			break;
-		case 2:
-			deleteCar(request, response);
-			break;
-		default:
-			return;
-		}
-		
-		doGet(request, response);
+		// if has logged in
+		if (AppSession.isAuthenticated()) {
+			// if the role is correct
+            if (AppSession.hasRole(AppSession.SELLER_ROLE)) {
+            	// do operation according to the different flag
+            	String sOpertationFlag = request.getParameter("operation_flag");
+        		int operationflag = Integer.parseInt(sOpertationFlag);
+        		
+        		switch (operationflag) {
+        		case 0:
+        			addNewCar(request, response);
+        			break;
+        		case 1:
+        			updateCar(request, response);
+        			break;
+        		case 2:
+        			deleteCar(request, response);
+        			break;
+        		default:
+        			return;
+        		}
+        		
+        		doGet(request, response);
+            } 
+            else {
+                response.sendError(403);
+            }
+        } else {
+            response.sendError(401);
+        }
 	}
 	
 	// Add new car opertation TODO: add logic

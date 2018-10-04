@@ -29,6 +29,7 @@ public class CarHistoryListDTO
         this.list = historyList;
     }
     
+    // generate DTO from the list of CarHistory
     public ArrayList<CarHistoryDTO> generateList (List<CarHistory> histories) {
     	ArrayList<CarHistoryDTO> tempList = new ArrayList<>();
     	for (CarHistory carHistory : histories) {

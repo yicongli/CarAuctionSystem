@@ -1,3 +1,4 @@
+<%@page import="car.auction.auth.AppSession"%>
 <%@page import="car.auction.domain.CarHistory"%>
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -13,8 +14,8 @@
 <body>
 
 <%
-	Boolean isSeller = (Boolean)session.getAttribute("sellerflag"); 
-	if (isSeller.booleanValue()){
+	boolean isSeller = AppSession.isSellerRole(); 
+	if (isSeller){
 %>
 <h2>Sold Cars</h2>
 <hr />
@@ -24,7 +25,7 @@
   <li><a href="/buyers">Buyers Information</a></li>
   <li><a href="/auctionmanagement">Auction Management</a></li>
   <li><a href="/history">Sold Cars</a></li>
-  <li><a href="/login">Log out</a></li> 
+  <li><a href="/logout">Log out</a></li> 
 </ul>
 
 <%
@@ -37,7 +38,7 @@
   <li><a href="/homepage">Home page</a></li>
   <li><a href="/auction">Auction</a></li>
   <li><a href="/history">Bought Cars</a></li>
-  <li><a href="/login">Log out</a></li> 
+  <li><a href="/logout">Log out</a></li> 
 </ul>
 <%
 	}
@@ -46,7 +47,7 @@
 
 <div class='container'>
 <%
-	if (isSeller.booleanValue()){
+	if (isSeller){
 %>
 <table class='table table-bordered table-striped'>
         <tr>

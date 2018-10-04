@@ -1,6 +1,7 @@
 package car.auction.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,8 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import car.auction.auth.AppSession;
 import car.auction.domain.Buyer;
 import car.auction.domain.Seller;
 import car.auction.domain.UserInfoManagementService;
@@ -33,16 +33,13 @@ public class UpdateInforController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		if(session == null 
-			|| session.getAttribute("userinfo") == null
-			|| session.getAttribute("sellerflag") == null) {
-			response.sendRedirect(request.getContextPath() + "/login");
-		}
-		else {
-		
+		// if has logged in
+		if(AppSession.isAuthenticated()) {
 			RequestDispatcher req = request.getRequestDispatcher("/views/updateinfo.jsp");
 			req.include(request, response);
+		}
+		else {
+			response.sendRedirect(request.getContextPath() + "/login");
 		}
 	}
 
@@ -50,40 +47,34 @@ public class UpdateInforController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		if (session == null) {
-			RequestDispatcher req = request.getRequestDispatcher("/views/updateinfo.jsp");
-			req.include(request, response);
-			return;
-		}
-		
-		Boolean sellerFlag = (Boolean)session.getAttribute("sellerflag");
-		
-		// update user information according to the user type
-		UserInfoManagementService instance = UserInfoManagementService.getInstance();
-		String username = request.getParameter("username");
-		
-		if (sellerFlag) {
-			String password = request.getParameter("password");
-			String address = request.getParameter("address");
+		// if has logged in
+    	if (AppSession.isAuthenticated()) {
+    		
+    		UserInfoManagementService instance = UserInfoManagementService.getInstance();
+    		String username = request.getParameter("username");
+    		
+    		// if the role is correct
+            if (AppSession.hasRole(AppSession.SELLER_ROLE)) {
+            	String password = request.getParameter("password");
+    			String address = request.getParameter("address");
 
-			Seller seller = (Seller)session.getAttribute("userinfo");
-			instance.updateSellerInfo(username, password, address, seller);
-			
-			session.setAttribute("userinfo", seller);
-		} else {
-			String first_name = request.getParameter("first_name");
-			String last_name = request.getParameter("last_name");
-			String password = request.getParameter("password");
-			String contact = request.getParameter("contact");
-			
-			Buyer buyer = (Buyer)session.getAttribute("userinfo");
-			instance.updateBuyerInfo(buyer.getId(),username, password, first_name, last_name, contact);
-		}
-		
-		// after modification, direct back to the homepage
-		session.setAttribute("userinfo", instance.getUser(username, sellerFlag));
-		response.sendRedirect(request.getContextPath() + "/homepage");
+    			Seller seller = (Seller)AppSession.getUser();
+    			instance.updateSellerInfo(username, password, address, seller);
+            } 
+            else {
+                String first_name = request.getParameter("first_name");
+    			String last_name = request.getParameter("last_name");
+    			String password = request.getParameter("password");
+    			String contact = request.getParameter("contact");
+    			
+    			Buyer buyer = (Buyer)AppSession.getUser();
+    			instance.updateBuyerInfo(buyer.getId(),username, password, first_name, last_name, contact);
+            }
+            
+            response.sendRedirect(request.getContextPath() + "/homepage");
+        } else {
+            response.sendError(401);
+        }
 	}
 
 }

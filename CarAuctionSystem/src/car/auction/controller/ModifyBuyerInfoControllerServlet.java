@@ -8,8 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import car.auction.auth.AppSession;
 import car.auction.domain.Buyer;
 import car.auction.domain.UserInfoManagementService;
 
@@ -32,23 +32,26 @@ public class ModifyBuyerInfoControllerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		if(session == null 
-			|| session.getAttribute("userinfo") == null
-			|| session.getAttribute("sellerflag") == null
-			|| request.getParameter("id") == null) {
-			response.sendRedirect(request.getContextPath() + "/login");
+		// if has logged in
+		if(AppSession.isAuthenticated()) {
+			// if the role is correct
+			if (AppSession.hasRole(AppSession.SELLER_ROLE)) {
+				// if get id from view_buyers page, then go to the modify page
+				UserInfoManagementService instance = UserInfoManagementService.getInstance();
+				int id = Integer.parseInt(request.getParameter("id"));
+				Buyer buyer = (Buyer)instance.getBuyerById(id);
+				
+				request.setAttribute("buyerinfo", buyer);
+				
+				RequestDispatcher req = request.getRequestDispatcher("/views/modifybuyerinfo.jsp");
+				req.include(request, response);
+			} 
+			else {
+				response.sendError(403);
+			}
 		}
 		else {
-			// if get id from view_buyers page, then go to the modify page
-			UserInfoManagementService instance = UserInfoManagementService.getInstance();
-			int id = Integer.parseInt(request.getParameter("id"));
-			Buyer buyer = (Buyer)instance.getBuyerById(id);
-			
-			request.setAttribute("buyerinfo", buyer);
-			
-			RequestDispatcher req = request.getRequestDispatcher("/views/modifybuyerinfo.jsp");
-			req.include(request, response);
+			response.sendRedirect(request.getContextPath() + "/login");
 		}
 	}
 
@@ -56,25 +59,30 @@ public class ModifyBuyerInfoControllerServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		if(session == null 
-			|| session.getAttribute("userinfo") == null
-			|| session.getAttribute("sellerflag") == null) {
-			response.sendRedirect(request.getContextPath() + "/login");
-		}
 		
-		// update the buyer's information
-		UserInfoManagementService instance = UserInfoManagementService.getInstance();
-		int id = Integer.parseInt(request.getParameter("id"));
-		String username = request.getParameter("username");
-		String first_name = request.getParameter("first_name");
-		String last_name = request.getParameter("last_name");
-		String password = request.getParameter("password");
-		String contact = request.getParameter("contact");
-		instance.updateBuyerInfo(id,username, password, first_name, last_name, contact);
+		// if has logged in
+    	if (AppSession.isAuthenticated()) {
+    		// if the role is correct
+            if (AppSession.hasRole(AppSession.SELLER_ROLE)) {
+            	
+        		// update the buyer's information
+        		UserInfoManagementService instance = UserInfoManagementService.getInstance();
+        		int id = Integer.parseInt(request.getParameter("id"));
+        		String username = request.getParameter("username");
+        		String first_name = request.getParameter("first_name");
+        		String last_name = request.getParameter("last_name");
+        		String password = request.getParameter("password");
+        		String contact = request.getParameter("contact");
+        		instance.updateBuyerInfo(id,username, password, first_name, last_name, contact);
 
-		session.setAttribute("modifyflag", "1");
-		response.sendRedirect(request.getContextPath() + "/buyers");
+        		response.sendRedirect(request.getContextPath() + "/buyers");
+            } 
+            else {
+                response.sendError(403);
+            }
+        } else {
+            response.sendError(401);
+        }
 	}
 
 }

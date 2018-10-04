@@ -12,12 +12,12 @@ public class DBConnection {
 	private static String port = "5432";
 	*/
 	
-	private static final String DB_CONNECTION = System.getenv().get("JDBC_DATABASE_URL");
-	private static final String DB_USER = System.getenv().get("JDBC_DATABASE_USERNAME");
-	private static final String DB_PASSWORD = System.getenv().get("JDBC_DATABASE_PASSWORD");
-	//private static final String DB_CONNECTION = "jdbc:derby://localhost:1527/carauction;create=true";
-	//private static final String DB_USER = "user";
-	//private static final String DB_PASSWORD = "123";
+	//private static final String DB_CONNECTION = System.getenv().get("JDBC_DATABASE_URL");
+	//private static final String DB_USER = System.getenv().get("JDBC_DATABASE_USERNAME");
+	//private static final String DB_PASSWORD = System.getenv().get("JDBC_DATABASE_PASSWORD");
+	private static final String DB_CONNECTION = "jdbc:derby://localhost:1527/carauction;create=true";
+	private static final String DB_USER = "user";
+	private static final String DB_PASSWORD = "123";
 
 
 	// prepare for the operation
