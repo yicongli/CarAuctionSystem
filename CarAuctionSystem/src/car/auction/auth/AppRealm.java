@@ -18,7 +18,7 @@ public class AppRealm extends JdbcRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        // identify account to log to
+        // identify account 
         UsernamePasswordToken userPassToken = (UsernamePasswordToken) token;
         final String username = userPassToken.getUsername();
 
@@ -39,8 +39,8 @@ public class AppRealm extends JdbcRealm {
             return null;
         }
 
-        String username = (String) principals.getPrimaryPrincipal();
-        final User user = UserInfoManagementService.getInstance().getUser(username);
+        Integer username = (Integer) principals.getPrimaryPrincipal();
+       final User user = UserInfoManagementService.getInstance().getBuyerById(username);
 
         if (user == null) {
             System.out.println("No account found for user with username " + username);

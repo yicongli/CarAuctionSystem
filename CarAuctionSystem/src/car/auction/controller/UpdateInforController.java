@@ -60,8 +60,10 @@ public class UpdateInforController extends HttpServlet {
 
     			Seller seller = (Seller)AppSession.getUser();
     			instance.updateSellerInfo(username, password, address, seller);
+    			
+    			response.sendRedirect(request.getContextPath() + "/homepage");
             } 
-            else {
+            else if (AppSession.hasRole(AppSession.BUYER_ROLE)){
                 String first_name = request.getParameter("first_name");
     			String last_name = request.getParameter("last_name");
     			String password = request.getParameter("password");
@@ -69,9 +71,12 @@ public class UpdateInforController extends HttpServlet {
     			
     			Buyer buyer = (Buyer)AppSession.getUser();
     			instance.updateBuyerInfo(buyer.getId(),username, password, first_name, last_name, contact);
+    			response.sendRedirect(request.getContextPath() + "/homepage");
             }
+            else {
+            	response.sendError(403);
+			}
             
-            response.sendRedirect(request.getContextPath() + "/homepage");
         } else {
             response.sendError(401);
         }

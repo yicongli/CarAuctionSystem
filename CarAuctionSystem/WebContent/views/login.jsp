@@ -1,4 +1,5 @@
 <%@ page import="car.auction.auth.AppSession" %>
+<%@ page import="car.auction.domain.User" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -13,7 +14,7 @@
 <body>
 <h2>Login</h2>
 
-<% if (!AppSession.isAuthenticated()) {%>
+<% if (!AppSession.isAuthenticated() || AppSession.getUser() == null) {%>
 
 <% 
 	String flag = (String)session.getAttribute("registerFlag");
@@ -51,9 +52,11 @@
 	</form>
 </div>
 
-<% } else {%>
+<% } else {
+	User user = AppSession.getUser();
+%>
 
-You are already logged in as <%=AppSession.getUser().getUsername()%>
+You are already logged in as <%= user.getUsername() %>
 <div class='container'>
     <a href="homepage"> HomePage </a>
 </div>
