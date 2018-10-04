@@ -28,7 +28,7 @@ public class AppRealm extends JdbcRealm {
             return null;
         }
 
-        return new SimpleAuthenticationInfo(user.getId(), user.getPassword(), user.getUsername());
+        return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), user.getUsername());
     }
 
     @Override
@@ -39,8 +39,8 @@ public class AppRealm extends JdbcRealm {
             return null;
         }
 
-        Integer username = (Integer) principals.getPrimaryPrincipal();
-       final User user = UserInfoManagementService.getInstance().getBuyerById(username);
+        String username = (String) principals.getPrimaryPrincipal();
+       final User user = UserInfoManagementService.getInstance().getUser(username);
 
         if (user == null) {
             System.out.println("No account found for user with username " + username);

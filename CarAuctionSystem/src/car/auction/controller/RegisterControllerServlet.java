@@ -56,6 +56,8 @@ public class RegisterControllerServlet extends HttpServlet {
 				HttpSession session = request.getSession(false);
 				session.setAttribute("registerFlag", "1");
 				response.sendRedirect(request.getContextPath() + "/login");
+				
+				return;
 			}
 		}
 		

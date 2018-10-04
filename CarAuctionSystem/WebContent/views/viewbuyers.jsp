@@ -25,7 +25,7 @@
   <li><a href="/buyers" class="active">Buyers Information</a></li>
   <li><a href="/auctionmanagement">Auction Management</a></li>
   <li><a href="/history">Sold Cars</a></li>
-  <li><a href="/logout">Log out</a></li> <!-- TODO temporary -->
+  <li><a href="/logout">Log out</a></li>
 </ul>
 
 
