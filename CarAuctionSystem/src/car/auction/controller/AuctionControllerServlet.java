@@ -50,7 +50,7 @@ public class AuctionControllerServlet extends HttpServlet {
 			}
 		}
 		else {
-			response.sendRedirect(request.getContextPath() + "/login");
+			response.sendRedirect(request.getContextPath() + "/logout");
 		}
     }
 

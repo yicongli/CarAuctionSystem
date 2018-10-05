@@ -56,7 +56,7 @@ public class RegisterControllerServlet extends HttpServlet {
 				// here session is used to transfer the info if register success.
 				HttpSession session = request.getSession(false);
 				session.setAttribute("registerFlag", "1");
-				response.sendRedirect(request.getContextPath() + "/login");
+				response.sendRedirect(request.getContextPath() + "/logout");
 				
 				return;
 			}

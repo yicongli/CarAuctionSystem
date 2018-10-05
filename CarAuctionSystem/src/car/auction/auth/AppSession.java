@@ -15,7 +15,7 @@ public class AppSession {
 
     // check if current logged in user belong to specific role
     public static boolean hasRole(String role) {
-        return SecurityUtils.getSubject().hasRole(role);
+        return SecurityUtils.getSubject().hasRole(role) && AppSession.getUser() != null;
     }
 
     // check if current access is authenticated

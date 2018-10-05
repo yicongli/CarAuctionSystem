@@ -55,7 +55,7 @@ public class HistoryControllerServlet extends HttpServlet {
 			req.include(request, response);
 		}
 		else {
-			response.sendRedirect(request.getContextPath() + "/login");
+			response.sendRedirect(request.getContextPath() + "/logout");
 		}
     }
 
