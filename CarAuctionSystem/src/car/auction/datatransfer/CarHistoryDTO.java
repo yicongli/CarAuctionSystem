@@ -11,18 +11,18 @@ import car.auction.domain.CarHistory;
  * The Data transfer object for CarHistory
  */
 public class CarHistoryDTO {
-	private int registerNumber;	// identity
+	private String registerNumber;	// identity
     private String make;
     private String model;
     private String variant;
-    private String year;
+    private int year;
     
     private int  buyerID;
     private double salesPrice;
 	private long salesdate;
 	private String pickUpLocation;
 	
-	public CarHistoryDTO(int registerNumber, String make, String model, String variant ,String year,
+	public CarHistoryDTO(String registerNumber, String make, String model, String variant ,int year,
 			int buyerID, double salesPrice, long salesdate, String pickUpLocation) {
 		this.setRegisterNumber(registerNumber);
 		this.setMake(make);
@@ -62,11 +62,11 @@ public class CarHistoryDTO {
         return result;
     }
 
-	public int getRegisterNumber() {
+	public String getRegisterNumber() {
 		return registerNumber;
 	}
 
-	public void setRegisterNumber(int registerNumber) {
+	public void setRegisterNumber(String registerNumber) {
 		this.registerNumber = registerNumber;
 	}
 
@@ -102,11 +102,11 @@ public class CarHistoryDTO {
 		this.buyerID = buyerID;
 	}
 
-	public String getYear() {
+	public int getYear() {
 		return year;
 	}
 
-	public void setYear(String year) {
+	public void setYear(int year) {
 		this.year = year;
 	}
 

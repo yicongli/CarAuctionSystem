@@ -1,8 +1,5 @@
 package car.auction.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /*
  * Class for Car information
  * */
