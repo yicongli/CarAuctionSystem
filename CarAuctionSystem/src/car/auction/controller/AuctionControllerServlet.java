@@ -64,14 +64,15 @@ public class AuctionControllerServlet extends HttpServlet {
     		// if the role is correct
             if (AppSession.hasRole(AppSession.BUYER_ROLE)) {
             	
-            	String sRegisterNumber = request.getParameter("register_number");
+            	String carID = request.getParameter("carID");
         		String sBiddingPrice = request.getParameter("bidding_price");
         		double biddingPrice = Double.parseDouble(sBiddingPrice);
+        		int iCarID = Integer.parseInt(carID);
         		
         		// update specific car's bidding price
-        		if (sRegisterNumber != null) {
+        		if (carID != null) {
         			AuctionManagementService instance = AuctionManagementService.getInstance();
-        			if (instance.updateBiddingCarPrice(sRegisterNumber, biddingPrice)) {
+        			if (instance.updateBiddingCarPrice(iCarID, biddingPrice)) {
         				request.setAttribute("bidFlag", "1");
         			}
         			else {

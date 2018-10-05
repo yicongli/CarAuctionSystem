@@ -49,7 +49,7 @@ public class HistoryControllerServlet extends HttpServlet {
 				response.sendError(403);
 				return;
 			}
-			
+
 			RequestDispatcher req = request.getRequestDispatcher("/views/history.jsp");
 			request.setAttribute("history", history);
 			req.include(request, response);

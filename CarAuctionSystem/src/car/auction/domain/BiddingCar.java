@@ -3,6 +3,8 @@ package car.auction.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.org.apache.regexp.internal.recompile;
+
 /*
  * Class for Car information
  * */
@@ -48,16 +50,26 @@ public class BiddingCar extends Car {
     	return curCar;
     }
 
-    public static List<Car> getAllAvailableCars() {
-        List<Car> result = new ArrayList<Car>();
+    public static List<BiddingCar> getAllAvailableCars() {
+        List<BiddingCar> result = new ArrayList<BiddingCar>();
         return result;
     }
 
-    public static void updateBiddingCar(Car car) {
-
+    public static boolean updateBiddingCarPrice(int carID, double biddingPrice) {
+    	return false;
     }
     
-    public static void addNewBiddingCar() {
-		// TODO add new car to the db
+    public static boolean updateBiddingCar(int carID, String registerNumber, String make, 
+    		String model, String variant, String year) {
+    	return false;
+    }
+    
+    public static boolean deleteBiddingCar(int carID) {
+    	return false;
+    }
+    
+    public static boolean addNewBiddingCar(String registerNumber, String make, String model, String variant, 
+			String year, float initialPrice, Long timeLeft) {
+		return false;
 	}
 }

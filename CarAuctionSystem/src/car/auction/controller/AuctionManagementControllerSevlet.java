@@ -122,11 +122,14 @@ public class AuctionManagementControllerSevlet extends HttpServlet {
 	
 	// update specific car opertation
     private void updateCar(HttpServletRequest request, HttpServletResponse response) {
+    	String carID		  = request.getParameter("carID");
     	String registerNumber = request.getParameter("register_number");
 		String make  		  = request.getParameter("make");
 		String model  		  = request.getParameter("model");
 		String variant  	  = request.getParameter("variant");
 		String year  		  = request.getParameter("year");
+		
+		int iCarID = Integer.parseInt(carID);
 		
 		// update specific car's bidding price
 		if(!registerNumber.isEmpty() && !make.isEmpty() && !model.isEmpty() 
@@ -134,7 +137,7 @@ public class AuctionManagementControllerSevlet extends HttpServlet {
 		{
 			// check if the generating operation success
 			AuctionManagementService instance = AuctionManagementService.getInstance();
-			if (instance.updateBiddingCar(registerNumber, make, model, variant, year)) {
+			if (instance.updateBiddingCar(iCarID, registerNumber, make, model, variant, year)) {
 				request.setAttribute("updateCarFlag", "1");	
 				return;
 			}
