@@ -14,7 +14,7 @@ public class CarMapper {
 	
 	private static final String getAllCarsStatement = "SELECT * FROM APP.car";
 	
-	private static final String getRegisterNumberStatement = "SELECT regno FROM APP.car";
+	private static final String getCarByIdStatement = "SELECT * FROM APP.car WHERE id = ?";
 	
 	private static final String updateCarStatementString = "UPDATE APP.car"
 			+ " SET regno = ?, make = ?, model = ?, variant = ?, buildyear = ?"
@@ -52,14 +52,14 @@ public class CarMapper {
 		}
 	}
 	
-	public static void updateBid(BiddingCar cb) {
+	public static void updateBid(float currentbid, int id) {
 		PreparedStatement updateStatement = null;
 		
 		try {
 			updateStatement = DBConnection.prepare(updateBidStatementString);
 			
-			updateStatement.setFloat(1, cb.getCurrentBid());
-			updateStatement.setInt(2, cb.getId());
+			updateStatement.setFloat(1, currentbid);
+			updateStatement.setInt(2, id);
 			
 			updateStatement.execute();
 			
@@ -96,12 +96,12 @@ public class CarMapper {
 	}
 	
 	// delete car from database
-    public static void delete(Car c) {
+    public static void delete(int id) {
     	PreparedStatement deleteStatement = null;
     	
     	try {
     		deleteStatement = DBConnection.prepare(deleteStatementString);
-    		deleteStatement.setInt(1, c.getId());
+    		deleteStatement.setInt(1, id);
     		
     		deleteStatement.execute();
     	} catch (SQLException e) {
@@ -131,23 +131,27 @@ public class CarMapper {
 		return result;
 	}
 	
-	public static String getRegisterNumber() {
-		String result = null;
-		
-		try {
-			PreparedStatement stmt = DBConnection.prepare(getRegisterNumberStatement);
 
-			  ResultSet rs = stmt.executeQuery();
-			  while (rs.next()) {
-				  result = rs.getString(1);
-			  }
+	// get car information by id
+	public static BiddingCar getCarById(int id) {
+        BiddingCar result = null;
+        PreparedStatement getStatement = null;
+        ResultSet rs = null;
+        try {
+            getStatement = DBConnection.prepare(getCarByIdStatement);
+            getStatement.setInt(1, id);
+            rs = getStatement.executeQuery();
+            while (rs.next()) {
+            	BiddingCar bc = new BiddingCar (rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5),
+						rs.getString(6), rs.getInt(7), rs.getLong(9), rs.getFloat(10));
+          	
+            	result = bc;
+            }
 
-		} catch (SQLException e) {
-			System.out.println("load address error: " + e.getMessage());
-    		// TODO handle the error situation
-		}
-		
-		return result;
-	
-	}
+        } catch (SQLException e) {
+        	System.out.println("load error: " + e.getMessage());
+        }
+        
+        return result;
+    }
 }
