@@ -18,6 +18,7 @@ public class LogoutControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// when redirect to logout sevlet, then get the subject and logout current user
 		Subject currentUser = SecurityUtils.getSubject();
         if (currentUser.isAuthenticated()) {
             currentUser.logout();

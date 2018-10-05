@@ -1,7 +1,6 @@
 package car.auction.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,8 +34,13 @@ public class UpdateInforController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// if has logged in
 		if(AppSession.isAuthenticated()) {
-			RequestDispatcher req = request.getRequestDispatcher("/views/updateinfo.jsp");
-			req.include(request, response);
+			if (AppSession.hasRole(AppSession.SELLER_ROLE) || AppSession.hasRole(AppSession.BUYER_ROLE)) {
+				RequestDispatcher req = request.getRequestDispatcher("/views/updateinfo.jsp");
+				req.include(request, response);
+			}
+			else {
+				response.sendError(403);
+			}
 		}
 		else {
 			response.sendRedirect(request.getContextPath() + "/login");
@@ -55,6 +59,7 @@ public class UpdateInforController extends HttpServlet {
     		
     		// if the role is correct
             if (AppSession.hasRole(AppSession.SELLER_ROLE)) {
+            	// update seller information
             	String password = request.getParameter("password");
     			String address = request.getParameter("address");
 
@@ -64,6 +69,7 @@ public class UpdateInforController extends HttpServlet {
     			response.sendRedirect(request.getContextPath() + "/homepage");
             } 
             else if (AppSession.hasRole(AppSession.BUYER_ROLE)){
+            	// update buyer information
                 String first_name = request.getParameter("first_name");
     			String last_name = request.getParameter("last_name");
     			String password = request.getParameter("password");

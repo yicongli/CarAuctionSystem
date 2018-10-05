@@ -16,7 +16,7 @@
 </head>
 
 <%  
-	boolean isSeller = AppSession.isSellerRole(); 
+	boolean isSeller = AppSession.hasRole(AppSession.SELLER_ROLE); 
 	if (isSeller){
 %>
 
@@ -131,6 +131,5 @@
 
 </body>
 
-<%  }
-%>
+<% } %>
 </html>

@@ -34,17 +34,20 @@ public class HistoryControllerServlet extends HttpServlet {
     	// if has logged in
 		if(AppSession.isAuthenticated()) {
 				
-			Boolean isSeller = (Boolean) AppSession.isSellerRole();
 			AuctionManagementService instance = AuctionManagementService.getInstance();
 			List<CarHistory> history =  null;
 			
 			// get the history according to current user
-			if (isSeller.booleanValue()) {
+			if (AppSession.hasRole(AppSession.SELLER_ROLE)) {
 				history = instance.getSoldCarHistory();
 			}
-			else {
+			else if (AppSession.hasRole(AppSession.BUYER_ROLE)){
 				Buyer buyer = (Buyer)AppSession.getUser();
 				history = instance.getBoughtCarHistoryByBuyerID(buyer.getId());
+			}
+			else {
+				response.sendError(403);
+				return;
 			}
 			
 			RequestDispatcher req = request.getRequestDispatcher("/views/history.jsp");

@@ -59,14 +59,16 @@ public class LoginControllerServlet extends HttpServlet {
             //Authenticate the subject by passing the user name and password token into the login method
             currentUser.login(token);
 
+            // initiate the user information of AppSession
             UserInfoManagementService instance = UserInfoManagementService.getInstance();
 			User user = instance.getUser(username, isSeller);
             AppSession.init(user);
             
+            // if login successes, then redirect to home page.
             response.sendRedirect(request.getContextPath() + "/homepage");
             
         } catch (UnknownAccountException | IncorrectCredentialsException e) {
-    		// if failed redirect to login page
+    		// if failed redirect to login page and show login fail information
     		RequestDispatcher req = request.getRequestDispatcher("/views/login.jsp");
     		request.setAttribute("loginFlag", "2");
     		req.include(request, response);

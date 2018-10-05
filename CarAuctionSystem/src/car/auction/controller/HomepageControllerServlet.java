@@ -1,7 +1,6 @@
 package car.auction.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,8 +34,13 @@ public class HomepageControllerServlet extends HttpServlet {
 		// if has logged in
 		if(AppSession.isAuthenticated()) {
 			// show home page
-			RequestDispatcher req = request.getRequestDispatcher("/views/homepage.jsp");
-			req.include(request, response);
+			if (AppSession.hasRole(AppSession.SELLER_ROLE) || AppSession.hasRole(AppSession.BUYER_ROLE)) {
+				RequestDispatcher req = request.getRequestDispatcher("/views/homepage.jsp");
+				req.include(request, response);
+			}
+			else {
+				response.sendError(403);
+			}
 		}
 		else {
 			response.sendRedirect(request.getContextPath() + "/login");

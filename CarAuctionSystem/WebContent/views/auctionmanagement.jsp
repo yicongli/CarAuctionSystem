@@ -27,7 +27,7 @@
 <% 
 	String flag = (String)request.getAttribute("updateFlag");
 	request.removeAttribute("updateFlag");
-	if(flag != null && Integer.parseInt(flag) == 1) { 
+	if(flag != null) { 
 		if (Integer.parseInt(flag) == 1) {
 %>
 		<p style = "color:blue; margin-left: 80px;"> <b>Bid Success! </b></p>
@@ -39,7 +39,7 @@
 <% 
 	flag = (String)request.getAttribute("addFlag");
 	request.removeAttribute("addFlag");
-	if(flag != null && Integer.parseInt(flag) == 1) { 
+	if(flag != null) { 
 		if (Integer.parseInt(flag) == 1) {
 %>
 		<p style = "color:blue; margin-left: 80px;"> <b>Add Success! </b></p>

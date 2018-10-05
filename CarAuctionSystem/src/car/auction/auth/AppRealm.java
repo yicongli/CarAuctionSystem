@@ -14,6 +14,10 @@ import car.auction.domain.UserInfoManagementService;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * this class is used to setup the authentication and
+ * authorization mechanism.
+ */
 public class AppRealm extends JdbcRealm {
 
     @Override
@@ -22,6 +26,7 @@ public class AppRealm extends JdbcRealm {
         UsernamePasswordToken userPassToken = (UsernamePasswordToken) token;
         final String username = userPassToken.getUsername();
 
+        // if can find the user information in local db, then the authentication is success.
         final User user = UserInfoManagementService.getInstance().getUser(username);
         if (user == null) {
             System.out.println("No account found for user with username " + username);
@@ -39,8 +44,9 @@ public class AppRealm extends JdbcRealm {
             return null;
         }
 
+        // if the authorization success, then return current role of the logged in user.
         String username = (String) principals.getPrimaryPrincipal();
-       final User user = UserInfoManagementService.getInstance().getUser(username);
+        final User user = UserInfoManagementService.getInstance().getUser(username);
 
         if (user == null) {
             System.out.println("No account found for user with username " + username);

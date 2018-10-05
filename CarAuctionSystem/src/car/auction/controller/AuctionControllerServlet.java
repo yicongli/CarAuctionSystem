@@ -66,13 +66,12 @@ public class AuctionControllerServlet extends HttpServlet {
             	
             	String sRegisterNumber = request.getParameter("register_number");
         		String sBiddingPrice = request.getParameter("bidding_price");
-        		int registerNumber = Integer.parseInt(sRegisterNumber);
         		double biddingPrice = Double.parseDouble(sBiddingPrice);
         		
         		// update specific car's bidding price
         		if (sRegisterNumber != null) {
         			AuctionManagementService instance = AuctionManagementService.getInstance();
-        			if (instance.updateBiddingCarPrice(registerNumber, biddingPrice)) {
+        			if (instance.updateBiddingCarPrice(sRegisterNumber, biddingPrice)) {
         				request.setAttribute("bidFlag", "1");
         			}
         			else {

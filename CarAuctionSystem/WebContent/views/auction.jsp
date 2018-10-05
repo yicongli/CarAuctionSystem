@@ -30,7 +30,7 @@
 		if (Integer.parseInt(flag) == 1) {
 %>
 		<p style = "color:blue; margin-left: 80px;"> <b>Bid Success! </b></p>
-	<%  } else {%>
+	<%  } else if (Integer.parseInt(flag) == 2) {%>
 		<p style = "color:red; margin-left: 80px;"> <b>Bid Failed! </b></p>
 <% 		}
 	}%>
