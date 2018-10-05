@@ -80,7 +80,7 @@
                 <td align="left"> <input type="submit" value="Update"> </td>
               </form>
               <form name="DeleteCars" action="auctionmanagement" method="post">
-	            <input type="hidden" name="register_number" value = "<%= car.getRegisterNumber() %>">
+	            <input type="hidden" name="carID" value = "<%= car.getId() %>">
 	            <input type="hidden" name="operation_flag" value="2">
                 <td align="left"> <input type="submit" value="Delete"> </td>
               </form>

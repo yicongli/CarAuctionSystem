@@ -35,16 +35,16 @@ public class AuctionManagementService {
     	return false;
     }
     
-    public boolean deleteBiddingCar (int registerNumber) {
+    public boolean deleteBiddingCar (int carID) {
     	return false;
     }
     
-    public boolean AddBiddingCar (int registerNumber, String make, String model, String variant, 
-			String year, float initialPrice, Long endTime) {
+    public boolean AddBiddingCar (String registerNumber, String make, String model, String variant, 
+			String year, float initialPrice, Long timeLeft) {
     	return false;
     }
     
-    public boolean updateBiddingCar (int registerNumber, String make, String model, String variant, String year) {
+    public boolean updateBiddingCar (String registerNumber, String make, String model, String variant, String year) {
     	return false;
     }
 

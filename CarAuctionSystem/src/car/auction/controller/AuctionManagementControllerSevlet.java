@@ -1,6 +1,7 @@
 package car.auction.controller;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -90,34 +91,70 @@ public class AuctionManagementControllerSevlet extends HttpServlet {
         }
 	}
 	
-	// Add new car opertation TODO: add logic
+	// Add new car opertation
 	private void addNewCar(HttpServletRequest request, HttpServletResponse response) {
-//		int registerNumber = Integer.parseInt(sRegisterNumber);
-//		double biddingPrice = Double.parseDouble(sBiddingPrice);
-//		
-//		// update specific car's bidding price
-//		if (sRegisterNumber != null) {
-//			AuctionManagementService instance = AuctionManagementService.getInstance();
-//			if (instance.updateBiddingCarPrice(registerNumber, biddingPrice)) {
-//				request.setAttribute("bidFlag", "1");
-//			}
-//			else {
-//				request.setAttribute("bidFlag", "2");
-//			}
-//			
-//			RequestDispatcher req = request.getRequestDispatcher("/views/auction.jsp");
-//			req.include(request, response);
-//		}
+		String registerNumber = request.getParameter("register_number");
+		String make  		  = request.getParameter("make");
+		String model  		  = request.getParameter("model");
+		String variant  	  = request.getParameter("variant");
+		String year  		  = request.getParameter("year");
+		String timeLeft  	  = request.getParameter("time_left");
+		String currentBid     = request.getParameter("current_bid");
+		
+		float fCurrentBid = Float.parseFloat(currentBid);
+		long lTimeLeft = Time.valueOf(timeLeft).getTime();
+		
+		// add bidding car
+		if(!registerNumber.isEmpty() && !make.isEmpty() && !model.isEmpty() 
+				&& !variant.isEmpty() && !year.isEmpty() && timeLeft.isEmpty() 
+				&& !currentBid.isEmpty())
+		{
+			// check if the generating operation success
+			AuctionManagementService instance = AuctionManagementService.getInstance();
+			if (instance.AddBiddingCar(registerNumber, make, model, variant, year, fCurrentBid, lTimeLeft)) {
+				request.setAttribute("addCarFlag", "1");	
+				return;
+			}
+		}
+		
+		request.setAttribute("addCarFlag", "2");
 	}
 	
-	// update specific car opertation TODO: add logic
+	// update specific car opertation
     private void updateCar(HttpServletRequest request, HttpServletResponse response) {
+    	String registerNumber = request.getParameter("register_number");
+		String make  		  = request.getParameter("make");
+		String model  		  = request.getParameter("model");
+		String variant  	  = request.getParameter("variant");
+		String year  		  = request.getParameter("year");
 		
+		// update specific car's bidding price
+		if(!registerNumber.isEmpty() && !make.isEmpty() && !model.isEmpty() 
+				&& !variant.isEmpty() && !year.isEmpty())
+		{
+			// check if the generating operation success
+			AuctionManagementService instance = AuctionManagementService.getInstance();
+			if (instance.updateBiddingCar(registerNumber, make, model, variant, year)) {
+				request.setAttribute("updateCarFlag", "1");	
+				return;
+			}
+		}
+		
+		request.setAttribute("updateCarFlag", "2");
 	}
 	
-    // delete specific car opertation TODO: add logic
+    // delete specific car opertation
 	private void deleteCar(HttpServletRequest request, HttpServletResponse response) {
+		String carID = request.getParameter("carID");
+		int iCarID = Integer.parseInt(carID);
 		
+		AuctionManagementService instance = AuctionManagementService.getInstance();
+		if (instance.deleteBiddingCar(iCarID)) {
+			request.setAttribute("deleteCarFlag", "1");	
+			return;
+		}
+		
+		request.setAttribute("deleteCarFlag", "2");
 	}
 
 }
