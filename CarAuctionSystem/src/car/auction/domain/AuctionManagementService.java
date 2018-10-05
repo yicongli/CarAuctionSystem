@@ -16,36 +16,35 @@ public class AuctionManagementService {
     
     // get the bought car history of specific buyer
     public List<CarHistory> getBoughtCarHistoryByBuyerID (int buyerID) {
-    	return null;
+    	return CarHistory.getBuyerCarHistories(buyerID);
     }
     
     // get the sold car history for seller
     public List<CarHistory> getSoldCarHistory() {
-    	return null;
+    	return CarHistory.getSellerCarHistories();
     }
     
     // get all current bidding cars
     public List<BiddingCar> getBiddingCars() {
-    	return null;
+    	return BiddingCar.getAllAvailableCars();
     }
     
     // update specific cars's bidding price
-    public boolean updateBiddingCarPrice (String registerNumber, double biddingPrice) {
-    	
-    	return false;
+    public boolean updateBiddingCarPrice (int carID, double biddingPrice) {
+    	return BiddingCar.updateBiddingCarPrice(carID, biddingPrice);
     }
     
-    public boolean deleteBiddingCar (int registerNumber) {
-    	return false;
+    public boolean deleteBiddingCar (int carID) {
+    	return BiddingCar.deleteBiddingCar(carID);
     }
     
-    public boolean AddBiddingCar (int registerNumber, String make, String model, String variant, 
-			String year, float initialPrice, Long endTime) {
-    	return false;
+    public boolean AddBiddingCar (String registerNumber, String make, String model, String variant, 
+			String year, float initialPrice, Long timeLeft) {
+    	return BiddingCar.addNewBiddingCar(registerNumber, make, model, variant, year, initialPrice, timeLeft);
     }
     
-    public boolean updateBiddingCar (int registerNumber, String make, String model, String variant, String year) {
-    	return false;
+    public boolean updateBiddingCar (int carID, String registerNumber, String make, String model, String variant, String year) {
+    	return BiddingCar.updateBiddingCar(carID, registerNumber, make, model, variant, year);
     }
 
 }

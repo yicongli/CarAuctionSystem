@@ -1,5 +1,7 @@
 package car.auction.domain;
 
+import java.awt.List;
+import java.util.ArrayList;
 
 public class CarHistory extends Car {
 	
@@ -51,6 +53,14 @@ public class CarHistory extends Car {
 	public String getBuyerName () {
 		Buyer buyer = UserInfoManagementService.getInstance().getBuyerById(this.buyerID);
 		return buyer.getFullName();
+	}
+	
+	public static ArrayList<CarHistory> getBuyerCarHistories (int buyerID) {
+		return null;
+	}
+	
+	public static ArrayList<CarHistory> getSellerCarHistories () {
+		return null;
 	}
 
 }

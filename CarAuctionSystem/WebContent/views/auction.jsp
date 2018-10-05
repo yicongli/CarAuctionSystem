@@ -56,7 +56,7 @@
 	        %>
 	        <tr>
 	          <form name="ListCars" action="auction" method="post">
-	            <input type="hidden" name="register_number" value="<%= car.getRegisterNumber() %>">
+	            <input type="hidden" name="carID" value="<%= car.getId() %>">
                 <td ><%= car.getRegisterNumber() %></td>
                 <td><%= car.getMake() %></td>
                 <td><%= car.getModel() %></td>
