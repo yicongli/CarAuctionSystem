@@ -1,34 +1,34 @@
 package car.auction.domain;
 
+
 public class CarHistory extends Car {
 	
-	private double salesPrice;
-	private long salesdate;
-	private String pickUpLocation;
+	private double salesprice;
+	private Long salesdate;
+	private String pickuplocation;
 	private int buyerID;
 
-	public CarHistory(int registerNumber, String make, String model, String variant, 
-    			String year, double salesPrice, long salesdate, int buyerID) {
-    	super(registerNumber, make, model, variant, year);
+	public CarHistory(int id, int sellerId, String registerNumber, String make, String model, String variant, 
+    			int year, double salesprice, Long salesdate, int buyerID, String pickuplocation) {
+    	super(id, sellerId, registerNumber, make, model, variant, year);
     	
-        this.setSalesPrice(salesPrice);
         this.setSalesdate(salesdate);
         this.setBuyerID(buyerID);
 	}
-
+	
 	public double getSalesPrice() {
-		return salesPrice;
+		return salesprice;
+	}
+	
+	public void setSalesPrice(double salesprice) {
+		this.salesprice = salesprice;
 	}
 
-	public void setSalesPrice(double salesPrice) {
-		this.salesPrice = salesPrice;
-	}
-
-	public long getSalesdate() {
+	public Long getSalesdate() {
 		return salesdate;
 	}
 
-	public void setSalesdate(long salesdate) {
+	public void setSalesdate(Long salesdate) {
 		this.salesdate = salesdate;
 	}
 
@@ -41,11 +41,11 @@ public class CarHistory extends Car {
 	}
 	
 	public String getPickUpLocation() {
-		return pickUpLocation;
+		return pickuplocation;
 	}
 
-	public void setPickUpLocation(String pickUpLocation) {
-		this.pickUpLocation = pickUpLocation;
+	public void setPickUpLocation(String pickuplocation) {
+		this.pickuplocation = pickuplocation;
 	}
 
 	public String getBuyerName () {

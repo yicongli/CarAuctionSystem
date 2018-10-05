@@ -1,0 +1,12 @@
+package car.auction.datasource;
+
+import java.util.List;
+
+import car.auction.domain.CarHistory;
+
+public interface CarHistoryMapperInterface {
+
+	public List<CarHistory> getAllCars (CarHistory ch);
+	
+	public void insert(CarHistory ch);
+}

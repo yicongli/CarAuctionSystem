@@ -7,27 +7,17 @@ import java.util.List;
  * Class for Car information
  * */
 public class BiddingCar extends Car {
-    private float  initialPrice;// initial price
     private float  currentBid;	// current bid price
     private Long   endTime;  	// the ending time of bidding
     private int    curBuyerID;	// the one who has the highest bidding price
 
-    public BiddingCar(int registerNumber, String make, String model, String variant, 
-    			String year, float initialPrice, float currentBid, Long endTime) {
-    	super(registerNumber, make, model, variant, year);
+    public BiddingCar(int id, int sellerId, String registerNumber, String make, String model, String variant, 
+    			int year, Long endTime, float currentBid) {
+    	super(id, sellerId, registerNumber, make, model, variant, year);
     	
-        this.setInitialPrice(initialPrice);
         this.setCurrentBid(currentBid);
         this.setEndtime(endTime);
     }
-
-	public float getInitialPrice() {
-		return initialPrice;
-	}
-
-	public void setInitialPrice(float initialPrice) {
-		this.initialPrice = initialPrice;
-	}
 
 	public float getCurrentBid() {
 		return currentBid;
