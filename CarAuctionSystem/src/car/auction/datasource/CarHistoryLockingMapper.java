@@ -5,36 +5,37 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.ReadWriteLock;
+
+import car.auction.concurrency.LockManager;
 
 import car.auction.domain.CarHistory;
 
-public class CarHistoryMapper {
-
+public class CarHistoryLockingMapper implements CarHistoryMapperInterface {
+	
+	private CarHistoryMapperInterface impl;
+	private LockManager lm;
+	private String sessionId;
+	
+	
 	private static final String getAllCarsStatement = "SELECT * FROM APP.buyer_car bc"
 			+ " LEFT JOIN APP.car c ON bc.carID = c.id";
 	
 	private static final String insertStatementString =
             "INSERT INTO APP.buyer_car(carID, buyerID, pickuplocation)" +
             		" VALUES (?, ?, ?)";
+
 	
-	public static void insert(CarHistory ch) {
-		PreparedStatement insertStatement = null;
-		
-		try {
-			insertStatement = DBConnection.prepare(insertStatementString);
-			insertStatement.setInt(1, ch.getId());
-			insertStatement.setInt(2, ch.getBuyerID());
-			insertStatement.setString(3, ch.getPickUpLocation());
-			
-			insertStatement.executeUpdate();
-			
-		} catch (SQLException e) {
-        	System.out.println("Insert error: " + e.getMessage());
-		}
-		
+	
+	
+	public CarHistoryLockingMapper(CarHistoryMapperInterface impl) {
+		this.impl = impl;
+		//this.lm = .getInstance();
+		//this.sessionId = sessionId;
 	}
-	
-	public static List<CarHistory> getAllCarHistory(CarHistory ch) {
+
+	@Override
+	public List<CarHistory> getAllCars(CarHistory ch) {
 		List<CarHistory> result = new ArrayList<>();
 		
 		try {
@@ -57,5 +58,23 @@ public class CarHistoryMapper {
 		
 		return result;
 	}
-	
+
+	@Override
+	public void insert(CarHistory ch) {
+		PreparedStatement insertStatement = null;
+		
+		try {
+			insertStatement = DBConnection.prepare(insertStatementString);
+			insertStatement.setInt(1, ch.getId());
+			insertStatement.setInt(2, ch.getBuyerID());
+			insertStatement.setString(3, ch.getPickUpLocation());
+			
+			insertStatement.executeUpdate();
+			
+		} catch (SQLException e) {
+        	System.out.println("Insert error: " + e.getMessage());
+		}
+		
+	}
+
 }
