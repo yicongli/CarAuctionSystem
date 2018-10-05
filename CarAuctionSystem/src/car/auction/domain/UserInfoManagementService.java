@@ -34,6 +34,19 @@ public class UserInfoManagementService {
 		return isSeller ? Seller.getLoginInfoSeller() : Buyer.getBuyerByUsername(username);
 	}
 	
+	// get user information according to the username
+	public User getUser(String username) {
+		User user = Buyer.getBuyerByUsername(username);
+		if (user == null) {
+			User seller = Seller.getLoginInfoSeller();
+			if (seller.getUsername().equals(username)) {
+				user = seller;
+			}
+		}
+		
+		return user;
+	}
+	
 	// get buyer by id
 	public Buyer getBuyerById(int id) {
 		return Buyer.getBuyer(id);

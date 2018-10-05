@@ -9,8 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import car.auction.auth.AppSession;
 import car.auction.domain.AuctionManagementService;
 import car.auction.domain.Buyer;
 import car.auction.domain.CarHistory;
@@ -30,31 +30,32 @@ public class HistoryControllerServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		if(session == null 
-			|| session.getAttribute("userinfo") == null
-			|| session.getAttribute("sellerflag") == null) {
-			response.sendRedirect(request.getContextPath() + "/login");
-		}
-		else {
-			Boolean isSeller = (Boolean) session.getAttribute("sellerflag");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	// if has logged in
+		if(AppSession.isAuthenticated()) {
+				
 			AuctionManagementService instance = AuctionManagementService.getInstance();
 			List<CarHistory> history =  null;
 			
 			// get the history according to current user
-			if (isSeller.booleanValue()) {
+			if (AppSession.hasRole(AppSession.SELLER_ROLE)) {
 				history = instance.getSoldCarHistory();
 			}
-			else {
-				Buyer buyer = (Buyer)session.getAttribute("userinfo");
+			else if (AppSession.hasRole(AppSession.BUYER_ROLE)){
+				Buyer buyer = (Buyer)AppSession.getUser();
 				history = instance.getBoughtCarHistoryByBuyerID(buyer.getId());
+			}
+			else {
+				response.sendError(403);
+				return;
 			}
 			
 			RequestDispatcher req = request.getRequestDispatcher("/views/history.jsp");
 			request.setAttribute("history", history);
 			req.include(request, response);
+		}
+		else {
+			response.sendRedirect(request.getContextPath() + "/login");
 		}
     }
 

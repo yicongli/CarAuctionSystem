@@ -17,7 +17,7 @@
   <li><a href="/homepage">Home page</a></li>
   <li><a href="/auction">Auction</a></li>
   <li><a href="/history">Bought Cars</a></li>
-  <li><a href="/login">Log out</a></li>
+  <li><a href="/logout">Log out</a></li>
 </ul>
 
 
@@ -30,8 +30,8 @@
 		if (Integer.parseInt(flag) == 1) {
 %>
 		<p style = "color:blue; margin-left: 80px;"> <b>Bid Success! </b></p>
-<% 		} else {%>
-	<p style = "color:red; margin-left: 80px;"> <b>Bid Failed! </b></p>
+	<%  } else if (Integer.parseInt(flag) == 2) {%>
+		<p style = "color:red; margin-left: 80px;"> <b>Bid Failed! </b></p>
 <% 		}
 	}%>
 

@@ -18,7 +18,7 @@
   <li><a href="/buyers">Buyers Information</a></li>
   <li><a href="/auctionmanagement">Auction Management</a></li>
   <li><a href="/history">Bought Cars</a></li>
-  <li><a href="/login">Log out</a></li>
+  <li><a href="/logout">Log out</a></li>
 </ul>
 
 
@@ -27,7 +27,7 @@
 <% 
 	String flag = (String)request.getAttribute("updateFlag");
 	request.removeAttribute("updateFlag");
-	if(flag != null && Integer.parseInt(flag) == 1) { 
+	if(flag != null) { 
 		if (Integer.parseInt(flag) == 1) {
 %>
 		<p style = "color:blue; margin-left: 80px;"> <b>Bid Success! </b></p>
@@ -39,7 +39,7 @@
 <% 
 	flag = (String)request.getAttribute("addFlag");
 	request.removeAttribute("addFlag");
-	if(flag != null && Integer.parseInt(flag) == 1) { 
+	if(flag != null) { 
 		if (Integer.parseInt(flag) == 1) {
 %>
 		<p style = "color:blue; margin-left: 80px;"> <b>Add Success! </b></p>

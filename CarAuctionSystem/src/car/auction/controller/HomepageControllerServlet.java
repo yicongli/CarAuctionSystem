@@ -8,7 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import car.auction.auth.AppSession;
 
 /**
  * Servlet implementation class HomepageControllerServlet
@@ -29,16 +30,20 @@ public class HomepageControllerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		// if no session, jump back to login page
-		if(session == null 
-			|| session.getAttribute("userinfo") == null
-			|| session.getAttribute("sellerflag") == null) {
-			response.sendRedirect(request.getContextPath() + "/login");
+		
+		// if has logged in
+		if(AppSession.isAuthenticated()) {
+			// show home page
+			if (AppSession.hasRole(AppSession.SELLER_ROLE) || AppSession.hasRole(AppSession.BUYER_ROLE)) {
+				RequestDispatcher req = request.getRequestDispatcher("/views/homepage.jsp");
+				req.include(request, response);
+			}
+			else {
+				response.sendError(403);
+			}
 		}
 		else {
-			RequestDispatcher req = request.getRequestDispatcher("/views/homepage.jsp");
-			req.include(request, response);
+			response.sendRedirect(request.getContextPath() + "/login");
 		}
 	}
 
@@ -46,17 +51,7 @@ public class HomepageControllerServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		// if no session, jump back to login page
-		if(session == null 
-			|| session.getAttribute("userinfo") == null
-			|| session.getAttribute("sellerflag") == null) {
-			response.sendRedirect(request.getContextPath() + "/login");
-			return;
-		}
-		
-		RequestDispatcher req = request.getRequestDispatcher("/views/homepage.jsp");
-		req.include(request, response);
+		doGet(request, response);
 	}
 
 }

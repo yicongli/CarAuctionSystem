@@ -1,3 +1,4 @@
+<%@page import="car.auction.auth.AppSession"%>
 <%@page import="car.auction.domain.Seller"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -15,8 +16,8 @@
 </head>
 
 <%  
-	Boolean isSeller = (Boolean)session.getAttribute("sellerflag"); 
-	if (isSeller.booleanValue()){
+	boolean isSeller = AppSession.hasRole(AppSession.SELLER_ROLE); 
+	if (isSeller){
 %>
 
 <body>
@@ -29,7 +30,7 @@
   <li><a href="/buyers">Buyers Information</a></li>
   <li><a href="/auctionmanagement">Auction Management</a></li>
   <li><a href="/history">Sold Cars</a></li>
-  <li><a href="/login">Log out</a></li> <!-- TODO temporary -->
+  <li><a href="/logout">Log out</a></li> <!-- TODO temporary -->
 </ul>
 
 <br />
@@ -38,7 +39,7 @@
 	<table style="with: 50%" class='table table-bordered table-striped'>
 	<tr>
 		<td>
-	<% Seller seller = (Seller)session.getAttribute("userinfo"); %>
+	<% Seller seller = (Seller)AppSession.getUser(); %>
 	<b><% out.println(seller.getUsername()); %>, Welcome! You have logged in.</b>
 		</td>
 	</tr>
@@ -81,7 +82,7 @@
   <li><a href="/homepage" class="active">Home page</a></li>
   <li><a href="/auction">Auction</a></li>
   <li><a href="/history">Bought Cars</a></li>
-  <li><a href="/login">Log out</a></li> <!-- TODO temporary -->
+  <li><a href="/logout">Log out</a></li> <!-- TODO temporary -->
 </ul>
 
 <br />
@@ -90,7 +91,7 @@
 	<table style="with: 50%" class='table table-bordered table-striped'>
 	<tr>
 		<td>
-	<% Buyer buyer = (Buyer)session.getAttribute("userinfo");  %>
+	<% Buyer buyer = (Buyer)AppSession.getUser();  %>
 	<b><% out.println(buyer.getUsername()); %>, Welcome! You have logged in.</b>
 		</td>
 	</tr>
@@ -130,6 +131,5 @@
 
 </body>
 
-<%  }
-%>
+<% } %>
 </html>

@@ -9,8 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import car.auction.auth.AppSession;
 import car.auction.domain.AuctionManagementService;
 import car.auction.domain.BiddingCar;
 
@@ -32,21 +32,25 @@ public class AuctionControllerServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		if(session == null 
-			|| session.getAttribute("userinfo") == null
-			|| session.getAttribute("sellerflag") == null) {
-			response.sendRedirect(request.getContextPath() + "/login");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	// if has logged in
+		if(AppSession.isAuthenticated()) {
+			// if the role is correct
+			if (AppSession.hasRole(AppSession.BUYER_ROLE)) {
+				// get all bidding cars and showing on the auction page
+				AuctionManagementService instance = AuctionManagementService.getInstance();
+				List<BiddingCar> cars =  instance.getBiddingCars();
+				
+				RequestDispatcher req = request.getRequestDispatcher("/views/auction.jsp");
+				request.setAttribute("bidding_car", cars);
+				req.include(request, response);
+			} 
+			else {
+				response.sendError(403);
+			}
 		}
 		else {
-			AuctionManagementService instance = AuctionManagementService.getInstance();
-			List<BiddingCar> cars =  instance.getBiddingCars();
-			
-			RequestDispatcher req = request.getRequestDispatcher("/views/auction.jsp");
-			request.setAttribute("bidding_car", cars);
-			req.include(request, response);
+			response.sendRedirect(request.getContextPath() + "/login");
 		}
     }
 
@@ -55,31 +59,35 @@ public class AuctionControllerServlet extends HttpServlet {
 	 */
     protected void doPost(HttpServletRequest request,
            HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		if(session == null 
-			|| session.getAttribute("userinfo") == null
-			|| session.getAttribute("sellerflag") == null) {
-			response.sendRedirect(request.getContextPath() + "/login");
-			return;
-		}
-		
-		String sRegisterNumber = request.getParameter("register_number");
-		String sBiddingPrice = request.getParameter("bidding_price");
-		int registerNumber = Integer.parseInt(sRegisterNumber);
-		double biddingPrice = Double.parseDouble(sBiddingPrice);
-		
-		// update specific car's bidding price
-		if (sRegisterNumber != null) {
-			AuctionManagementService instance = AuctionManagementService.getInstance();
-			if (instance.updateBiddingCarPrice(registerNumber, biddingPrice)) {
-				request.setAttribute("bidFlag", "1");
-			}
-			else {
-				request.setAttribute("bidFlag", "2");
-			}
-			
-			doGet(request, response);
-		}
+    	// if has logged in
+    	if (AppSession.isAuthenticated()) {
+    		// if the role is correct
+            if (AppSession.hasRole(AppSession.BUYER_ROLE)) {
+            	
+            	String sRegisterNumber = request.getParameter("register_number");
+        		String sBiddingPrice = request.getParameter("bidding_price");
+        		double biddingPrice = Double.parseDouble(sBiddingPrice);
+        		
+        		// update specific car's bidding price
+        		if (sRegisterNumber != null) {
+        			AuctionManagementService instance = AuctionManagementService.getInstance();
+        			if (instance.updateBiddingCarPrice(sRegisterNumber, biddingPrice)) {
+        				request.setAttribute("bidFlag", "1");
+        			}
+        			else {
+        				request.setAttribute("bidFlag", "2");
+        			}
+        			
+        			// reload the auction page
+        			doGet(request, response);
+        		}
+            } 
+            else {
+                response.sendError(403);
+            }
+        } else {
+            response.sendError(401);
+        }
 	}
 
 }

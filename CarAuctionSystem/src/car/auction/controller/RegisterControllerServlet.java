@@ -53,9 +53,12 @@ public class RegisterControllerServlet extends HttpServlet {
 			UserInfoManagementService instance = UserInfoManagementService.getInstance();
 			if (instance.generateNewBuyers(username, password, first_name, last_name, contact)) {
 				
+				// here session is used to transfer the info if register success.
 				HttpSession session = request.getSession(false);
 				session.setAttribute("registerFlag", "1");
 				response.sendRedirect(request.getContextPath() + "/login");
+				
+				return;
 			}
 		}
 		

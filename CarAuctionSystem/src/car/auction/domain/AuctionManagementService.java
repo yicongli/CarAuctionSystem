@@ -30,7 +30,7 @@ public class AuctionManagementService {
     }
     
     // update specific cars's bidding price
-    public boolean updateBiddingCarPrice (int registerNumber, double biddingPrice) {
+    public boolean updateBiddingCarPrice (String registerNumber, double biddingPrice) {
     	
     	return false;
     }
