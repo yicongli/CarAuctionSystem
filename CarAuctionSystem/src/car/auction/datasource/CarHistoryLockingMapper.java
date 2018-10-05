@@ -9,11 +9,10 @@ import java.util.concurrent.locks.ReadWriteLock;
 
 import car.auction.auth.AppSession;
 import car.auction.concurrency.LockManager;
-
 import car.auction.domain.CarHistory;
 
 public class CarHistoryLockingMapper implements CarHistoryMapperInterface {
-	
+
 	private CarHistoryMapperInterface impl;
 	private LockManager lm;
 	private int sessionId;
@@ -25,6 +24,15 @@ public class CarHistoryLockingMapper implements CarHistoryMapperInterface {
 	private static final String insertStatementString =
             "INSERT INTO APP.buyer_car(carID, buyerID, pickuplocation)" +
             		" VALUES (?, ?, ?)";
+	
+	// singleton
+	private static final CarHistoryLockingMapper instance = new CarHistoryLockingMapper();
+
+	private CarHistoryLockingMapper() {}
+	
+	public CarHistoryLockingMapper getInstance(){
+        return instance;
+    }
 
 	public CarHistoryLockingMapper(CarHistoryMapperInterface impl) {
 		this.impl = impl;
