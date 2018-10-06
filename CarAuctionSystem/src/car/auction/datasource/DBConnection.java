@@ -19,6 +19,7 @@ public class DBConnection {
 	private static final String DB_USER = "user";
 	private static final String DB_PASSWORD = "123";
 
+	static Connection dbConnection;
 
 	// prepare for the operation
     public static PreparedStatement prepare(String stm) {
@@ -26,9 +27,10 @@ public class DBConnection {
 		PreparedStatement preparedStatement = null;
 		try {	
 	
-	       	 Connection dbConnection = getDBConnection();
+	       	dbConnection = getDBConnection();
+	       	dbConnection.setAutoCommit(false);
 
-			preparedStatement = dbConnection.prepareStatement(stm);
+			preparedStatement = dbConnection.prepareStatement(stm, Statement.RETURN_GENERATED_KEYS);
 
 			
 		} catch (SQLException e) {

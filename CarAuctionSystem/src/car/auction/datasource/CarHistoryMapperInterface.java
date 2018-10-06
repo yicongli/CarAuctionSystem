@@ -11,4 +11,6 @@ public interface CarHistoryMapperInterface {
 	public List<CarHistory> getAllCarsByBuyerId (int id);
 	
 	public void insert(CarHistory ch);
+	
+	public void updatePrice(int id, float price);
 }

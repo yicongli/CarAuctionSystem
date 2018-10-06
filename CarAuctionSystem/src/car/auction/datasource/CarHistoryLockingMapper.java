@@ -29,6 +29,11 @@ public class CarHistoryLockingMapper implements CarHistoryMapperInterface {
             "INSERT INTO APP.buyer_car(carID, buyerID, pickuplocation)" +
             		" VALUES (?, ?, ?)";
 	
+	private static final String updateCarSalesPriceStatementString =
+			"UPDATE APP.car"
+					+ " SET price = ?"
+					+ " WHERE id = ?";
+	
 	// singleton
 	private static final CarHistoryLockingMapper instance = new CarHistoryLockingMapper();
 
@@ -53,9 +58,7 @@ public class CarHistoryLockingMapper implements CarHistoryMapperInterface {
 		} catch (InterruptedException e1) {
 			System.out.println("Acquiring read lock when adding when getting cars failed");
 		}
-		
 			
-		
 		try {
 			PreparedStatement stmt = DBConnection.prepare(getAllCarsStatement);
 			
@@ -106,6 +109,7 @@ public class CarHistoryLockingMapper implements CarHistoryMapperInterface {
 		return result;
 	}
 
+	// insert when car is sold
 	@Override
 	public void insert(CarHistory ch) {
 		PreparedStatement insertStatement = null;
@@ -122,6 +126,25 @@ public class CarHistoryLockingMapper implements CarHistoryMapperInterface {
         	System.out.println("Insert error: " + e.getMessage());
 		}
 		
+	}
+	
+	// Update car sales price by id
+	@Override
+	public void updatePrice(int id, float price) {
+		PreparedStatement updateStatement = null;
+		
+		try {
+			updateStatement = DBConnection.prepare(updateCarSalesPriceStatementString);
+			
+			updateStatement.setFloat(1, price);
+			updateStatement.setInt(2, id);
+			
+			updateStatement.execute();
+			
+		} catch (SQLException e) {
+			System.out.println("update error: " + e.getMessage());
+		
+		}
 	}
 	
 }
