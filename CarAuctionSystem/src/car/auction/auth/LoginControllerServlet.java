@@ -62,6 +62,9 @@ public class LoginControllerServlet extends HttpServlet {
             // initiate the user information of AppSession
             UserInfoManagementService instance = UserInfoManagementService.getInstance();
 			User user = instance.getUser(username, isSeller);
+			if (user == null) {
+				throw new IncorrectCredentialsException();
+			}
             AppSession.init(user);
             
             // if login successes, then redirect to home page.
