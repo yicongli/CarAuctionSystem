@@ -20,6 +20,7 @@ public class HistoryGenerationThread extends Thread {
 				if (biddingCar.getEndtime() <= date) {
 					CarHistory history = new CarHistory(biddingCar);
 					maper.insert(history);
+					maper.updatePrice(biddingCar.getId(), biddingCar.getCurrentBid());
 				}
 			}
 			
