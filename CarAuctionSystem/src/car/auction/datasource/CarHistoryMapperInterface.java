@@ -8,5 +8,7 @@ public interface CarHistoryMapperInterface {
 
 	public List<CarHistory> getAllCars (CarHistory ch);
 	
+	public List<CarHistory> getAllCarsByBuyerId (int id);
+	
 	public void insert(CarHistory ch);
 }

@@ -21,6 +21,10 @@ public class CarHistoryLockingMapper implements CarHistoryMapperInterface {
 	private static final String getAllCarsStatement = "SELECT * FROM APP.buyer_car bc"
 			+ " LEFT JOIN APP.car c ON bc.carID = c.id";
 	
+	private static final String getAllCarsByBuyerIDStatement = "SELECT * FROM APP.buyer_car bc"
+			+ " LEFT JOIN APP.car c ON bc.carID = c.id"
+			+ " WHERE bc.buyerID = ?";
+	
 	private static final String insertStatementString =
             "INSERT INTO APP.buyer_car(carID, buyerID, pickuplocation)" +
             		" VALUES (?, ?, ?)";
@@ -73,6 +77,34 @@ public class CarHistoryLockingMapper implements CarHistoryMapperInterface {
 			
 		return result;
 	}
+	
+	
+	// Get all car history by buyer id
+	@Override
+	public List<CarHistory> getAllCarsByBuyerId(int id) {
+		List<CarHistory> result = new ArrayList<>();
+		
+		try {
+			PreparedStatement stmt = DBConnection.prepare(getAllCarsByBuyerIDStatement);
+			
+			stmt.setInt(1, id);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				CarHistory car = new CarHistory(rs.getInt(4), rs.getInt(5), rs.getString(6),
+						rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10),
+						rs.getFloat(11), rs.getLong(12), rs.getInt(1), rs.getString(3));
+				
+				result.add(car);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("load error: " + e.getMessage());
+		}
+		
+		return result;
+	}
 
 	@Override
 	public void insert(CarHistory ch) {
@@ -91,5 +123,5 @@ public class CarHistoryLockingMapper implements CarHistoryMapperInterface {
 		}
 		
 	}
-
+	
 }
