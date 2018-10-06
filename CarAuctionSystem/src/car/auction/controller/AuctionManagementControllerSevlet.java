@@ -1,7 +1,6 @@
 package car.auction.controller;
 
 import java.io.IOException;
-import java.sql.Time;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;

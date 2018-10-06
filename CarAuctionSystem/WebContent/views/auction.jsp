@@ -7,7 +7,46 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel='stylesheet' href='../resources/bootstrap.min.css'/>
     <link rel='stylesheet' href='../style.css'/>
+    <script src="//code.jquery.com/jquery.js"></script>
     <title>Auction</title>
+<script>
+ var table = document.getElementById("cartable");
+ for (var i = 1, row; row = table.rows[i]; i++) {
+//iterate through rows
+//rows would be accessed using the "row" variable assigned in the for loop
+
+var orderTime= row.cells[5];
+countDownTime = new Date(orderTime.innerHTML).getTime();
+var countDown = row.cells[5];
+// Update the count down every 1 second
+
+var x = setInterval(
+function () {
+    // Get todays date and time
+    var now = new Date().getTime();
+
+    // Find the distance between now an the count down date
+    var distance = countDownDate - now;
+
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+
+    // Display the result in the element
+    countDown.innerHTML = (days + "d " + hours + "h "
+        + minutes + "m " + seconds + "s ");
+
+     //If the count down is finished, write some text 
+    if (distance < 0) {
+        clearInterval(x);
+        countDown.innerHTML = "Finish";
+    }
+  }, 1000);
+ }
+ </script>
 </head>
 <body>
 <h2> Auction </h2>
@@ -37,7 +76,7 @@
 
 <div class='container'>
 
-    <table class='table table-bordered table-striped'>
+    <table id='cartable'class='table table-bordered table-striped'>
         <tr>
             <th>Reg.No.</th>
             <th>Make</th>
@@ -62,8 +101,8 @@
                 <td><%= car.getModel() %></td>
                 <td><%= car.getVariant() %></td>
                 <td><%= car.getYear() %></td>
-                <td> <!-- TODO: use javascript update time --></td>
-                <td> <!-- TODO: update bid price --></td>
+                <td><%= car.getEndtime() %>></td>
+                <td><%= car.getCurrentBid() %>></td>
                 <td align="left"> <input type="text" name="bidding_price" /> </td>
                 <td align="left"> <input type="submit" value="Bid"> </td>
               </form>
