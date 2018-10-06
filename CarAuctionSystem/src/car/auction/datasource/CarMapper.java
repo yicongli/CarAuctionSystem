@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import car.auction.domain.BiddingCar;
-import car.auction.domain.Car;
 
 public class CarMapper {
 	
