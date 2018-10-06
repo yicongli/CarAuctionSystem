@@ -64,12 +64,6 @@ public class CarMapper {
 				System.out.println("Rollback failed");
 				noError = false;
 			}
-        } finally {
-        	try {
-				if (DBConnection.dbConnection != null) DBConnection.dbConnection.close();
-			} catch (SQLException ignored) {
-				noError = false;
-			}
         }
 		
 		return noError;
@@ -95,13 +89,7 @@ public class CarMapper {
 				System.out.println("Rollback failed");
 				noError = false;
 			}
-        } finally {
-        	try {
-				if (DBConnection.dbConnection != null) DBConnection.dbConnection.close();
-			} catch (SQLException ignored) {
-				noError = false;
-			}
-        }
+        } 
 		
 		return noError;
 	}
@@ -137,13 +125,7 @@ public class CarMapper {
 				System.out.println("Rollback failed");
 				noError = false;
 			}
-        } finally {
-        	try {
-				if (DBConnection.dbConnection != null) DBConnection.dbConnection.close();
-			} catch (SQLException ignored) {
-				noError = false;
-			}
-        }
+        } 
 		
 		return noError;
 	}
@@ -165,13 +147,8 @@ public class CarMapper {
 				System.out.println("Rollback failed");
 				noError = false;;
 			}
-        } finally {
-        	try {
-				if (DBConnection.dbConnection != null) DBConnection.dbConnection.close();
-			} catch (SQLException ignored) {
-				noError = false;
-			}
-        }
+        } 
+    	
     	return noError;
     }  
 	
@@ -196,12 +173,6 @@ public class CarMapper {
 				DBConnection.dbConnection.rollback();
 			} catch (SQLException ignored) {
 				System.out.println("Rollback failed");
-				result = null;
-			}
-        } finally {
-        	try {
-				if (DBConnection.dbConnection != null) DBConnection.dbConnection.close();
-			} catch (SQLException ignored) {
 				result = null;
 			}
         }
@@ -231,12 +202,6 @@ public class CarMapper {
 				DBConnection.dbConnection.rollback();
 			} catch (SQLException ignored) {
 				System.out.println("Rollback failed");
-				result = null;
-			}
-        } finally {
-        	try {
-				if (DBConnection.dbConnection != null) DBConnection.dbConnection.close();
-			} catch (SQLException ignored) {
 				result = null;
 			}
         }
