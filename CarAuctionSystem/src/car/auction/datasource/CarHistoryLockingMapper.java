@@ -17,18 +17,21 @@ public class CarHistoryLockingMapper implements CarHistoryMapperInterface {
 	private LockManager lm;
 	private int sessionId;
 	
-	
+	// Get everything from buyer_car and car table, where the id of buyer_car carID is mapped to the id of car id
 	private static final String getAllCarsStatement = "SELECT * FROM APP.buyer_car bc"
 			+ " LEFT JOIN APP.car c ON bc.carID = c.id";
 	
+	// Get everything from buyer_car and car table, where the id of buyer_car carID is mapped to the id of car id, based on buyerID
 	private static final String getAllCarsByBuyerIDStatement = "SELECT * FROM APP.buyer_car bc"
 			+ " LEFT JOIN APP.car c ON bc.carID = c.id"
 			+ " WHERE bc.buyerID = ?";
 	
+	// Insert values when auction has finished
 	private static final String insertStatementString =
             "INSERT INTO APP.buyer_car(carID, buyerID, pickuplocation)" +
             		" VALUES (?, ?, ?)";
 	
+	// Set the highest currentbid as the price of the car. The price field is used to check if a car has been sold or not
 	private static final String updateCarSalesPriceStatementString =
 			"UPDATE APP.car"
 					+ " SET price = ?"

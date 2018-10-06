@@ -12,23 +12,31 @@ import car.auction.domain.Car;
 
 public class CarMapper {
 	
+	// Get all cars where the price field has not been set, this means the car has not been sold
 	private static final String getAllCarsStatement = "SELECT * FROM APP.car"
 			+ " WHERE price IS NULL";
 	
-	private static final String getCarByIdStatement = "SELECT * FROM APP.car WHERE id = ?";
+	// Get all cars, that has NOT been sold, by id 
+	private static final String getCarByIdStatement = "SELECT * FROM APP.car"
+			+ " WHERE id = ? "
+			+ " AND price IS NULL";
 	
+	// Update basic car information
 	private static final String updateCarStatementString = "UPDATE APP.car"
 			+ " SET regno = ?, make = ?, model = ?, variant = ?, buildyear = ?"
 			+ " WHERE id = ?";
 	
+	//  Update bid on a car
 	private static final String updateBidStatementString = "UPDATE APP.car "
 			+ "SET currentbid = ?"
 			+ " WHERE id = ?";
 	
+	// Add new car to the auction
 	private static final String insertStatementString =
             "INSERT INTO APP.car(regno, make, model, variant, buildyear, salesdate, currentbid)"
             + " VALUES (?, ?, ?, ?, ?, ?, ?)";
 	
+	// Delete car from auction by id
 	private static final String deleteStatementString =
     		"DELETE FROM APP.car"
     		+ " WHERE id = ?";
