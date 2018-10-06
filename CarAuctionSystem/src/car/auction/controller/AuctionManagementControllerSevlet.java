@@ -102,11 +102,15 @@ public class AuctionManagementControllerSevlet extends HttpServlet {
 		String currentBid     = request.getParameter("current_bid");
 		
 		float fCurrentBid = Float.parseFloat(currentBid);
-		long lTimeLeft = Time.valueOf(timeLeft).getTime();
+		String[]timelist = timeLeft.split(":");
+		long lTimeLeft = 0;
+		for (int i = 0; i < timelist.length; i++) {
+			lTimeLeft += Integer.parseInt(timelist[i]) * Math.pow(60, 2-i);
+		}
 		
 		// add bidding car
 		if(!registerNumber.isEmpty() && !make.isEmpty() && !model.isEmpty() 
-				&& !variant.isEmpty() && !year.isEmpty() && timeLeft.isEmpty() 
+				&& !variant.isEmpty() && !year.isEmpty() && !timeLeft.isEmpty() 
 				&& !currentBid.isEmpty())
 		{
 			// check if the generating operation success

@@ -1,10 +1,6 @@
 package car.auction.domain;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import com.sun.org.apache.regexp.internal.recompile;
 
 import car.auction.datasource.CarMapper;
 
@@ -48,19 +44,13 @@ public class BiddingCar extends Car {
 		this.curBuyerID = curBuyerID;
 	}
 
-	public static Car getCar(String registNum) {
-    	Car curCar = null;
-    	return curCar;
-    }
-
     public static List<BiddingCar> getAllAvailableCars() {
         List<BiddingCar> result = CarMapper.getAllCars();
         return result;
     }
 
     public static boolean updateBiddingCarPrice(int carID, double biddingPrice) {
-    	CarMapper.updateBid((float)biddingPrice, carID);
-    	return false;
+    	return CarMapper.updateBid((float)biddingPrice, carID);
     }
     
     public static boolean updateBiddingCar(int carID, String registerNumber, String make, 
@@ -72,22 +62,20 @@ public class BiddingCar extends Car {
     	car.setVariant(variant);
     	car.setYear(Integer.parseInt(year));
     	
-    	CarMapper.updateCarInfo(car);
-    	return false;
+    	return CarMapper.updateCarInfo(car);
     }
     
     public static boolean deleteBiddingCar(int carID) {
-    	CarMapper.delete(carID);
-    	return false;
+    	return CarMapper.delete(carID);
     }
     
     public static boolean addNewBiddingCar(String registerNumber, String make, String model, String variant, 
 			String year, float initialPrice, Long timeLeft) {
-    	long currentTime = System.currentTimeMillis();
+    	long currentTime = System.currentTimeMillis() / 1000;
     	long endTime = currentTime + timeLeft;
     	int  iYear = Integer.parseInt(year);
-    	BiddingCar newCar = new BiddingCar(0, 0, registerNumber, make, model, variant, iYear, endTime, initialPrice);
-    	CarMapper.insert(newCar);
-    	return false;
+    	BiddingCar newCar = new BiddingCar(0, 1, registerNumber, make, model, variant, iYear, endTime, initialPrice);
+    	
+    	return CarMapper.insert(newCar);
 	}
 }
