@@ -45,10 +45,10 @@ CREATE TABLE APP.car(
 );
 
 INSERT INTO APP.car (sellerID, regno, make, model, variant, buildyear, price, salesdate)
-VALUES (1, 'REG111', 'Toyota', 'Yaris', 'Variant 87', 2017, 9000, '2018-09-06 12:00:00');
+VALUES (1, 'REG111', 'Toyota', 'Yaris', 'Variant 87', 2017, 9000, 1541464206);
 
 INSERT INTO APP.car (sellerID, regno, make, model, variant, buildyear, price, salesdate)
-VALUES (1, 'REG222', 'Mercedes', 'C-Class', 'Variant 5', 2014, 12000, '2018-09-07 12:00:00');
+VALUES (1, 'REG222', 'Mercedes', 'C-Class', 'Variant 5', 2014, 12000, 1541464206);
 
 CREATE TABLE APP.buyer_car(
 	buyerID			INT,
