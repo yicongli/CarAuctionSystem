@@ -3,6 +3,8 @@ package car.auction.domain;
 import java.awt.List;
 import java.util.ArrayList;
 
+import car.auction.datasource.CarHistoryLockingMapper;
+
 public class CarHistory extends Car {
 	
 	private double salesprice;
@@ -56,7 +58,7 @@ public class CarHistory extends Car {
 	}
 	
 	public static ArrayList<CarHistory> getBuyerCarHistories (int buyerID) {
-		return null;
+		return null;//CarHistoryLockingMapper.getInstance().
 	}
 	
 	public static ArrayList<CarHistory> getSellerCarHistories () {
