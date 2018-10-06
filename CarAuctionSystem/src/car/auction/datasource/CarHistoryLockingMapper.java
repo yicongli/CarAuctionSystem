@@ -42,7 +42,7 @@ public class CarHistoryLockingMapper implements CarHistoryMapperInterface {
 
 	private CarHistoryLockingMapper() {}
 	
-	public CarHistoryLockingMapper getInstance(){
+	public static CarHistoryLockingMapper getInstance(){
         return instance;
     }
 
@@ -53,7 +53,7 @@ public class CarHistoryLockingMapper implements CarHistoryMapperInterface {
 	}
 	
 	@Override
-	public List<CarHistory> getAllCars(CarHistory ch) {
+	public List<CarHistory> getAllCars() {
 		List<CarHistory> result = new ArrayList<>();
 		
 		try {

@@ -1,7 +1,6 @@
 package car.auction.domain;
 
-import java.awt.List;
-import java.util.ArrayList;
+import java.util.List;
 
 import car.auction.datasource.CarHistoryLockingMapper;
 
@@ -18,6 +17,13 @@ public class CarHistory extends Car {
     	
         this.setSalesdate(salesdate);
         this.setBuyerID(buyerID);
+	}
+	
+	public CarHistory (BiddingCar car) {
+		super(car.getId(), car.getSellerId(), car.getRegisterNumber(), car.getMake(), car.getModel(), car.getVariant(), car.getYear());
+		
+		this.setSalesdate(car.getEndtime());
+		this.setBuyerID(car.getCurBuyerID());
 	}
 	
 	public double getSalesPrice() {
@@ -57,12 +63,12 @@ public class CarHistory extends Car {
 		return buyer.getFullName();
 	}
 	
-	public static ArrayList<CarHistory> getBuyerCarHistories (int buyerID) {
-		return null;//CarHistoryLockingMapper.getInstance().
+	public static List<CarHistory> getBuyerCarHistories (int buyerID) {
+		return CarHistoryLockingMapper.getInstance().getAllCarsByBuyerId(buyerID);
 	}
 	
-	public static ArrayList<CarHistory> getSellerCarHistories () {
-		return null;
+	public static List<CarHistory> getSellerCarHistories () {
+		return CarHistoryLockingMapper.getInstance().getAllCars();
 	}
 
 }
