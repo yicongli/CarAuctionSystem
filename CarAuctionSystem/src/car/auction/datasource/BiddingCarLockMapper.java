@@ -217,7 +217,7 @@ public class BiddingCarLockMapper {
     }  
 	
     // Get all cars for the auction list
-	public static List<BiddingCar> getAllCars(){
+	public List<BiddingCar> getAllCars(){
 		List<BiddingCar> result = new ArrayList<>();
 		
 		try {
