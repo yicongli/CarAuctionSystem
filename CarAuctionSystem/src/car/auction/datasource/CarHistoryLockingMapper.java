@@ -26,7 +26,9 @@ public class CarHistoryLockingMapper {
 	// Insert values when auction has finished
 	private static final String insertStatementString =
             "INSERT INTO APP.buyer_car(buyerID, carID, pickuplocation)" +
-            		" VALUES (?, ?, ?)";
+            		" VALUES ((SELECT id FROM APP.buyer WHERE id = ?),"
+            		+ " (SELECT id FROM APP.car WHERE id = ?),"
+            		+ " (SELECT address FROM APP.seller WHERE id = 1)";
 	
 	// singleton
 	private static final CarHistoryLockingMapper instance = new CarHistoryLockingMapper();
@@ -114,9 +116,8 @@ public class CarHistoryLockingMapper {
 		
 		try {
 			insertStatement = DBConnection.prepare(insertStatementString);
-			insertStatement.setInt(1, ch.getId());
-			insertStatement.setInt(2, ch.getBuyerID());
-			insertStatement.setString(3, ch.getPickUpLocation());
+			insertStatement.setInt(1, ch.getBuyerID());
+			insertStatement.setInt(2, ch.getId());
 			
 			insertStatement.executeUpdate();
 			DBConnection.dbConnection.commit();
