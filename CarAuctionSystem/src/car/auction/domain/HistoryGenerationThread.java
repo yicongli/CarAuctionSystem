@@ -15,6 +15,13 @@ public class HistoryGenerationThread extends Thread {
 	public void run() {
 		
 		while (true) {
+			try {
+				Thread.sleep(10000);
+				
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
 			long date = System.currentTimeMillis() / 1000;
 			
 			List<BiddingCar> car = HistoryGenerationThread.getAllCars();
@@ -26,13 +33,7 @@ public class HistoryGenerationThread extends Thread {
 					BiddingCarLockMapper.updatePrice(biddingCar.getId(), biddingCar.getCurrentBid());
 				}
 			}
-			
-			try {
-				Thread.sleep(1000);
-				
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+		
 		}
 	}
 	
