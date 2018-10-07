@@ -5,16 +5,14 @@ package car.auction.domain;
  * */
 public class Car {
 	private int id;
-	private int sellerId;
 	private String registerNumber;
     private String make;
     private String model;
     private String variant;
     private int year;
 
-    public Car(int id, int sellerId, String registerNumber, String make, String model, String variant, int year) {
+    public Car(int id, String registerNumber, String make, String model, String variant, int year) {
     	this.setId(id);
-    	this.setSellerId(sellerId);
         this.setRegisterNumber(registerNumber);
         this.setMake(make);
         this.setModel(model);
@@ -28,14 +26,6 @@ public class Car {
     
     public void setId(int id) {
     	this.id = id;
-    }
-    
-    public int getSellerId() {
-    	return sellerId;
-    }
-    
-    public void setSellerId(int sellerId) {
-    	this.sellerId = sellerId;
     }
 
     public String getRegisterNumber() {

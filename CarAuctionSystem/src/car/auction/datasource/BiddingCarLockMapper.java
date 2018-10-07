@@ -10,15 +10,18 @@ import java.util.List;
 import car.auction.auth.AppSession;
 import car.auction.concurrency.LockManager;
 import car.auction.domain.BiddingCar;
+import car.auction.domain.User;
 
 public class BiddingCarLockMapper {
 	
 	private LockManager lm;	// lock manager
-	private int sessionId;  // current session ID
 	
 	// Get all cars where the price field has not been set, this means the car has not been sold
 	private static final String getAllCarsStatement = "SELECT * FROM APP.car"
 			+ " WHERE price IS NULL";
+	
+	private static final String getAllSoldCarsStatement = "SELECT * FROM APP.car"
+			+ " WHERE price IS NOT NULL";
 	
 	// Get all cars, that has NOT been sold, by id 
 	private static final String getCarByIdStatement = "SELECT * FROM APP.car"
@@ -32,7 +35,7 @@ public class BiddingCarLockMapper {
 	
 	//  Update bid on a car
 	private static final String updateBidStatementString = "UPDATE APP.car "
-			+ "SET currentbid = ?"
+			+ "SET currentbid = ?, buyerID = ?"
 			+ " WHERE id = ?";
 	
 	// Add new car to the auction
@@ -56,12 +59,21 @@ public class BiddingCarLockMapper {
 
 	private BiddingCarLockMapper() {
 		this.lm = LockManager.getInstance();
-		this.sessionId = AppSession.getUser().getId();
 	}
 	
 	public static BiddingCarLockMapper getInstance(){
         return instance;
     }
+	
+	private int getSessionID() {
+		User user = AppSession.getUser();
+		if (user == null) {
+			return -1;
+		}
+		else {
+			 return user.getId();
+		}
+	}
 	
 	// Update basic car information
 	public boolean updateCarInfo(BiddingCar cb) {
@@ -69,7 +81,7 @@ public class BiddingCarLockMapper {
 		boolean noError = true;
 		
 		try {
-			lm.acquireWriteLock(sessionId);
+			lm.acquireWriteLock(getSessionID());
 		} catch (InterruptedException e1) {
 			System.out.println("Acquiring write lock when adding when getting cars failed");
 		}
@@ -95,18 +107,18 @@ public class BiddingCarLockMapper {
 			}
         }
 		
-		lm.releaseWriteLock(sessionId);
+		lm.releaseWriteLock(getSessionID());
 		
 		return noError;
 	}
 	
 	// Update bid by car id
-	public boolean updateBid(float currentbid, int id) {
+	public boolean updateBid(float currentbid, int id, int buyerID) {
 		PreparedStatement updateStatement = null;
 		boolean noError = true;
 		
 		try {
-			lm.acquireWriteLock(sessionId);
+			lm.acquireWriteLock(getSessionID());
 		} catch (InterruptedException e1) {
 			System.out.println("Acquiring write lock when adding when getting cars failed");
 		}
@@ -116,6 +128,7 @@ public class BiddingCarLockMapper {
 			
 			updateStatement.setFloat(1, currentbid);
 			updateStatement.setInt(2, id);
+			updateStatement.setInt(2, buyerID);
 			
 			updateStatement.execute();
 			
@@ -128,7 +141,7 @@ public class BiddingCarLockMapper {
 			}
         } 
 		
-		lm.releaseWriteLock(sessionId);
+		lm.releaseWriteLock(getSessionID());
 		
 		return noError;
 	}
@@ -140,7 +153,7 @@ public class BiddingCarLockMapper {
 		boolean noError = true;
 		
 		try {
-			lm.acquireWriteLock(sessionId);
+			lm.acquireWriteLock(getSessionID());
 		} catch (InterruptedException e1) {
 			System.out.println("Acquiring write lock when adding when getting cars failed");
 		}
@@ -172,7 +185,7 @@ public class BiddingCarLockMapper {
 			}
         } 
 		
-		lm.releaseWriteLock(sessionId);
+		lm.releaseWriteLock(getSessionID());
 		
 		return noError;
 	}
@@ -183,7 +196,7 @@ public class BiddingCarLockMapper {
     	boolean noError = true;
     	
 		try {
-			lm.acquireWriteLock(sessionId);
+			lm.acquireWriteLock(getSessionID());
 		} catch (InterruptedException e1) {
 			System.out.println("Acquiring write lock when adding when getting cars failed");
 		}
@@ -202,20 +215,14 @@ public class BiddingCarLockMapper {
 			}
         } 
     	
-    	lm.releaseWriteLock(sessionId);
+    	lm.releaseWriteLock(getSessionID());
     	
     	return noError;
     }  
 	
     // Get all cars for the auction list
-	public List<BiddingCar> getAllCars(){
+	public static List<BiddingCar> getAllCars(){
 		List<BiddingCar> result = new ArrayList<>();
-		
-		try {
-			lm.acquireReadLock(sessionId);
-		} catch (InterruptedException e1) {
-			System.out.println("Acquiring read lock when adding when getting cars failed");
-		}
 		
 		try {
 			PreparedStatement stmt = DBConnection.prepare(getAllCarsStatement);
@@ -238,7 +245,33 @@ public class BiddingCarLockMapper {
 			}
         }
 		
-		lm.releaseReadLock(sessionId);
+		return result;
+	}
+	
+	// Get all cars for the auction list
+	public static List<BiddingCar> getAllHistoryCars(){
+		List<BiddingCar> result = new ArrayList<>();
+
+		try {
+			PreparedStatement stmt = DBConnection.prepare(getAllSoldCarsStatement);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				BiddingCar car = new BiddingCar (rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5),
+						rs.getString(6), rs.getInt(7), rs.getLong(9), rs.getFloat(10));
+				
+				result.add(car);
+			}
+			
+		} catch (SQLException e) {
+			try {
+				DBConnection.dbConnection.rollback();
+			} catch (SQLException ignored) {
+				System.out.println("Rollback failed");
+				result = null;
+			}
+        }
 		
 		return result;
 	}
@@ -251,7 +284,7 @@ public class BiddingCarLockMapper {
         ResultSet rs = null;
         
 		try {
-			lm.acquireReadLock(sessionId);
+			lm.acquireReadLock(getSessionID());
 		} catch (InterruptedException e1) {
 			System.out.println("Acquiring read lock when adding when getting cars failed");
 		}
@@ -276,20 +309,14 @@ public class BiddingCarLockMapper {
 			}
         }
         
-        lm.releaseReadLock(sessionId);
+        lm.releaseReadLock(getSessionID());
         
         return result;
     }
 	
 	// Update car sales price by id
-	public void updatePrice(int id, float price) {
+	public static void updatePrice(int id, float price) {
 		PreparedStatement updateStatement = null;
-		
-		try {
-			lm.acquireWriteLock(sessionId);
-		} catch (InterruptedException e1) {
-			System.out.println("Acquiring write lock when adding when getting cars failed");
-		}
 		
 		try {
 			updateStatement = DBConnection.prepare(updateCarSalesPriceStatementString);
@@ -303,7 +330,6 @@ public class BiddingCarLockMapper {
 			System.out.println("update error: " + e.getMessage());
 		
 		}
-		
-		lm.releaseWriteLock(sessionId);
+
 	}
 }

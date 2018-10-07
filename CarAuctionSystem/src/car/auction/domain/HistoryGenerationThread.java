@@ -9,24 +9,23 @@ public class HistoryGenerationThread extends Thread {
 	
 	public void run() {
 		
-		CarHistoryLockingMapper historyMaper = CarHistoryLockingMapper.getInstance();
-		BiddingCarLockMapper biddingCarLockMapper = BiddingCarLockMapper.getInstance();
-		
 		while (true) {
 			long date = System.currentTimeMillis() / 1000;
 			
-			List<BiddingCar> car = BiddingCarLockMapper.getInstance().getAllCars();
+			List<BiddingCar> car = BiddingCarLockMapper.getAllCars();
 			
 			for (BiddingCar biddingCar : car) {
 				if (biddingCar.getEndtime() <= date) {
 					CarHistory history = new CarHistory(biddingCar);
-					historyMaper.insert(history);
-					biddingCarLockMapper.updatePrice(biddingCar.getId(), biddingCar.getCurrentBid());
+					CarHistoryLockingMapper.insert(history);
+					BiddingCarLockMapper.updatePrice(biddingCar.getId(), biddingCar.getCurrentBid());
 				}
 			}
 			
 			try {
+				System.out.println("check car 1s later");
 				Thread.sleep(1000);
+				
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

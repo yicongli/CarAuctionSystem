@@ -72,7 +72,7 @@ public class AuctionControllerServlet extends HttpServlet {
         		// update specific car's bidding price
         		if (carID != null) {
         			AuctionManagementService instance = AuctionManagementService.getInstance();
-        			if (instance.updateBiddingCarPrice(iCarID, biddingPrice)) {
+        			if (instance.updateBiddingCarPrice(iCarID, biddingPrice, AppSession.getUser().getId())) {
         				request.setAttribute("bidFlag", "1");
         			}
         			else {

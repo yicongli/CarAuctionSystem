@@ -33,7 +33,7 @@ SELECT * FROM APP.car
 
 CREATE TABLE APP.car(
    id			INT GENERATED ALWAYS AS IDENTITY,
-   sellerID		INT,
+   buyerID		INT,
    regno	 	VARCHAR(50),
    make			VARCHAR(50),
    model		VARCHAR(50),
@@ -46,10 +46,10 @@ CREATE TABLE APP.car(
    FOREIGN KEY (sellerID) REFERENCES APP.seller (id)
 );
 
-INSERT INTO APP.car (sellerID, regno, make, model, variant, buildyear, price, salesdate, currentbid)
+INSERT INTO APP.car (buyerID, regno, make, model, variant, buildyear, price, salesdate, currentbid)
 VALUES (1, 'REG111', 'Toyota', 'Yaris', 'Variant 87', 2017, NULL, 1541464206, 9000);
 
-INSERT INTO APP.car (sellerID, regno, make, model, variant, buildyear, price, salesdate, currentbid)
+INSERT INTO APP.car (buyerID, regno, make, model, variant, buildyear, price, salesdate, currentbid)
 VALUES (1, 'REG222', 'Mercedes', 'C-Class', 'Variant 5', 2014, NULL, 1541464206, 12000);
 
 CREATE TABLE APP.buyer_car(

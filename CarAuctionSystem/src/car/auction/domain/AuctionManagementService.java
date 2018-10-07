@@ -30,8 +30,8 @@ public class AuctionManagementService {
     }
     
     // update specific cars's bidding price
-    public boolean updateBiddingCarPrice (int carID, double biddingPrice) {
-    	return BiddingCar.updateBiddingCarPrice(carID, biddingPrice);
+    public boolean updateBiddingCarPrice (int carID, double biddingPrice, int buyerID) {
+    	return BiddingCar.updateBiddingCarPrice(carID, biddingPrice, buyerID);
     }
     
     public boolean deleteBiddingCar (int carID) {

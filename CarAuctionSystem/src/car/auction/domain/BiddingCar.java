@@ -12,12 +12,13 @@ public class BiddingCar extends Car {
     private long   endTime;  	// the ending time of bidding
     private int    curBuyerID;	// the one who has the highest bidding price
 
-    public BiddingCar(int id, int sellerId, String registerNumber, String make, String model, String variant, 
+    public BiddingCar(int id, int curBuyerID, String registerNumber, String make, String model, String variant, 
     			int year, long endTime, float currentBid) {
-    	super(id, sellerId, registerNumber, make, model, variant, year);
+    	super(id, registerNumber, make, model, variant, year);
     	
         this.setCurrentBid(currentBid);
         this.setEndtime(endTime);
+        this.setCurBuyerID(curBuyerID);
     }
 
 	public float getCurrentBid() {
@@ -45,12 +46,12 @@ public class BiddingCar extends Car {
 	}
 
     public static List<BiddingCar> getAllAvailableCars() {
-        List<BiddingCar> result = BiddingCarLockMapper.getInstance().getAllCars();
+        List<BiddingCar> result = BiddingCarLockMapper.getAllCars();
         return result;
     }
 
-    public static boolean updateBiddingCarPrice(int carID, double biddingPrice) {
-    	return BiddingCarLockMapper.getInstance().updateBid((float)biddingPrice, carID);
+    public static boolean updateBiddingCarPrice(int carID, double biddingPrice, int buyerID) {
+    	return BiddingCarLockMapper.getInstance().updateBid((float)biddingPrice, carID, buyerID);
     }
     
     public static boolean updateBiddingCar(int carID, String registerNumber, String make, 
@@ -74,7 +75,7 @@ public class BiddingCar extends Car {
     	long currentTime = System.currentTimeMillis() / 1000;
     	long endTime = currentTime + timeLeft;
     	int  iYear = Integer.parseInt(year);
-    	BiddingCar newCar = new BiddingCar(0, 1, registerNumber, make, model, variant, iYear, endTime, initialPrice);
+    	BiddingCar newCar = new BiddingCar(0, -1, registerNumber, make, model, variant, iYear, endTime, initialPrice);
     	
     	return BiddingCarLockMapper.getInstance().insert(newCar);
 	}

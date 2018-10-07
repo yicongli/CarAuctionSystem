@@ -11,19 +11,21 @@ public class CarHistory extends Car {
 	private String pickuplocation;
 	private int buyerID;
 
-	public CarHistory(int id, int sellerId, String registerNumber, String make, String model, String variant, 
+	public CarHistory(int id, String registerNumber, String make, String model, String variant, 
     			int year, double salesprice, Long salesdate, int buyerID, String pickuplocation) {
-    	super(id, sellerId, registerNumber, make, model, variant, year);
+    	super(id, registerNumber, make, model, variant, year);
     	
         this.setSalesdate(salesdate);
         this.setBuyerID(buyerID);
+        this.setPickUpLocation(pickuplocation);
 	}
 	
 	public CarHistory (BiddingCar car) {
-		super(car.getId(), car.getSellerId(), car.getRegisterNumber(), car.getMake(), car.getModel(), car.getVariant(), car.getYear());
+		super(car.getId(), car.getRegisterNumber(), car.getMake(), car.getModel(), car.getVariant(), car.getYear());
 		
 		this.setSalesdate(car.getEndtime());
 		this.setBuyerID(car.getCurBuyerID());
+		this.setPickUpLocation(Seller.getLoginInfoSeller().getAddress());
 	}
 	
 	public double getSalesPrice() {
