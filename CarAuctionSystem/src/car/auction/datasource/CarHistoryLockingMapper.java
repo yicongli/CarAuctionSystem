@@ -5,17 +5,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.ReadWriteLock;
 
 import car.auction.auth.AppSession;
 import car.auction.concurrency.LockManager;
 import car.auction.domain.CarHistory;
 
-public class CarHistoryLockingMapper implements CarHistoryMapperInterface {
+public class CarHistoryLockingMapper {
 
-	private CarHistoryMapperInterface impl;
-	private LockManager lm;
-	private int sessionId;
+	private LockManager lm;	// lock manager
+	private int sessionId;  // current session ID
 	
 	// Get everything from buyer_car and car table, where the id of buyer_car carID is mapped to the id of car id
 	private static final String getAllCarsStatement = "SELECT * FROM APP.buyer_car bc"
@@ -31,28 +29,18 @@ public class CarHistoryLockingMapper implements CarHistoryMapperInterface {
             "INSERT INTO APP.buyer_car(carID, buyerID, pickuplocation)" +
             		" VALUES (?, ?, ?)";
 	
-	// Set the highest currentbid as the price of the car. The price field is used to check if a car has been sold or not
-	private static final String updateCarSalesPriceStatementString =
-			"UPDATE APP.car"
-					+ " SET price = ?"
-					+ " WHERE id = ?";
-	
 	// singleton
 	private static final CarHistoryLockingMapper instance = new CarHistoryLockingMapper();
 
-	private CarHistoryLockingMapper() {}
+	private CarHistoryLockingMapper() {
+		this.lm = LockManager.getInstance();
+		this.sessionId = AppSession.getUser().getId();
+	}
 	
 	public static CarHistoryLockingMapper getInstance(){
         return instance;
     }
 
-	public CarHistoryLockingMapper(CarHistoryMapperInterface impl) {
-		this.impl = impl;
-		this.lm = LockManager.getInstance();
-		this.sessionId = AppSession.getUser().getId();
-	}
-	
-	@Override
 	public List<CarHistory> getAllCars() {
 		List<CarHistory> result = new ArrayList<>();
 		
@@ -86,9 +74,14 @@ public class CarHistoryLockingMapper implements CarHistoryMapperInterface {
 	
 	
 	// Get all car history by buyer id
-	@Override
 	public List<CarHistory> getAllCarsByBuyerId(int id) {
 		List<CarHistory> result = new ArrayList<>();
+		
+		try {
+			lm.acquireReadLock(sessionId);
+		} catch (InterruptedException e1) {
+			System.out.println("Acquiring read lock when adding when getting cars failed");
+		}
 		
 		try {
 			PreparedStatement stmt = DBConnection.prepare(getAllCarsByBuyerIDStatement);
@@ -109,13 +102,20 @@ public class CarHistoryLockingMapper implements CarHistoryMapperInterface {
 			System.out.println("load error: " + e.getMessage());
 		}
 		
+		lm.releaseReadLock(sessionId);
+		
 		return result;
 	}
 
 	// insert when car is sold
-	@Override
 	public void insert(CarHistory ch) {
 		PreparedStatement insertStatement = null;
+		
+		try {
+			lm.acquireWriteLock(sessionId);
+		} catch (InterruptedException e1) {
+			System.out.println("Acquiring write lock when adding when getting cars failed");
+		}
 		
 		try {
 			insertStatement = DBConnection.prepare(insertStatementString);
@@ -129,25 +129,8 @@ public class CarHistoryLockingMapper implements CarHistoryMapperInterface {
         	System.out.println("Insert error: " + e.getMessage());
 		}
 		
-	}
-	
-	// Update car sales price by id
-	@Override
-	public void updatePrice(int id, float price) {
-		PreparedStatement updateStatement = null;
+		lm.releaseWriteLock(sessionId);
 		
-		try {
-			updateStatement = DBConnection.prepare(updateCarSalesPriceStatementString);
-			
-			updateStatement.setFloat(1, price);
-			updateStatement.setInt(2, id);
-			
-			updateStatement.execute();
-			
-		} catch (SQLException e) {
-			System.out.println("update error: " + e.getMessage());
-		
-		}
 	}
 	
 }

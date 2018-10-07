@@ -2,7 +2,7 @@ package car.auction.domain;
 
 import java.util.List;
 
-import car.auction.datasource.CarMapper;
+import car.auction.datasource.BiddingCarLockMapper;
 
 /*
  * Class for Car information
@@ -45,28 +45,28 @@ public class BiddingCar extends Car {
 	}
 
     public static List<BiddingCar> getAllAvailableCars() {
-        List<BiddingCar> result = CarMapper.getAllCars();
+        List<BiddingCar> result = BiddingCarLockMapper.getInstance().getAllCars();
         return result;
     }
 
     public static boolean updateBiddingCarPrice(int carID, double biddingPrice) {
-    	return CarMapper.updateBid((float)biddingPrice, carID);
+    	return BiddingCarLockMapper.getInstance().updateBid((float)biddingPrice, carID);
     }
     
     public static boolean updateBiddingCar(int carID, String registerNumber, String make, 
     		String model, String variant, String year) {
-    	BiddingCar car = CarMapper.getCarById(carID);
+    	BiddingCar car = BiddingCarLockMapper.getInstance().getCarById(carID);
     	car.setRegisterNumber(registerNumber);
     	car.setMake(make);
     	car.setModel(model);
     	car.setVariant(variant);
     	car.setYear(Integer.parseInt(year));
     	
-    	return CarMapper.updateCarInfo(car);
+    	return BiddingCarLockMapper.getInstance().updateCarInfo(car);
     }
     
     public static boolean deleteBiddingCar(int carID) {
-    	return CarMapper.delete(carID);
+    	return BiddingCarLockMapper.getInstance().delete(carID);
     }
     
     public static boolean addNewBiddingCar(String registerNumber, String make, String model, String variant, 
@@ -76,6 +76,6 @@ public class BiddingCar extends Car {
     	int  iYear = Integer.parseInt(year);
     	BiddingCar newCar = new BiddingCar(0, 1, registerNumber, make, model, variant, iYear, endTime, initialPrice);
     	
-    	return CarMapper.insert(newCar);
+    	return BiddingCarLockMapper.getInstance().insert(newCar);
 	}
 }

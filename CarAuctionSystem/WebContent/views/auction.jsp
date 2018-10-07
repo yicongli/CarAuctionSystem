@@ -101,8 +101,8 @@ function () {
                 <td><%= car.getModel() %></td>
                 <td><%= car.getVariant() %></td>
                 <td><%= car.getYear() %></td>
-                <td><%= car.getEndtime() %>></td>
-                <td><%= car.getCurrentBid() %>></td>
+                <td><%= car.getEndtime() %></td>
+                <td><%= car.getCurrentBid() %></td>
                 <td align="left"> <input type="text" name="bidding_price" /> </td>
                 <td align="left"> <input type="submit" value="Bid"> </td>
               </form>
