@@ -10,14 +10,14 @@
     <title>Auction</title>
 </head>
 <body>
-<h2> Auction </h2>
+<h2> Auction Management </h2>
 <hr />
 
 <ul>
   <li><a href="/homepage">Home page</a></li>
   <li><a href="/buyers">Buyers Information</a></li>
   <li><a href="/auctionmanagement">Auction Management</a></li>
-  <li><a href="/history">Bought Cars</a></li>
+  <li><a href="/history">Sold Cars</a></li>
   <li><a href="/logout">Log out</a></li>
 </ul>
 
@@ -71,11 +71,11 @@
 	          <form name="ListCars" action="auctionmanagement" method="post">
 	            <input type="hidden" name="operation_flag" value="1" />
 	            <input type="hidden" name="carID" value = "<%= car.getId() %>">
-	            <td align="left"> <input type="text" name="register_number" value = "<%= car.getRegisterNumber() %>"/> </td>
-	            <td align="left"> <input type="text" name="make" value = "<%= car.getMake() %>"/> </td>
-	            <td align="left"> <input type="text" name="model" value = "<%= car.getModel() %>"/> </td>
-	            <td align="left"> <input type="text" name="variant" value = "<%= car.getVariant() %>"/> </td>
-	            <td align="left"> <input type="text" name="year" value = "<%= car.getYear() %>"/> </td>
+	            <td align="left"> <input  size="5" type="text" name="register_number" value = "<%= car.getRegisterNumber() %>"/> </td>
+	            <td align="left"> <input size="6" type="text" name="make" value = "<%= car.getMake() %>"/> </td>
+	            <td align="left"> <input size="7" type="text" name="model" value = "<%= car.getModel() %>"/> </td>
+	            <td align="left"> <input size="7" type="text" name="variant" value = "<%= car.getVariant() %>"/> </td>
+	            <td align="left"> <input size="4" type="text" name="year" value = "<%= car.getYear() %>"/> </td>
                 <td> <%= car.getEndtime() %></td>
                 <td> <%= car.getCurrentBid() %></td>
                 <td align="left"> <input type="submit" value="Update"> </td>
@@ -94,13 +94,13 @@
         	<tr>
 	          <form name="AddCar" action="auctionmanagement" method="post">
 	            <input type="hidden" name="operation_flag" value="0" />
-	            <td align="left"> <input type="text" name="register_number"/> </td>
-	            <td align="left"> <input type="text" name="make"/> </td>
-	            <td align="left"> <input type="text" name="model"/> </td>
-	            <td align="left"> <input type="text" name="variant"/> </td>
-	            <td align="left"> <input type="text" name="year"/> </td>
-	            <td align="left"> <input type="text" name="time_left" value="dd:hh:mm"/> </td>
-	            <td align="left"> <input type="text" name="current_bid"/> </td>
+	            <td align="left"> <input size="5" type="text" name="register_number"/> </td>
+	            <td align="left"> <input size="6" type="text" name="make"/> </td>
+	            <td align="left"> <input size="7" type="text" name="model"/> </td>
+	            <td align="left"> <input size="7" type="text" name="variant"/> </td>
+	            <td align="left"> <input size="4" type="text" name="year"/> </td>
+	            <td align="left"> <input size="6" type="text" name="time_left" value="dd:hh:mm"/> </td>
+	            <td align="left"> <input size="6" type="text" name="current_bid"/> </td>
                 <td align="left"> <input type="submit" value="Enroll"> </td>
               </form>
 	        </tr>
@@ -111,7 +111,7 @@
 
 <script>
  var table = document.getElementById("cartable");
- for (var r = 0; r < table.rows.length - 1; r++) {
+ for (var r = 1; r < table.rows.length - 1; r++) {
 //iterate through rows
 //rows would be accessed using the "row" variable assigned in the for loop
 var row = table.rows[r];
