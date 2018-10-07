@@ -15,7 +15,6 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
-import car.auction.domain.HistoryGenerationThread;
 import car.auction.domain.User;
 import car.auction.domain.UserInfoManagementService;
 
@@ -40,10 +39,6 @@ public class LoginControllerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/views/login.jsp");
         requestDispatcher.forward(request, response);
-        
-        // start history generation thread when the login page shows
-        Thread historyThread = new HistoryGenerationThread();
-        historyThread.start();
 	}
 
 	/**

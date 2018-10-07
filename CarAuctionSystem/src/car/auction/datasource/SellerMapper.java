@@ -29,6 +29,7 @@ public class SellerMapper {
             updateStatement.setString(3, s.getAddress());
 
             updateStatement.execute();
+            DBConnection.dbConnection.commit();
 
         } catch (Exception e) {
         	System.out.println("update error: " + e.getMessage());
@@ -43,6 +44,8 @@ public class SellerMapper {
 			PreparedStatement stmt = DBConnection.prepare(getLoginInfoSellerStatement);
 
 			  ResultSet rs = stmt.executeQuery();
+			  DBConnection.dbConnection.commit();
+			  
 			  while (rs.next()) {
 				  Seller seller = new Seller (rs.getString(1), rs.getString(2));
 				  
@@ -65,6 +68,8 @@ public class SellerMapper {
 			PreparedStatement stmt = DBConnection.prepare(getAddressSellerStatement);
 
 			  ResultSet rs = stmt.executeQuery();
+			  DBConnection.dbConnection.commit();
+			  
 			  while (rs.next()) {
 				  result = rs.getString(1);
 			  }

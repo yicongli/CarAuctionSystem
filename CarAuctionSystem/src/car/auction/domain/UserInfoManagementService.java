@@ -13,7 +13,11 @@ public class UserInfoManagementService {
 	private static final UserInfoManagementService instance = new UserInfoManagementService();
     
     //private constructor to avoid client applications to use constructor
-    private UserInfoManagementService(){}
+    private UserInfoManagementService(){
+        // start history generation thread when the login page shows
+        Thread historyThread = new HistoryGenerationThread();
+        historyThread.start();
+    }
 
     public static UserInfoManagementService getInstance(){
         return instance;

@@ -6,14 +6,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import car.auction.auth.AppSession;
 import car.auction.concurrency.LockManager;
 import car.auction.domain.CarHistory;
-import car.auction.domain.User;
 
 public class CarHistoryLockingMapper {
 
 	private LockManager lm;	// lock manager
+	private String sessionStr;
 	
 	// Get everything from buyer_car and car table, where the id of buyer_car carID is mapped to the id of car id
 	private static final String getAllCarsStatement = "SELECT * FROM APP.buyer_car bc"
@@ -34,27 +33,18 @@ public class CarHistoryLockingMapper {
 
 	private CarHistoryLockingMapper() {
 		this.lm = LockManager.getInstance();
+		this.sessionStr = "hisotory";
 	}
 	
 	public static CarHistoryLockingMapper getInstance(){
         return instance;
     }
-	
-	private int getSessionID() {
-		User user = AppSession.getUser();
-		if (user == null) {
-			return -1;
-		}
-		else {
-			 return user.getId();
-		}
-	}
 
 	public List<CarHistory> getAllCars() {
 		List<CarHistory> result = new ArrayList<>();
 		
 		try {
-			lm.acquireReadLock(getSessionID());
+			lm.acquireReadLock(sessionStr);
 		} catch (InterruptedException e1) {
 			System.out.println("Acquiring read lock when adding when getting cars failed");
 		}
@@ -63,6 +53,7 @@ public class CarHistoryLockingMapper {
 			PreparedStatement stmt = DBConnection.prepare(getAllCarsStatement);
 			
 			ResultSet rs = stmt.executeQuery();
+			DBConnection.dbConnection.commit();
 			
 			while (rs.next()) {
 				CarHistory car = new CarHistory(rs.getInt(4), rs.getString(6),
@@ -76,7 +67,7 @@ public class CarHistoryLockingMapper {
 			System.out.println("load error: " + e.getMessage());
 		}
 		
-		lm.releaseReadLock(getSessionID());
+		lm.releaseReadLock(sessionStr);
 			
 		return result;
 	}
@@ -87,7 +78,7 @@ public class CarHistoryLockingMapper {
 		List<CarHistory> result = new ArrayList<>();
 		
 		try {
-			lm.acquireReadLock(getSessionID());
+			lm.acquireReadLock(sessionStr);
 		} catch (InterruptedException e1) {
 			System.out.println("Acquiring read lock when adding when getting cars failed");
 		}
@@ -98,6 +89,7 @@ public class CarHistoryLockingMapper {
 			stmt.setInt(1, id);
 			
 			ResultSet rs = stmt.executeQuery();
+			DBConnection.dbConnection.commit();
 			
 			while (rs.next()) {
 				CarHistory car = new CarHistory(rs.getInt(4), rs.getString(6),
@@ -111,7 +103,7 @@ public class CarHistoryLockingMapper {
 			System.out.println("load error: " + e.getMessage());
 		}
 		
-		lm.releaseReadLock(getSessionID());
+		lm.releaseReadLock(sessionStr);
 		
 		return result;
 	}
@@ -127,6 +119,7 @@ public class CarHistoryLockingMapper {
 			insertStatement.setString(3, ch.getPickUpLocation());
 			
 			insertStatement.executeUpdate();
+			DBConnection.dbConnection.commit();
 			
 		} catch (SQLException e) {
         	System.out.println("Insert error: " + e.getMessage());
