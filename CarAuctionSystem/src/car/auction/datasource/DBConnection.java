@@ -26,9 +26,11 @@ public class DBConnection {
 		 
 		PreparedStatement preparedStatement = null;
 		try {	
-	
-	       	dbConnection = getDBConnection();
-	       	dbConnection.setAutoCommit(false);
+	       	
+	       	if (dbConnection == null) {
+	       		dbConnection = getDBConnection();
+	       		dbConnection.setAutoCommit(false);
+			}
 
 			preparedStatement = dbConnection.prepareStatement(stm, Statement.RETURN_GENERATED_KEYS);
 
@@ -42,6 +44,7 @@ public class DBConnection {
 
 		return preparedStatement;
 	}
+    
     
     // get connection
 	private static Connection getDBConnection() {
