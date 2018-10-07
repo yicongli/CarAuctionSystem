@@ -46,7 +46,7 @@ public class BiddingCar extends Car {
 	}
 
     public static List<BiddingCar> getAllAvailableCars() {
-        List<BiddingCar> result = BiddingCarLockMapper.getAllCars();
+        List<BiddingCar> result = BiddingCarLockMapper.getInstance().getAllCars();
         return result;
     }
 

@@ -19,7 +19,7 @@ public class DBConnection {
 	private static final String DB_USER = "user";
 	private static final String DB_PASSWORD = "123";
 
-	static Connection dbConnection;
+	public static Connection dbConnection;
 
 	// prepare for the operation
     public static PreparedStatement prepare(String stm) {
