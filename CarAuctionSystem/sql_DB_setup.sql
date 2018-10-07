@@ -29,8 +29,6 @@ CREATE TABLE APP.seller(
 INSERT INTO APP.seller
 VALUES (1, 'Seller', '1234', 'Parkville Victoria 3010');
 
-SELECT * FROM APP.car
-
 CREATE TABLE APP.car(
    id			INT GENERATED ALWAYS AS IDENTITY,
    buyerID		INT,
@@ -42,8 +40,7 @@ CREATE TABLE APP.car(
    price		FLOAT,
    salesdate	BIGINT,
    currentbid	FLOAT,
-   PRIMARY KEY (id),
-   FOREIGN KEY (sellerID) REFERENCES APP.seller (id)
+   PRIMARY KEY (id)
 );
 
 INSERT INTO APP.car (buyerID, regno, make, model, variant, buildyear, price, salesdate, currentbid)
@@ -60,3 +57,6 @@ CREATE TABLE APP.buyer_car(
 	FOREIGN KEY (buyerID) REFERENCES APP.buyer (id),
 	FOREIGN KEY (carID) REFERENCES APP.car (id)
 );
+
+INSERT INTO APP.buyer_car (buyerID, carID, pickuplocation)
+VALUES (1, 1, 'Parkville Victoria 3010');
