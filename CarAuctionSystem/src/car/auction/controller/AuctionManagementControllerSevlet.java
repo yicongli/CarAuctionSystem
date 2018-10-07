@@ -103,9 +103,11 @@ public class AuctionManagementControllerSevlet extends HttpServlet {
 		float fCurrentBid = Float.parseFloat(currentBid);
 		String[]timelist = timeLeft.split(":");
 		long lTimeLeft = 0;
-		for (int i = 0; i < timelist.length; i++) {
-			lTimeLeft += Integer.parseInt(timelist[i]) * Math.pow(60, 2-i);
+		for (int i = 1; i < timelist.length; i++) {
+			lTimeLeft += Integer.parseInt(timelist[i]) * Math.pow(60, 3-i);
 		}
+		
+		lTimeLeft += Integer.parseInt(timelist[0]) * 24 * 60 * 60;
 		
 		// add bidding car
 		if(!registerNumber.isEmpty() && !make.isEmpty() && !model.isEmpty() 

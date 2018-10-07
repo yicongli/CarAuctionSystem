@@ -50,7 +50,7 @@
 
 <div class='container'>
 
-    <table class='table table-bordered table-striped'>
+    <table id='cartable'class='table table-bordered table-striped'>
         <tr>
             <th>Reg.No.</th>
             <th>Make</th>
@@ -76,8 +76,8 @@
 	            <td align="left"> <input type="text" name="model" value = "<%= car.getModel() %>"/> </td>
 	            <td align="left"> <input type="text" name="variant" value = "<%= car.getVariant() %>"/> </td>
 	            <td align="left"> <input type="text" name="year" value = "<%= car.getYear() %>"/> </td>
-                <td> <!-- TODO: use javascript update time --></td>
-                <td> <!-- TODO: update bid price --></td>
+                <td> <%= car.getEndtime() %></td>
+                <td> <%= car.getCurrentBid() %></td>
                 <td align="left"> <input type="submit" value="Update"> </td>
               </form>
               <form name="DeleteCars" action="auctionmanagement" method="post">
@@ -99,7 +99,7 @@
 	            <td align="left"> <input type="text" name="model"/> </td>
 	            <td align="left"> <input type="text" name="variant"/> </td>
 	            <td align="left"> <input type="text" name="year"/> </td>
-	            <td align="left"> <input type="text" name="time_left"/> </td>
+	            <td align="left"> <input type="text" name="time_left" value="dd:hh:mm"/> </td>
 	            <td align="left"> <input type="text" name="current_bid"/> </td>
                 <td align="left"> <input type="submit" value="Enroll"> </td>
               </form>
@@ -108,6 +108,43 @@
     
     
 </div>
+
+<script>
+ var table = document.getElementById("cartable");
+ for (var r = 0; r < table.rows.length - 1; r++) {
+//iterate through rows
+//rows would be accessed using the "row" variable assigned in the for loop
+var row = table.rows[r];
+var countDown = row.cells[5];
+var countDownNum = row.cells[5].innerHTML;
+// Update the count down every 1 second
+
+function countDownFun() {
+    // Get todays date and time
+    var now = new Date().getTime();
+
+    // Find the distance between now an the count down date
+    var distance = parseInt(countDown.innerHTML) - now / 1000;
+
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (60 * 60 * 24));
+    var hours = Math.floor((distance % (60 * 60 * 24)) / (60 * 60));
+    var minutes = Math.floor((distance % (60 * 60)) / ( 60));
+
+
+    // Display the result in the element
+    countDown.innerHTML = (days + "d " + hours + "h " + minutes + "m ");
+
+     //If the count down is finished, write some text 
+    if (distance < 0) {
+        clearInterval(x);
+        countDown.innerHTML = "Finish";
+    }
+  }
+
+countDownFun();
+ }
+ </script>
 
 </body>
 </html>
